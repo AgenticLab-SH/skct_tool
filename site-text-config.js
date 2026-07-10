@@ -1,12 +1,12 @@
 (function initSiteTextConfig() {
     const DEFAULT_SITE_TEXT_CONFIG = {
         meta: {
-            title: 'SKCT 온라인 연습 도구 | 계산기·메모장·그림판·타이머',
-            description: '가지고 있는 SKCT 문제 PDF나 E-book을 보며 계산기, 메모장, 그림판, 과목별 타이머를 무료로 연습하는 온라인 도구입니다.',
-            ogTitle: 'SKCT 온라인 연습 도구 | 계산기·메모장·그림판·타이머',
-            ogDescription: '문제 자료는 그대로 두고, 온라인 시험에서 쓰는 계산기와 메모 도구를 미리 익혀보세요.',
-            twitterTitle: 'SKCT 온라인 연습 도구 | 계산기·메모장·그림판·타이머',
-            twitterDescription: '문제 자료는 그대로 두고, 온라인 시험에서 쓰는 계산기와 메모 도구를 미리 익혀보세요.',
+            title: 'SKCT 연습 도구 | 타이머·계산기·메모장·그림판',
+            description: '가지고 있는 문제 PDF나 E-book 옆에서 타이머, 화면 계산기, 메모장과 그림판을 무료로 연습하세요. PC 팝업 배치를 지원합니다.',
+            ogTitle: 'SKCT 연습 도구 | 화면 도구까지 미리 연습하세요',
+            ogDescription: '문제 PDF나 E-book 옆에서 타이머, 화면 계산기, 메모장과 그림판을 무료로 사용해 보세요.',
+            twitterTitle: 'SKCT 연습 도구 | 화면 도구까지 미리 연습하세요',
+            twitterDescription: '문제 PDF나 E-book 옆에서 타이머, 화면 계산기, 메모장과 그림판을 무료로 사용해 보세요.',
             srTitle: 'SKCT 온라인 연습 도구',
             srDescription: '타이머, 메모장, 그림판, 계산기를 실제 온라인 시험과 비슷한 흐름으로 연습하는 SKCT 도구입니다.'
         },

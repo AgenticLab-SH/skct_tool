@@ -1,16 +1,16 @@
 :root {
-    --docs-bg: #f8fafc;
-    --docs-bg-accent: #eef4ff;
-    --docs-card: rgba(255, 255, 255, 0.88);
-    --docs-card-strong: #ffffff;
-    --docs-text: #0f172a;
-    --docs-muted: #475569;
-    --docs-border: rgba(148, 163, 184, 0.28);
-    --docs-blue: #2563eb;
-    --docs-cyan: #0891b2;
-    --docs-green: #0f766e;
-    --docs-warm: #c2410c;
-    --docs-shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
+    --docs-bg: #050505;
+    --docs-bg-accent: #0d0909;
+    --docs-card: rgba(25, 22, 23, 0.88);
+    --docs-card-strong: rgba(20, 18, 19, 0.96);
+    --docs-text: #f8f6f4;
+    --docs-muted: #aaa3a0;
+    --docs-border: rgba(255, 255, 255, 0.11);
+    --docs-blue: #ff6b00;
+    --docs-cyan: #ff8a25;
+    --docs-green: #e31937;
+    --docs-warm: #ff8150;
+    --docs-shadow: 0 28px 76px rgba(0, 0, 0, 0.42);
     --docs-radius-xl: 28px;
     --docs-radius-lg: 20px;
     --docs-radius-md: 14px;
@@ -33,10 +33,23 @@ body.docs-page {
     min-height: 100vh;
     color: var(--docs-text);
     font-family: "Pretendard", sans-serif;
+    min-width: 320px;
+    color-scheme: dark;
     background:
-        radial-gradient(circle at top left, rgba(37, 99, 235, 0.16), transparent 28%),
-        radial-gradient(circle at top right, rgba(8, 145, 178, 0.10), transparent 24%),
+        radial-gradient(850px 560px at 92% -5%, rgba(227, 25, 55, 0.23), transparent 66%),
+        radial-gradient(720px 480px at -5% 35%, rgba(255, 107, 0, 0.12), transparent 68%),
         linear-gradient(180deg, var(--docs-bg) 0%, var(--docs-bg-accent) 100%);
+}
+
+body.docs-page::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: .24;
+    background-image: linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: linear-gradient(to bottom, #000, transparent 82%);
 }
 
 .docs-shell {
@@ -49,8 +62,8 @@ body.docs-page {
     top: 0;
     z-index: 30;
     backdrop-filter: blur(14px);
-    background: rgba(248, 250, 252, 0.78);
-    border-bottom: 1px solid rgba(226, 232, 240, 0.78);
+    background: rgba(6, 6, 6, 0.76);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 .docs-topbar-inner {
@@ -80,8 +93,9 @@ body.docs-page {
     align-items: center;
     justify-content: center;
     border-radius: 14px;
-    background: linear-gradient(135deg, #dbeafe, #ecfeff);
-    box-shadow: inset 0 0 0 1px rgba(37, 99, 235, 0.12);
+    color: #1c0803;
+    background: linear-gradient(135deg, #e31937, #ff6b00 70%, #ffad1f);
+    box-shadow: 0 10px 28px rgba(227, 25, 55, .26), inset 0 1px rgba(255,255,255,.34);
 }
 
 .docs-brand-text {
@@ -118,8 +132,8 @@ body.docs-page {
 
 .docs-nav a:hover,
 .docs-nav a.is-active {
-    background: rgba(37, 99, 235, 0.1);
-    color: var(--docs-blue);
+    background: rgba(255, 107, 0, 0.12);
+    color: #ff9b68;
     transform: translateY(-1px);
 }
 
@@ -134,8 +148,8 @@ body.docs-page {
     border: 1px solid var(--docs-border);
     border-radius: var(--docs-radius-xl);
     background:
-        linear-gradient(135deg, rgba(255,255,255,0.96), rgba(255,255,255,0.82)),
-        radial-gradient(circle at top right, rgba(59, 130, 246, 0.18), transparent 35%);
+        linear-gradient(135deg, rgba(227,25,55,.14), rgba(255,107,0,.05) 46%, rgba(255,255,255,.035)),
+        #100d0e;
     box-shadow: var(--docs-shadow);
 }
 
@@ -147,7 +161,7 @@ body.docs-page {
     width: 240px;
     height: 240px;
     border-radius: 999px;
-    background: radial-gradient(circle, rgba(37, 99, 235, 0.12), transparent 68%);
+    background: radial-gradient(circle, rgba(255, 107, 0, 0.2), transparent 68%);
     pointer-events: none;
 }
 
@@ -158,8 +172,9 @@ body.docs-page {
     min-height: 34px;
     padding: 0 12px;
     border-radius: 999px;
-    background: #eff6ff;
-    color: var(--docs-blue);
+    border: 1px solid rgba(255,107,0,.24);
+    background: rgba(227,25,55,.1);
+    color: #ff9a68;
     font-size: 12px;
     font-weight: 900;
     letter-spacing: 0.04em;
@@ -642,3 +657,81 @@ body.docs-page {
     html { scroll-behavior: auto; }
     .docs-page *, .docs-page *::before, .docs-page *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
 }
+
+/* Warm dark document system: shared by guide, feature, FAQ, pricing and policy pages. */
+.docs-summary-strip article,
+.setup-timeline article,
+.advanced-feature-list article,
+.pricing-plan-card,
+.pricing-step,
+.pricing-review-card {
+    border-color: var(--docs-border);
+    color: var(--docs-text);
+    background: rgba(255,255,255,.045);
+    box-shadow: 0 18px 42px rgba(0,0,0,.2);
+}
+
+.free-feature-note {
+    border-color: rgba(255,107,0,.26);
+    background: linear-gradient(145deg,rgba(227,25,55,.13),rgba(255,107,0,.055));
+}
+.free-feature-note strong,
+.advanced-two-line strong,
+.advanced-two-line a,
+.pricing-plan-kicker { color: #ff9b68; }
+.free-feature-note span,
+.setup-timeline p,
+.advanced-two-line span,
+.advanced-feature-list p { color: var(--docs-muted); }
+
+.setup-timeline article > strong,
+.pricing-step > strong {
+    color: #fff;
+    background: linear-gradient(135deg,#e31937,#ff6b00);
+}
+.advanced-two-line {
+    border-color: rgba(255,107,0,.24);
+    background: linear-gradient(145deg,rgba(227,25,55,.12),rgba(255,107,0,.045));
+}
+.advanced-feature-list article > span {
+    color: #ff9b68;
+    background: rgba(227,25,55,.12);
+}
+.advanced-feature-list article:hover,
+.docs-card:hover,
+.pricing-plan-card:hover,
+.pricing-step:hover {
+    border-color: rgba(255,107,0,.3);
+    box-shadow: 0 24px 54px rgba(0,0,0,.24);
+}
+
+.faq-search {
+    border-color: var(--docs-border);
+    background: rgba(255,255,255,.055);
+    box-shadow: 0 14px 30px rgba(0,0,0,.2);
+}
+.faq-search input { color: var(--docs-text); background: transparent; }
+.faq-search input::placeholder { color: #77706d; }
+.faq-search b { color: #ff9b68; background: rgba(227,25,55,.12); }
+.faq-grid summary::after { color:#b0a8a5; background:rgba(255,255,255,.065); }
+.faq-grid details[open] summary::after { color:#fff; background:linear-gradient(135deg,#e31937,#ff6b00); }
+
+.docs-button.primary {
+    color: #1b0703;
+    background: linear-gradient(115deg,#ff4235,#ff6b00 68%,#ffad1f);
+    box-shadow: 0 18px 40px rgba(227,25,55,.28);
+}
+.docs-button.secondary { border-color:var(--docs-border); background:rgba(255,255,255,.055); }
+.docs-note { color:#ffc3a5; border-color:rgba(255,107,0,.24); background:rgba(255,107,0,.095); }
+.docs-warning { color:#ffb3bf; border-color:rgba(227,25,55,.28); background:rgba(227,25,55,.105); }
+.docs-table th,.docs-table td { border-bottom-color:rgba(255,255,255,.09); }
+.pricing-plan-card.featured { border-color:rgba(255,107,0,.45); box-shadow:0 22px 48px rgba(227,25,55,.16); }
+.pricing-plan-price { color:var(--docs-text); }
+.docs-footer { color:#827a77; }
+.docs-footer a,.docs-page .docs-card a { color:#ff9b68; }
+.docs-fineprint { color:#7f7774 !important; }
+.advanced-chart i,.chart-bars i { background:linear-gradient(#ff854c,#e31937 52%,#8f001f); }
+
+@keyframes advancedRow { 0%,28%{background:linear-gradient(115deg,#e31937,#ff6b00);color:#fff;transform:translateX(3px)} 32%,100%{background:rgba(255,255,255,.06);color:#98a2b3;transform:none} }
+@keyframes advancedProductTab { 0%,22%{background:linear-gradient(115deg,#e31937,#ff6b00);color:#fff}25%,100%{background:transparent;color:#98a2b3} }
+@keyframes advancedSession { 0%,22%{background:linear-gradient(115deg,#e31937,#ff6b00);color:#fff;transform:translateX(3px)}25%,100%{background:rgba(255,255,255,.06);color:#98a2b3;transform:none} }
