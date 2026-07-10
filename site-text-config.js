@@ -152,8 +152,8 @@
             featureAccessHtml: '<strong>실제와 가까운 비율과 배치로 환경에 익숙해질 수 있습니다.</strong><br>채점, 복기, 기록 등의 기능을 쉽게 할 수 있게 하여 시간을 아낄 수 있습니다.',
             planTitle: '신청 순서 1 - 이용권 안내',
             planIntro: '채점과 복기, 기록 정리에 드는 시간을 줄이는 데 초점을 맞춘 이용권입니다. 필수 연습 기능은 계속 무료로 유지하고, 고급 기능은 시간을 아끼고 싶은 분들이 선택해서 사용할 수 있게 구성했습니다.',
-            donateButton: '이용권 결제/후원하기',
-            flowHtml: '이용권 선택 → 신청서 입력 → 후원 내용 복사 → 이용권 결제/후원하기 → 신청하기',
+            donateButton: '후원하기',
+            flowHtml: '이용권 선택 → 신청서 입력 → 1. 후원 내용 복사 → 2. 후원하기 → 3. 후원완료',
             formTitle: '신청 순서 2 - 신청서 작성',
             formDescription: '이메일, 이용 시작일, 비밀번호를 입력하면 후원 내용이 자동으로 만들어집니다. 후원 내용 복사를 눌러 복사된 텍스트를 후원 사이트에서 입력해주시면 승인처리가 됩니다. (새벽 시간에는 승인이 지연될 수 있습니다.) 승인이 되면, 신청하신 내용으로 고급모드에 로그인할 수 있습니다.',
             passwordHint: '이 비밀번호는 <strong>고급 로그인</strong>에 사용됩니다. 로그인 ID 또는 신청 이메일과 함께 기억해 주세요.',
@@ -372,12 +372,12 @@
             '현재는 <strong>7일권</strong>과 <strong>14일권</strong>을 이용할 수 있습니다. 필요한 기간을 선택해 신청하면 됩니다.',
             '필요한 기간을 고르고 후원을 마친 뒤, 아래 신청서를 한 번만 저장하면 됩니다.',
             '후원 후 신청서를 저장하고, 승인되면 같은 창에서 바로 들어가면 됩니다.',
-            '신청서 작성 -> 후원 내용 복사 -> 후원 페이지에 붙여넣기 -> 후원 완료 및 신청 저장 순서입니다.'
+            '신청서 작성 -> 1. 후원 내용 복사 -> 2. 후원하기 -> 3. 후원완료 순서입니다.'
         ],
-        'advancedGuide.donateButton': ['이용권 결제/후원하기'],
+        'advancedGuide.donateButton': ['후원하기'],
         'advancedGuide.flowHtml': [
-            '이용권 선택 → 이메일 입력 → 이용 시작일 입력 → 비밀번호 입력 → 후원 내용 복사 → 이용권 결제/후원하기 → 신청하기',
-            '이용권 선택 -> 이메일 입력 -> 이용 시작일 입력 -> 비밀번호 입력 -> 후원 내용 복사 -> 이용권 결제/후원하기 -> 신청하기'
+            '이용권 선택 → 이메일 입력 → 이용 시작일 입력 → 비밀번호 입력 → 1. 후원 내용 복사 → 2. 후원하기 → 3. 후원완료',
+            '이용권 선택 -> 이메일 입력 -> 이용 시작일 입력 -> 비밀번호 입력 -> 1. 후원 내용 복사 -> 2. 후원하기 -> 3. 후원완료'
         ],
         'advancedGuide.formTitle': ['고급모드 신청 순서 2 - 신청서 작성'],
         'advancedGuide.formDescription': [
@@ -708,7 +708,7 @@
         { key: 'advancedGuide.featureAccessHtml', label: '고급 기능: 일반 모드와의 차이', category: '고급 안내', selector: '#advancedGuideFeatureAccess', prop: 'html', multiline: true },
         { key: 'advancedGuide.planTitle', label: '고급 기능: 신청 제목', category: '고급 안내', selector: '#advancedGuidePlanTitle', prop: 'text' },
         { key: 'advancedGuide.planIntro', label: '고급 기능: 신청 소개', category: '고급 안내', selector: '#advancedGuidePlanIntro', prop: 'html', multiline: true },
-        { key: 'advancedGuide.donateButton', label: '고급 기능: 후원 버튼', category: '고급 안내', selector: '#manualSubscriptionDonateLink', prop: 'text' },
+        { key: 'advancedGuide.donateButton', label: '고급 기능: 후원 버튼', category: '고급 안내', selector: '#manualDonationDonateLabel', prop: 'text' },
         { key: 'advancedGuide.flowHtml', label: '고급 기능: 신청 흐름', category: '고급 안내', selector: '#advancedGuideFlow', prop: 'html', multiline: true },
         { key: 'advancedGuide.formTitle', label: '고급 기능: 신청서 제목', category: '고급 안내', selector: '#advancedGuideFormTitle', prop: 'text' },
         { key: 'advancedGuide.formDescription', label: '고급 기능: 신청서 설명', category: '고급 안내', selector: '#advancedGuideFormDescription', prop: 'html', multiline: true },

@@ -3234,10 +3234,28 @@ body.popup-mode .popup-entry-cta {
 }
 
 .manual-donation-action-row {
-    display: flex;
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: stretch;
     gap: 8px;
-    flex-wrap: wrap;
+}
+
+.manual-donation-action-row > * {
+    width: 100%;
+    min-height: 44px;
+    box-sizing: border-box;
+}
+
+.manual-donation-step-number {
+    display: inline-grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    margin-right: 5px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.22);
+    font-size: 12px;
+    line-height: 1;
 }
 
 .manual-donation-donate-link {
@@ -3294,13 +3312,44 @@ body.popup-mode .popup-entry-cta {
 }
 
 .manual-subscription-submit {
-    width: fit-content;
-    min-width: 120px;
-    margin-top: 2px;
+    min-width: 0;
+    margin-top: 0;
 }
 
 .manual-subscription-submit.is-hidden {
-    display: none;
+    visibility: hidden;
+}
+
+.manual-subscription-receipt {
+    min-height: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 12px;
+    color: #334155;
+    font-size: 13px;
+    line-height: 1.75;
+    white-space: pre-line;
+}
+
+.manual-subscription-receipt.is-visible {
+    min-height: 132px;
+    margin-top: 12px;
+    padding: 18px 20px;
+    border: 1px solid #99f6e4;
+    background: linear-gradient(145deg, #f0fdfa, #f8fafc);
+    box-shadow: 0 10px 28px rgba(15, 118, 110, 0.1);
+    color: #115e59;
+    font-weight: 650;
+}
+
+@media (max-width: 640px) {
+    .manual-donation-action-row {
+        grid-template-columns: 1fr;
+    }
+
+    .manual-subscription-submit.is-hidden {
+        display: none;
+    }
 }
 
 .advanced-guide-contact {

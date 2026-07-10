@@ -957,24 +957,37 @@ document.addEventListener('DOMContentLoaded', () => {
     function getManualDonationPrimaryButtonLabel() {
         if (manualDonationDraft.completed) return '신청 완료';
         if (manualDonationDraft.polling) return '자동 확인 중...';
-        if (isApprovalBackendEnabled()) return '후원 완료';
+        if (isApprovalBackendEnabled()) return '후원완료';
         return '신청하기';
     }
 
-    const MANUAL_DONATION_READY_MESSAGE = '신청 문구가 복사됐습니다. 투네이션에서 문구를 붙여넣고 안내된 금액으로 후원해 주세요.';
+    const MANUAL_DONATION_READY_MESSAGE = '후원을 완료한 뒤 아래의 3번 후원완료 버튼을 눌러주세요.';
     const MANUAL_DONATION_COMPLETE_MESSAGE = '구독 신청이 완료되었습니다.';
+    const MANUAL_DONATION_RECEIPT_MESSAGE = '신청이 접수되었습니다. 보통 10분 이내로 처리되지만, 서버에 문제가 있을 시 지연될 수 있습니다.\n\n10분을 초과한 지연 시간은 2배로 계산하여 추가 사용 시간을 제공해드립니다. 후원 내용에 오류가 있을 시 메일이 발송됩니다. 이용권이 정상 승인되면 신청하신 메일로 안내해드리겠습니다.\n\n후원에 감사드리며, 서버 유지보수와 사용 경험 개선에 활용하겠습니다.';
+
+    function setManualDonationActionLabel(element, step, label) {
+        if (!element) return;
+        element.innerHTML = `<span class="manual-donation-step-number">${step}</span> ${label}`;
+    }
+
+    function showManualDonationReceipt(message = MANUAL_DONATION_RECEIPT_MESSAGE) {
+        if (!manualSubscriptionSubmitStatus) return;
+        manualSubscriptionSubmitStatus.classList.add('is-visible');
+        manualSubscriptionSubmitStatus.style.color = '';
+        manualSubscriptionSubmitStatus.textContent = message;
+    }
 
     function updateManualDonationFlowState(message = '') {
         const formDescription = document.getElementById('advancedGuideFormDescription');
         if (formDescription) {
             formDescription.textContent = isApprovalBackendEnabled()
-                ? '이용권과 이메일을 입력하고 후원 내용을 복사하세요. 투네이션에서 같은 금액으로 후원한 뒤 후원 완료를 누르면 자동 확인이 시작됩니다.'
+                ? '신청 정보를 입력한 뒤 1. 후원 내용 복사, 2. 후원하기, 3. 후원완료 순서로 진행해주세요.'
                 : '현재 자동승인 서버 설정을 확인하지 못했습니다. 신청을 진행하지 말고 잠시 후 다시 시도해 주세요.';
         }
         const flow = document.getElementById('advancedGuideFlow');
         if (flow) {
             flow.textContent = isApprovalBackendEnabled()
-                ? '이용권 선택 -> 후원 내용 복사 -> 동일 금액 후원 -> 후원 완료 -> 자동 확인 -> 승인'
+                ? '이용권 선택 -> 1. 후원 내용 복사 -> 2. 후원하기 -> 3. 후원완료 -> 승인 안내'
                 : '자동승인 서버 연결 확인 필요';
         }
         if (manualDonationFlowPanel) {
@@ -984,7 +997,7 @@ document.addEventListener('DOMContentLoaded', () => {
             manualDonationFlowBadge.textContent = manualDonationDraft.completed
                 ? '신청 완료'
                 : manualDonationDraft.copied
-                ? (manualDonationDraft.donateOpened ? '후원 완료 확인 필요' : '후원 페이지로 이동')
+                ? (manualDonationDraft.donateOpened ? '3번 후원완료' : '2번 후원하기')
                 : '';
         }
         if (manualDonationMemoText) {
@@ -992,7 +1005,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if (manualDonationMemoCopyBtn) {
             manualDonationMemoCopyBtn.classList.toggle('is-copied', manualDonationDraft.copied);
-            manualDonationMemoCopyBtn.textContent = manualDonationDraft.copied ? '후원 내용 다시 복사' : '후원 내용 복사';
+            setManualDonationActionLabel(manualDonationMemoCopyBtn, 1, manualDonationDraft.copied ? '후원 내용 다시 복사' : '후원 내용 복사');
         }
         if (manualSubscriptionDonateLink) {
             manualSubscriptionDonateLink.classList.toggle('is-disabled', !manualDonationDraft.copied);
@@ -1009,7 +1022,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if (manualSubscriptionSubmitBtn && !manualSubscriptionSubmitInFlight) {
             const canSubmit = manualDonationDraft.copied && manualDonationDraft.donateOpened && !manualDonationDraft.completed && !manualDonationDraft.polling;
-            manualSubscriptionSubmitBtn.textContent = getManualDonationPrimaryButtonLabel();
+            setManualDonationActionLabel(manualSubscriptionSubmitBtn, 3, getManualDonationPrimaryButtonLabel());
             manualSubscriptionSubmitBtn.disabled = !canSubmit;
             manualSubscriptionSubmitBtn.classList.toggle('is-hidden', !manualDonationDraft.copied);
         }
@@ -1050,7 +1063,7 @@ document.addEventListener('DOMContentLoaded', () => {
             draft.requestId = String(order.request_id || '').trim();
             draft.memo = String(order.instruction_message || '').trim();
             draft.monitoringStatus = String(order.monitoring_status || 'not_started');
-            draft.monitoringMessage = String(order.monitoring_message || '후원 완료를 누르면 자동 확인이 시작됩니다.');
+            draft.monitoringMessage = String(order.monitoring_message || '후원완료를 누르면 자동 확인이 시작됩니다.');
             if (!draft.requestId || !draft.memo) {
                 throw new Error('자동승인 서버가 신청번호를 발급하지 못했습니다.');
             }
@@ -1129,12 +1142,8 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             const status = String(statusPayload.status || 'pending');
             if (status === 'pending') {
-                const monitoring = String(statusPayload.monitoring_status || 'backend_unavailable');
-                manualSubscriptionSubmitStatus.style.color = monitoring === 'watching' ? '#0f766e' : '#b45309';
-                manualSubscriptionSubmitStatus.textContent = monitoring === 'watching'
-                    ? '신청은 접수됐습니다. 서버는 정상이며 아직 후원 내역을 기다리고 있습니다.'
-                    : '신청은 접수됐지만 서버 연결이 끊겨 후원 여부를 확인하지 못하고 있습니다. 운영자에게 복구 알림을 보냈습니다.';
-                manualApprovalPollingTimer = window.setTimeout(pollApprovalOrderStatus, 5000);
+                showManualDonationReceipt();
+                manualApprovalPollingTimer = window.setTimeout(pollApprovalOrderStatus, 15000);
                 return;
             }
             stopApprovalPolling();
@@ -1144,25 +1153,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 manual_review: '후원은 확인됐지만 신청 정보가 일치하지 않아 자동승인되지 않았습니다. 운영자가 확인 중입니다.',
                 rejected: '승인되지 않았습니다. 신청번호와 함께 문의해 주세요.'
             };
-            manualSubscriptionSubmitStatus.style.color = status === 'approved' ? '#0f766e' : '#b91c1c';
-            manualSubscriptionSubmitStatus.textContent = messages[status] || `현재 신청 상태: ${status}`;
+            showManualDonationReceipt(status === 'approved'
+                ? '이용권이 승인되었습니다. 신청하신 이메일로 승인 안내를 보내드렸습니다.'
+                : MANUAL_DONATION_RECEIPT_MESSAGE);
             if (status === 'approved') {
                 manualDonationDraft.completed = true;
                 saveManualDonationDraftForReturn(readManualSubscriptionFormFields(), manualDonationDraft);
             }
             updateManualDonationFlowState(messages[status] || `현재 신청 상태: ${status}`);
         } catch (error) {
-            stopApprovalPolling();
-            manualSubscriptionSubmitStatus.style.color = '#b91c1c';
-            manualSubscriptionSubmitStatus.textContent = error.message || '자동승인 상태를 확인하지 못했습니다.';
-            updateManualDonationFlowState('자동 확인이 중단되었습니다. 다시 확인 버튼을 눌러주세요.');
+            showManualDonationReceipt();
+            manualApprovalPollingTimer = window.setTimeout(pollApprovalOrderStatus, 15000);
         }
     }
 
     function startApprovalPolling() {
         stopApprovalPolling();
         manualDonationDraft.polling = true;
-        updateManualDonationFlowState('자동 확인을 시작했습니다. 약 3~5초 간격으로 상태를 확인합니다.');
+        showManualDonationReceipt();
+        updateManualDonationFlowState('신청이 접수되었습니다. 승인 결과는 이메일로 안내해드리겠습니다.');
         void pollApprovalOrderStatus();
     }
 
@@ -1184,7 +1193,8 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             if (!isApprovalBackendEnabled()) throw new Error('자동승인 서버 설정을 확인하지 못했습니다. 잠시 후 다시 시도해 주세요.');
             manualDonationStepStatus.textContent = '안전한 신청번호를 생성하고 있습니다...';
-            await prepareApprovalBackendOrder(fields, draft);
+            // 주문과 암호화 신청서를 함께 확정하되, 후원 감시는 3단계 전에는 시작하지 않는다.
+            await prepareApprovalBackendOrder(fields, draft, { storeSecureRequest: true });
         } catch (error) {
             manualDonationStepStatus.textContent = error.message || '신청번호를 준비하지 못했습니다.';
             return;
@@ -1196,7 +1206,7 @@ document.addEventListener('DOMContentLoaded', () => {
         draft.copied = copied;
         if (copied) saveManualDonationDraftForReturn(fields, draft);
         updateManualDonationFlowState(copied
-            ? '신청 문구가 복사됐습니다. 투네이션에서 후원한 뒤 후원 완료를 눌러 주세요.'
+            ? MANUAL_DONATION_READY_MESSAGE
             : '복사에 실패했습니다. 아래 내용을 직접 선택해서 복사해 주세요.');
     }
 
@@ -1225,7 +1235,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if (!draft.donateOpened) {
             manualSubscriptionSubmitStatus.style.color = '#b45309';
-            manualSubscriptionSubmitStatus.textContent = '후원하기 버튼을 눌러 후원한 뒤 후원 완료를 눌러주세요.';
+            manualSubscriptionSubmitStatus.textContent = '2번 후원하기로 후원한 뒤 3번 후원완료를 눌러주세요.';
             updateManualDonationFlowState();
             return;
         }
@@ -1236,16 +1246,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         manualSubscriptionSubmitInFlight = true;
         manualSubscriptionSubmitBtn.disabled = true;
-        manualSubscriptionSubmitBtn.textContent = '확인 준비 중...';
+        setManualDonationActionLabel(manualSubscriptionSubmitBtn, 3, '접수 중...');
+        showManualDonationReceipt();
         let monitoringStarted = false;
         try {
-            const readiness = await requestApprovalApi('/auto-approval/status', {
-                method: 'POST',
-                body: { requestId: draft.requestId }
-            });
-            if (String(readiness.status || 'pending') !== 'pending') {
-                throw new Error('신청 준비 시간이 지났습니다. 후원 내용을 다시 복사해 주세요.');
-            }
             await prepareApprovalBackendOrder(fields, draft, { storeSecureRequest: true });
             const result = await requestApprovalApi('/auto-approval/start-monitoring', {
                 method: 'POST',
@@ -1256,9 +1260,16 @@ document.addEventListener('DOMContentLoaded', () => {
             saveManualDonationDraftForReturn(fields, draft);
             monitoringStarted = true;
         } catch (error) {
-            manualSubscriptionSubmitStatus.style.color = '#b91c1c';
-            manualSubscriptionSubmitStatus.textContent = error.message || '자동 확인을 시작하지 못했습니다.';
-            updateManualDonationFlowState('자동 확인을 시작하지 못했습니다. 잠시 후 후원 완료를 다시 눌러주세요.');
+            showManualDonationReceipt();
+            draft.monitoringRetryCount = Number(draft.monitoringRetryCount || 0) + 1;
+            updateManualDonationFlowState('신청이 접수되었습니다. 자동 확인 연결을 다시 시도하고 있습니다.');
+            if (draft.monitoringRetryCount <= 40) {
+                window.setTimeout(() => {
+                    if (!manualDonationDraft.completed && !manualDonationDraft.polling) {
+                        void handleManualSubscriptionPrimaryAction();
+                    }
+                }, 15000);
+            }
         } finally {
             manualSubscriptionSubmitInFlight = false;
         }
@@ -1776,7 +1787,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     title: '🔒 고급 신청 · 진입 도움말',
                     body: [
                         buildQuickInfoCard('바로 열기', '승인 뒤에는 이메일과 비밀번호만 입력하면 됩니다.'),
-                        buildQuickInfoCard('신청 순서', '<strong>이용권 선택</strong> -> <strong>신청서 작성</strong> -> <strong>후원 내용 복사</strong> -> <strong>이용권 결제/후원하기</strong> -> <strong>신청하기</strong>'),
+                        buildQuickInfoCard('신청 순서', '<strong>신청서 작성</strong> -> <strong>1. 후원 내용 복사</strong> -> <strong>2. 후원하기</strong> -> <strong>3. 후원완료</strong>'),
                         buildQuickInfoCard('입력 기준', '신청과 로그인 모두 <strong>이메일</strong> 하나로 진행합니다.')
                     ].join('')
                 };

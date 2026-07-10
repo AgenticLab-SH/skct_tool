@@ -47,7 +47,7 @@
       gtag('js', new Date());
       gtag('config', 'G-ZLHB1RM91X');
     </script>
-    <link rel="stylesheet" href="main.css?v=2026071020">
+    <link rel="stylesheet" href="main.css?v=2026071101">
     <!-- Google Fonts & Pretendard -->
     <link rel="stylesheet" as="style" integrity="sha384-uGEvnSEpW2nM9xJFsrxrwakwrk9QdDTQIBJh0hVMu90OaVyMAMpAK1rIn0/Kh1/k" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     <link rel="icon" href="images/sk_ci.png">
@@ -625,7 +625,7 @@
             </div>
             <div class="modal-body advanced-guide-modal-body">
                 <div id="advancedGuideFlow" class="guide-flow-strip guide-flow-strip-warm">
-                    이용권 선택 → 신청서 입력 → 후원 내용 복사 → 이용권 결제/후원하기 → 후원 완료
+                    이용권 선택 → 신청서 입력 → 1. 후원 내용 복사 → 2. 후원하기 → 3. 후원완료
                 </div>
                 <div class="advanced-guide-section advanced-guide-section-login">
                     <div id="advancedGuideLoginTitle" class="advanced-guide-section-title advanced-guide-section-title-blue">고급모드 로그인하기</div>
@@ -744,14 +744,14 @@
                             </div>
                         </div>
                         <textarea id="manualDonationMemoText" class="manual-donation-memo" readonly placeholder="신청 정보를 입력하고 아래 버튼을 누르면 자동으로 만들어집니다."></textarea>
-                        <div class="manual-donation-action-row">
-                            <button id="manualDonationMemoCopyBtn" type="button" class="manual-donation-copy-btn">후원 내용 복사</button>
-                            <a id="manualSubscriptionDonateLink" class="manual-donation-donate-link is-disabled" href="#" target="_blank" rel="noopener noreferrer nofollow" aria-disabled="true">이용권 결제/후원하기</a>
+                        <div class="manual-donation-action-row" aria-label="후원 신청 3단계">
+                            <button id="manualDonationMemoCopyBtn" type="button" class="manual-donation-copy-btn"><span class="manual-donation-step-number">1</span> 후원 내용 복사</button>
+                            <a id="manualSubscriptionDonateLink" class="manual-donation-donate-link is-disabled" href="#" target="_blank" rel="noopener noreferrer nofollow" aria-disabled="true"><span class="manual-donation-step-number">2</span><span id="manualDonationDonateLabel">후원하기</span></a>
+                            <button id="manualSubscriptionSubmitBtn" type="button" class="advanced-guide-submit manual-subscription-submit" disabled><span class="manual-donation-step-number">3</span> 후원완료</button>
                         </div>
                         <div id="manualDonationStepStatus" class="manual-donation-step-status">후원 내용 복사 버튼을 눌러주세요.</div>
-                        <button id="manualSubscriptionSubmitBtn" type="button" class="advanced-guide-submit manual-subscription-submit" disabled>후원 완료</button>
                     </div>
-                    <div id="manualSubscriptionSubmitStatus" style="min-height:20px; font-size:12px; color:#64748b; line-height:1.6;"></div>
+                    <div id="manualSubscriptionSubmitStatus" class="manual-subscription-receipt" role="status" aria-live="polite"></div>
                 </div>
                 <div id="advancedGuideContact" class="advanced-guide-contact">
                     문의: <strong>zhdlsqpdj@gmail.com</strong>
@@ -1052,8 +1052,8 @@
     </script>
     <script src="subscription-crypto.js?v=202604081955"></script>
     <script src="build-info.js?v=202607050000"></script>
-    <script src="site-text-config.js?v=2026071020"></script>
-    <script src="main.js?v=2026071022"></script>
+    <script src="site-text-config.js?v=2026071101"></script>
+    <script src="main.js?v=2026071101"></script>
 
     <script src="config/firebase-web-config.js"></script>
     <!-- Firebase SDK (ES Module) -->

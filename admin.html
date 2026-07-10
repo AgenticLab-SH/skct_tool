@@ -788,7 +788,7 @@
 
 <!-- Firebase SDK -->
 <script src="build-info.js?v=202607050000"></script>
-<script src="site-text-config.js?v=2026071020"></script>
+<script src="site-text-config.js?v=2026071101"></script>
 <script src="config/firebase-web-config.js"></script>
 <script src="subscription-crypto.js?v=202604081955"></script>
 <script src="sponsor-csv-core.js?v=2026071020"></script>
@@ -1457,7 +1457,26 @@
         const year = next.getFullYear();
         const month = String(next.getMonth() + 1).padStart(2, '0');
         const date = String(next.getDate()).padStart(2, '0');
-        return `${year}-${month}-${date}`;
+        return `${year}-${month}-${date}T23:59`;
+    }
+
+    function formatExpiryForDatetimeInput(value) {
+        const normalized = String(value || '').trim();
+        if (!normalized) return '';
+        if (/^\d{4}-\d{2}-\d{2}$/.test(normalized)) return `${normalized}T23:59`;
+        const timestamp = Date.parse(normalized);
+        if (!Number.isFinite(timestamp)) return '';
+        const kst = new Date(timestamp + 9 * 60 * 60 * 1000);
+        return `${kst.getUTCFullYear()}-${String(kst.getUTCMonth() + 1).padStart(2, '0')}-${String(kst.getUTCDate()).padStart(2, '0')}T${String(kst.getUTCHours()).padStart(2, '0')}:${String(kst.getUTCMinutes()).padStart(2, '0')}`;
+    }
+
+    function normalizeExpiryInput(value) {
+        const normalized = String(value || '').trim();
+        if (!normalized) return '';
+        if (/^\d{4}-\d{2}-\d{2}$/.test(normalized)) return `${normalized}T23:59:59+09:00`;
+        const timestamp = Date.parse(normalized);
+        if (!Number.isFinite(timestamp)) throw new Error('만료 날짜와 시간을 확인해주세요.');
+        return new Date(timestamp).toISOString();
     }
 
     function deriveAdvancedPlanTypeFromManualRequest(record) {
@@ -1541,7 +1560,7 @@
             issuedAt: Date.now()
         };
         if (subscription.expiresAt) {
-            payload.expiresAt = `${subscription.expiresAt}T23:59:59+09:00`;
+            payload.expiresAt = normalizeExpiryInput(subscription.expiresAt);
         }
         return payload;
     }
@@ -4156,7 +4175,7 @@
                             ${payload.adminResponse?.licenseBundle ? `<div style="margin-top:8px; padding:8px; border-radius:8px; background:#eff6ff; border:1px solid #bfdbfe;"><strong>라이선스</strong>: 발급 완료 / <strong>만료일</strong>: ${esc(payload.adminResponse.expiresAt || '영구')}</div>` : ''}
                         </div>
                         <div style="display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:8px;">
-                            <input class="form-input" data-field="expiresAt" type="date" value="${esc(payload.adminResponse?.expiresAt || buildManualSubscriptionExpiry(plan.days, payload.requestedStartDate))}">
+                            <input class="form-input" data-field="expiresAt" type="datetime-local" step="60" value="${esc(formatExpiryForDatetimeInput(payload.adminResponse?.expiresAt || buildManualSubscriptionExpiry(plan.days, payload.requestedStartDate)))}" title="시간과 분까지 조정할 수 있습니다.">
                             <input class="form-input" data-field="statusMessage" value="${esc(payload.adminResponse?.statusMessage || '')}" placeholder="처리 메모">
                         </div>
                         <div style="display:flex; gap:8px; flex-wrap:wrap;">
@@ -4172,7 +4191,7 @@
                         </div>
                         ${serverApprovalAvailable && record.status === 'pending' ? `
                             <div style="display:grid; grid-template-columns:minmax(0, 1fr); gap:8px;">
-                                <input class="form-input" data-field="expiresAt" type="date" value="" title="비워두면 신청한 시작일과 요금제로 자동 계산">
+                                <input class="form-input" data-field="expiresAt" type="datetime-local" step="60" value="" title="비워두면 신청한 시작일과 요금제로 자동 계산합니다. 시간과 분까지 조정할 수 있습니다.">
                                 <input class="form-input" data-field="statusMessage" value="" placeholder="처리 메모">
                             </div>
                             <div style="display:flex; gap:8px; flex-wrap:wrap;">
@@ -4277,7 +4296,7 @@
         if (record && cardEl && canUseServerApproval) {
             const result = await postAdminSecureApi('/admin/subscription/approve', {
                 requestId,
-                expiresAt: expiresAtFromCard,
+                expiresAt: expiresAtFromCard ? normalizeExpiryInput(expiresAtFromCard) : '',
                 statusMessage: statusMessageFromCard || '투네이션 확인 후 승인되었습니다.'
             });
             await loadSubscriptionRequests();
@@ -4294,7 +4313,7 @@
         if (!expiresAt) {
             throw new Error('만료일을 입력해야 라이선스를 발급할 수 있습니다.');
         }
-        const expiresAtIso = `${expiresAt}T23:59:59+09:00`;
+        const expiresAtIso = normalizeExpiryInput(expiresAt);
         const licenseBundle = await window.SKCTSubscriptionCrypto.signLicensePayload({
             licenseId: crypto.randomUUID ? crypto.randomUUID() : `license-${Date.now()}`,
             requestId,
@@ -4317,7 +4336,7 @@
             }
         };
         const encryptedPayload = await window.SKCTSubscriptionCrypto.reencryptRequestPayloadForAdmin(record, nextPayload, privateKeyPem);
-        const upsertResult = await upsertApprovedSubscriptionFromRequest(record, nextPayload, expiresAt);
+        const upsertResult = await upsertApprovedSubscriptionFromRequest(record, nextPayload, expiresAtIso);
         const loginIdKey = getAdvancedLoginIdKey(nextPayload.desiredLoginId || '');
         const persistResult = await persistAdvancedSubscriptionState(upsertResult.config, {
             passwordOverrides: loginIdKey
@@ -4511,8 +4530,8 @@
                     </div>
                 </td>
                 <td style="padding:8px;">
-                    <input class="form-input" data-field="expiresAt" type="date" value="${esc(subscription.expiresAt)}">
-                    <div data-role="expiresHint" style="margin-top:4px; font-size:10px; color:#64748b;">선택한 날짜 23:59까지 사용 (다음 날 00:00 전)</div>
+                    <input class="form-input" data-field="expiresAt" type="datetime-local" step="60" value="${esc(formatExpiryForDatetimeInput(subscription.expiresAt))}">
+                    <div data-role="expiresHint" style="margin-top:4px; font-size:10px; color:#64748b;">종료 날짜·시간을 분 단위로 지정</div>
                 </td>
                 <td style="padding:8px;"><input class="form-input" data-field="note" value="${esc(subscription.note)}" placeholder="예: 입금 확인 완료, 1회 연장 약속"></td>
                 <td style="padding:8px; text-align:center;">
@@ -4739,7 +4758,7 @@
                 status,
                 passwordSalt: current.passwordSalt || '',
                 passwordHash: current.passwordHash || '',
-                expiresAt: persistence.expiresAt,
+                expiresAt: persistence.expiresAt ? normalizeExpiryInput(persistence.expiresAt) : '',
                 passwordCipher: current.passwordCipher || '',
                 passwordCipherIv: current.passwordCipherIv || '',
                 passwordCipherSalt: current.passwordCipherSalt || '',
