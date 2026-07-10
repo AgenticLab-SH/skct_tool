@@ -1,0 +1,110 @@
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Write Firebase web config (from secret)
+        env:
+          FIREBASE_WEB_CONFIG_JSON: ${{ secrets.FIREBASE_WEB_CONFIG_JSON }}
+        run: |
+          if [ -z "$FIREBASE_WEB_CONFIG_JSON" ]; then
+            echo "FIREBASE_WEB_CONFIG_JSON secret is required" >&2
+            exit 1
+          fi
+          node <<'NODE'
+          const fs = require('fs');
+          const raw = process.env.FIREBASE_WEB_CONFIG_JSON.trim();
+          JSON.parse(raw);
+          fs.mkdirSync('config', { recursive: true });
+          fs.writeFileSync(
+            'config/firebase-web-config.js',
+            `window.FIREBASE_WEB_CONFIG = ${raw};\n`,
+            'utf8'
+          );
+          NODE
+
+      - uses: actions/configure-pages@v5
+
+      - name: Stage public site (explicit allowlist)
+        run: |
+          mkdir -p _site
+          public_files=(
+            .nojekyll CNAME ads.txt admin.css admin.html advanced-tools.html
+            build-info.js bypass.html community.js docs-pages.css extension-info.html
+            googleb305551590fcb6e6.html index.html llms.txt main.css main.js
+            robots.txt site-text-config.js sitemap.xml skct_extension.zip
+            sponsor-csv-core.js study-archive.css study-archive.html study-archive.js
+            subscription-crypto.js update.html
+          )
+          public_dirs=(about admin advanced chrome-extension contact faq guide images pricing privacy terms)
+
+          for path in "${public_files[@]}"; do
+            if [ -f "$path" ]; then
+              cp -a "$path" _site/
+            fi
+          done
+          for path in "${public_dirs[@]}"; do
+            if [ -d "$path" ]; then
+              cp -a "$path" _site/
+            fi
+          done
+          mkdir -p _site/config
+          cp -a config/firebase-config.mjs _site/config/firebase-config.mjs
+          cp -a config/firebase-web-config.js _site/config/firebase-web-config.js
+
+          echo "Staged public site contents:"
+          find _site -maxdepth 2 -type f -print | sort
+
+          forbidden_paths=(backend functions scripts docs staging artifacts private tmp logs .github .vscode)
+          for path in "${forbidden_paths[@]}"; do
+            if [ -e "_site/$path" ]; then
+              echo "Internal path leaked into Pages artifact: $path" >&2
+              exit 1
+            fi
+          done
+          if find _site -type f \( -name '*.env' -o -name '.env*' -o -name '*.pem' -o -name '*.key' -o -name '*.service' -o -name '*.py' -o -name '*.sh' \) -print -quit | grep -q .; then
+            echo "Sensitive or operational file type leaked into Pages artifact" >&2
+            exit 1
+          fi
+
+      - name: Write build info
+        run: |
+          KST_NOW="$(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M:%S +09:00')"
+          VERSION="v$(TZ=Asia/Seoul date '+%Y.%m.%d.%H%M')"
+          ASSET_VERSION="$(TZ=Asia/Seoul date '+%Y%m%d%H%M')"
+          cat > _site/build-info.js <<EOF
+          window.SKCTBuildInfo = {
+            updatedAt: "${KST_NOW}",
+            version: "${VERSION}",
+            assetVersion: "${ASSET_VERSION}",
+            commitSha: "${GITHUB_SHA}"
+          };
+          EOF
+          find _site -name '*.html' -print0 | xargs -0 perl -0pi -e "s/build-info\\.js(?:\\?v=[0-9A-Za-z._-]+)?/build-info.js?v=${ASSET_VERSION}/g"
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - id: deployment
+        uses: actions/deploy-pages@v4

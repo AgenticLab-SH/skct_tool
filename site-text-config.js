@@ -1,0 +1,1089 @@
+(function initSiteTextConfig() {
+    const DEFAULT_SITE_TEXT_CONFIG = {
+        meta: {
+            title: 'SKCT 온라인 연습 도구 | OMR·타이머·채점·복기',
+            description: 'SKCT 연습용 OMR, 과목별 타이머, 메모장, 그림판, 계산기, 채점과 복기를 한 화면에서 사용하는 무료 온라인 연습 도구입니다.',
+            ogTitle: 'SKCT 온라인 연습 도구 | OMR·타이머·채점·복기',
+            ogDescription: '보유한 문제 자료를 보며 OMR, 시간 관리, 메모 도구와 채점·복기 흐름을 반복 연습합니다.',
+            twitterTitle: 'SKCT 온라인 연습 도구 | OMR·타이머·채점·복기',
+            twitterDescription: '보유한 문제 자료를 보며 OMR, 시간 관리, 메모 도구와 채점·복기 흐름을 반복 연습합니다.',
+            srTitle: 'SKCT 온라인 연습 도구',
+            srDescription: 'OMR, 타이머, 메모장, 그림판, 계산기를 한 화면에서 사용하는 SKCT 온라인 연습 도구입니다.'
+        },
+        sidebar: {
+            helpLabel: '사용\n안내',
+            noticeLabel: '공지',
+            omrLabelHtml: 'OMR',
+            settingsLabel: '설정',
+            advancedGuideLabelHtml: '고급<br>모드',
+            advancedModeLabelHtml: '고급<br>활용',
+            popupLabel: '팝업',
+            supportLabel: '운영\n후원',
+            utilityLabel: '더보기',
+            communityLabel: '채팅'
+        },
+        landing: {
+            eyebrow: 'SKCT PRACTICE',
+            title: '문제 풀이는 그대로.\n도구 사용은 더 익숙하게.',
+            lead: '가지고 있는 문제 PDF나 E-book을 띄우고, 무료 연습 도구로 시간 관리와 답안 마킹까지 함께 연습해 보세요.',
+            deviceHint: 'PC 화면에 최적화되어 있습니다. 연습할 때는 ‘팝업으로 열기’를 권장합니다.',
+            primaryButton: '연습 시작',
+            guideLink: '사용법 보기',
+            returnButton: '소개'
+        },
+        toolbar: {
+            popupButton: '팝업으로 열기',
+            totalTimeLabel: '전체 시간',
+            defaultPhaseName: '1과목 언어이해',
+            guidePrefix: '문항 가이드:',
+            playButtonTitle: '시작/일시정지',
+            nextSubjectButton: '다음',
+            resetSubjectButton: '이전 과목',
+            resetAllButton: '처음부터'
+        },
+        tools: {
+            omrCollapseButton: '◀ 접기',
+            omrModeLabel: '답안 마킹',
+            skipButton: '건너뛰기',
+            modeToggleButton: '📝 정답 입력',
+            scoreButton: '📊 채점',
+            detailStatsButton: '📋 과목별 통계',
+            statsDownloadButton: 'TXT 다운로드',
+            statsCsvExportButton: 'CSV 다운로드',
+            statsCsvImportButton: 'CSV 불러오기',
+            statsServerButton: '보관함 저장',
+            statsCsvServerButton: '보관함 저장',
+            statsCsvImportServerButton: '보관함 반영',
+            bulkImportButton: '링커리어 CBT 정오표 일괄입력',
+            resetButton: '🔄 초기화',
+            statSummaryLabel: '맞힘 / 응답 / 전체',
+            statRateAttemptedLabel: '정답률 (응답 기준)',
+            statRateOverallLabel: '정답률 (전체 기준)',
+            statSkippedLabel: '건너뜀',
+            statUnansweredLabel: '미응답',
+            notepadTab: '메모장',
+            canvasTab: '그림판',
+            clearToolButton: '지우기',
+            notepadPlaceholder: '메모 입력…',
+            calculatorPanelLabel: '계산기'
+        },
+        breakOverlay: {
+            title: '⏸ 쉬는 시간',
+            description: '다음 과목 시작 시 자동 전환됩니다.',
+            skipButton: '건너뛰기',
+            supportHint: '쉬는 시간입니다. 일반 모드에는 추후 중간 광고가 들어갈 수 있고, 고급 모드에서는 광고 없이 연습 흐름을 유지할 예정입니다.'
+        },
+        utilityModal: {
+            title: '⋯ 더보기',
+            descriptionHtml: '연습 밖 기능을 모아 두었습니다. 접속 현황, 커뮤니티, 운영 후원을 여기서 확인합니다.',
+            descriptionAdvancedHtml: '연습 밖 기능과 고급 전용 기능을 모아 두었습니다. 접속 현황, 커뮤니티, 기록 보관함, 확장 안내를 여기서 확인합니다.',
+            statsTitle: '접속 현황',
+            statsDescription: '오늘 방문 수와 최근 방문 기록을 확인합니다.',
+            communityTitle: '커뮤니티',
+            communityDescription: '질문, 후기, 개선 요청을 주고받습니다.',
+            archiveTitle: '기록 보관함',
+            archiveDescription: '고급 모드 전용. 회차 기록, 성장 그래프, 오답노트, 복기 메모를 저장하고 노션/엑셀용으로 내보냅니다.',
+            extensionTitle: '확장 안내',
+            extensionDescription: '고급 모드 전용 보조 연동 안내입니다. CBT 결과 표를 더 쉽게 옮기는 흐름을 설명합니다.'
+        },
+        statsModal: {
+            title: '🔥 접속 현황',
+            activeTitle: '오늘 방문',
+            activeHint: '하루에 한 번씩, 브라우저 단위로 집계됩니다.',
+            trendTitle: '📈 방문 추이',
+            totalTitle: '🗓️ 2026년 4월 4일 이후 누적 방문수',
+            totalHint: ''
+        },
+        noticeModal: {
+            title: '운영 상태 공지',
+            emptyBody: '현재 표시 중인 공지가 없습니다.',
+            updatedPrefix: '마지막 업데이트'
+        },
+        helpModal: {
+            title: '📘 사용 안내',
+            firstUseTitle: '사용 순서',
+            firstUseLead: '',
+            step1Title: '팝업으로 열기',
+            step1Body: '상단 타이머 오른쪽의 <b>팝업으로 열기</b>를 눌러 시작합니다.',
+            step2Title: '문제 풀기',
+            step2Body: '메모장과 그림판은 전환하여 사용합니다. 다음 문항으로 넘어가면 자동으로 지워집니다.',
+            step3Title: 'OMR 체크',
+            step3Body: '<b>연습 OMR</b>을 눌러 답을 선택합니다. 답을 누르면 다음 문항으로 이동합니다. 문항을 건너뛰기도 가능합니다.',
+            step4Title: '채점',
+            step4Body: '다 풀면 <b>OMR 하단 정답 입력</b>으로 정답을 넣고 <b>채점 및 통계</b>를 누릅니다.',
+            exampleSectionTitle: '📷 추천 화면 배치',
+            pdfTitle: 'PDF 활용',
+            pdfCaption: '좌측에 PDF를 띄우고, 우측에서 타이머·메모장과 함께 연습합니다.',
+            omrTitle: 'OMR 활용',
+            omrCaption: '답 체크·채점이 필요할 때 OMR 패널을 열어 사용합니다.',
+            advancedSectionTitle: '🔒 고급 모드 안내',
+            advancedSectionLeadHtml: '일반 모드는 기능 흐름을 실제와 유사하게 맞춘 연습 환경입니다. 고급 모드는 창 폭, 우측 여백, 복기 버튼까지 더 실제 배치에 가깝게 맞춥니다.',
+            advancedLinkButton: '고급 모드 안내 보기',
+            referenceBlockHtml: '<strong style="color:#1e293b;">[핵심 참고]</strong><br>\n1. <strong>실제 시험장 병행 사용 불가</strong>: 본 도구는 연습용이며 실제 온라인 SKCT 시험 창과 함께 띄워 쓸 수 없습니다.<br>\n2. <strong>실전 감각용 모의 환경</strong>: 타이머, 메모장, 계산기, 화면 비율을 실제 흐름에 가깝게 맞춘 연습 도구입니다.<br>\n3. <strong>OMR은 채점 편의 기능</strong>: 실제 시험에는 OMR이 없고, 문제 화면에서 바로 답을 체크합니다.',
+            featureSectionTitle: '핵심 버튼 위치',
+            sidebarFeatureHtml: '<strong>왼쪽 메뉴에서 먼저 볼 것</strong>\n<p><b>연습 OMR</b>: 답 체크, 정답 입력, 채점을 하는 곳</p>\n<p><b>설정</b>: 시간, 연습/실전 모드, 화면 비율을 바꾸는 곳</p>\n<p><b>팝업</b>: 실제 시험처럼 좁은 폭으로 따로 여는 곳</p>',
+            timerFeatureHtml: '<strong>풀이 중에는 타이머만 확인</strong>\n<p>전체 시간과 과목 시간이 같이 움직입니다. 과목 전환과 쉬는 시간은 자동으로 이어집니다.</p>',
+            practiceFeatureHtml: '<strong>메모장과 그림판은 임시 풀이용</strong>\n<p>문항을 넘기면 풀이 흔적이 정리됩니다. 오래 보관하는 노트가 아니라 실전처럼 짧게 쓰는 공간입니다.</p>',
+            calculatorFeatureHtml: '<strong>계산기는 기본 연산만</strong>\n<p>숫자와 사칙연산 중심으로 빠르게 계산하는 용도입니다. 복잡한 공학 계산 기능은 넣지 않았습니다.</p>'
+        },
+        settingsModal: {
+            title: '⚙ 설정',
+            practiceModeTitle: '🎯 풀이 방식',
+            practiceModeHint: '<div><strong>자유 풀이 모드</strong></div><div>기본 세팅은 실제 시험과 같이 과목이 시간에 맞춰 전환됩니다.</div><div>고급 모드에서 자유 풀이 모드를 켜면 시간 제한과 전환 없이 연습할 수 있습니다.</div>',
+            scoringTitle: '📊 건너뛴 문항',
+            scoringHint: 'OFF = 건너뛴 문항 별도 집계\nON = 건너뛴 문항도 오답 처리',
+            timerTitle: '🕒 타이머',
+            guideTitle: '⏱️ 시간 가이드',
+            layoutTitle: '📐 화면 비율',
+            toolTitle: '🧰 도구'
+        },
+        advancedGuide: {
+            title: '🔒 고급 모드',
+            loginTitle: '고급모드 로그인하기',
+            loginBody: '승인된 로그인 ID 또는 신청 이메일과 비밀번호로 고급 모드를 엽니다. 링크만으로는 열리지 않고, 이 브라우저에서 라이선스가 확인되어야 합니다.',
+            accessButton: '고급 모드 열기',
+            accessIdPlaceholder: '신청 이메일',
+            accessPasswordPlaceholder: '비밀번호',
+            featureTitle: '고급 모드에서 편해지는 기능',
+            featureCard1Html: '<strong style="display:block; color:#0f172a; margin-bottom:4px;">실전 배치</strong>\n팝업 폭과 우측 여백을 실제 화면에 더 가깝게 맞춰, 환경에 대해 익숙해질 수 있습니다.',
+            featureCard2Html: '<strong style="display:block; color:#0f172a; margin-bottom:4px;">타이머 제어</strong>\n이전 과목과 처음부터 버튼으로 필요한 범위만 다시 풀 수 있어 원하는 대로 활용이 가능합니다.',
+            featureCard3Html: '<strong style="display:block; color:#0f172a; margin-bottom:4px;">채점 후 복기</strong>\n정답을 하나씩 입력하지 않아도, CBT 답지 표를 붙여넣어 한 번에 채점할 수 있습니다. 과목별 통계, 문항별 시간, CBT 정답률까지 함께 보며 쉽게 복기하고 시간을 아낄 수 있습니다.',
+            featureCard4Html: '<strong style="display:block; color:#0f172a; margin-bottom:4px;">기록 보관함</strong>\n회차 기록, 성장 그래프, 오답노트, 복기 메모를 개인 서버 보관함에 바로 저장하고, 필요하면 CSV나 복사용 표로 내보낼 수 있습니다.',
+            featureAccessHtml: '<strong>실제와 가까운 비율과 배치로 환경에 익숙해질 수 있습니다.</strong><br>채점, 복기, 기록 등의 기능을 쉽게 할 수 있게 하여 시간을 아낄 수 있습니다.',
+            planTitle: '신청 순서 1 - 이용권 안내',
+            planIntro: '채점과 복기, 기록 정리에 드는 시간을 줄이는 데 초점을 맞춘 이용권입니다. 필수 연습 기능은 계속 무료로 유지하고, 고급 기능은 시간을 아끼고 싶은 분들이 선택해서 사용할 수 있게 구성했습니다.',
+            donateButton: '이용권 결제/후원하기',
+            flowHtml: '이용권 선택 → 신청서 입력 → 후원 내용 복사 → 이용권 결제/후원하기 → 신청하기',
+            formTitle: '신청 순서 2 - 신청서 작성',
+            formDescription: '이메일, 이용 시작일, 비밀번호를 입력하면 후원 내용이 자동으로 만들어집니다. 후원 내용 복사를 눌러 복사된 텍스트를 후원 사이트에서 입력해주시면 승인처리가 됩니다. (새벽 시간에는 승인이 지연될 수 있습니다.) 승인이 되면, 신청하신 내용으로 고급모드에 로그인할 수 있습니다.',
+            passwordHint: '이 비밀번호는 <strong>고급 로그인</strong>에 사용됩니다. 로그인 ID 또는 신청 이메일과 함께 기억해 주세요.',
+            submitButton: '신청하기',
+            lookupTitle: '',
+            lookupDescription: '',
+            lookupButton: '조회',
+            lookupIdPlaceholder: '신청 이메일',
+            lookupPasswordPlaceholder: '신청 비밀번호',
+            contactHtml: '문의: <strong>zhdlsqpdj@gmail.com</strong>'
+        },
+        advancedFeature: {
+            title: '✨ 고급 활용',
+            introHtml: '',
+            summaryHtml: '<strong>정답 입력</strong> → <strong>링커리어 CBT 정오표 일괄입력</strong> → <strong>채점</strong> → <strong>과목별 통계·저장</strong>',
+            planHtml: '',
+            image1Title: '1. 상단 상태와 실제환경 여백',
+            image1Caption: '고급 ON, 로그인 상태, 이용권 정보를 확인하고 실제 화면에 가까운 우측 여백으로 연습합니다.',
+            image2Title: '2. OMR 아래 복기 버튼',
+            image2Caption: '정답 입력, 링커리어 CBT 정오표 일괄입력, 채점, 통계 다운로드와 보관함 저장이 OMR 아래 흐름에 모여 있습니다.',
+            flowButton: '신청 안내',
+            statsButton: 'TXT 다운로드',
+            feature1Html: '<strong>1. 채점 결과 확인</strong><br>응답 수, 미응답 수, 정답 수, 정답률을 확인할 수 있습니다.',
+            feature2Html: '<strong>2. 과목별 약점 확인</strong><br>과목별 상세 통계로 어느 영역이 약한 지 보기 쉽게 해석할 수 있습니다.',
+            feature3Html: '<strong>3. 기록 저장</strong><br>문항별 통계와 성장 기록은 파일로 내려받거나, 기록 보관함에 저장해 다시 확인할 수 있습니다.',
+            feature4Html: '<strong>4. 반복 연습 준비</strong><br>링커리어 CBT 정오표를 붙여넣어 정답을 빠르게 적용하고, 이전 과목/처음부터 버튼과 문항 가이드로 다시 연습할 수 있습니다.'
+        },
+        advancedMode: {
+            statusTitle: '고급 모드 상태',
+            statusLeadHtml: '고급 모드가 열린 브라우저입니다. 로그인, 이용권, 보관함, 실제환경 여백 상태를 여기서 확인합니다.',
+            labelState: '상태',
+            labelLogin: '로그인',
+            labelExpiry: '만료',
+            labelPlan: '이용권',
+            labelArchive: '기록 보관함',
+            labelRail: '실제환경 여백',
+            valueStateActive: '활성',
+            valueStateInactive: '비활성',
+            valueArchiveReady: '사용 가능',
+            valueArchiveBlocked: '잠김',
+            valueRailReady: '적용됨',
+            valueRailBlocked: '대기',
+            valuePermanentPlan: '영구 이용권',
+            valueLoginFallback: '확인 전',
+            valueExpiryFallback: '확인 전',
+            footnoteHtml: '기록 보관함은 <strong>OMR 아래 버튼</strong>에서 바로 열 수 있고, 고급 모드에서 열린 창이면 자동으로 연결됩니다.',
+            guideButton: '고급 활용 보기',
+            archiveButton: '기록 보관함',
+            coachTitle: '복기 버튼 순서',
+            coachLeadHtml: '풀이 후에는 아래 순서대로 누르면 됩니다.',
+            coachStep1Html: '<strong>1. 정답 입력</strong><br>답안 체크가 끝나면 실제 정답을 넣습니다.',
+            coachStep2Html: '<strong>2. 채점</strong><br>맞은 수, 정답률, 건너뜀, 미응답을 먼저 확인합니다.',
+            coachStep3Html: '<strong>3. 복기 저장</strong><br>문항별 통계와 성장 기록을 다운로드하거나 기록 보관함에 저장합니다.',
+            coachHintHtml: '<strong>이전 과목</strong>은 현재 과목 답안을 지우고 이전 과목으로 돌아가며, <strong>처음부터</strong>는 전체 답안을 지우고 다시 시작합니다.',
+            coachGuideButton: '전체 흐름 보기'
+        },
+        archivePage: {
+            metaTitle: '기록 보관함 | SKCT Tool',
+            metaDescription: '고급 모드 이용자를 위한 기록 보관함입니다. 회차 기록, 성장 그래프, 오답노트, 복기 메모를 계정별로 저장합니다.',
+            heroEyebrow: 'Advanced Study Library',
+            heroTitle: '기록 보관함',
+            heroCopyHtml: '고급 모드 전용 보관함입니다. 채점한 회차 기록, 성장 그래프, 오답노트, 복기 메모를 계정별로 저장하고 다시 확인할 수 있습니다.',
+            backButton: '메인으로',
+            gateTitle: '고급 모드 인증이 필요합니다',
+            gateBodyHtml: '이 페이지는 <strong>고급 모드 전용</strong>입니다. 메인 화면의 <strong>고급 모드</strong>에서 라이선스를 먼저 확인한 뒤 다시 들어와 주세요.',
+            gateButton: '메인으로',
+            authLoginTab: '로그인',
+            authRegisterTab: '회원가입',
+            authEmailLabel: '이메일',
+            authPasswordLabel: '비밀번호',
+            authEmailPlaceholder: 'example@email.com',
+            authPasswordPlaceholder: '비밀번호 6자 이상',
+            authLoginTitle: '기록 보관함 로그인',
+            authLoginDescription: '고급 모드 창에서 열면 자동으로 보관함에 연결됩니다. 자동 확인이 실패한 경우에만 신청 이메일과 비밀번호로 다시 확인해 주세요.',
+            authRegisterTitle: '보관함 계정 만들기',
+            authRegisterDescription: '처음이라면 이메일과 비밀번호로 계정을 만들어 주세요.',
+            authLoginButton: '로그인',
+            authRegisterButton: '가입',
+            authFootnoteHtml: '기록 보관함은 고급 모드 창에서 열었을 때만 사용할 수 있습니다. 저장해 둔 링크로 직접 접속하면 다시 고급 모드에서 열어야 합니다.',
+            workspaceTitle: '저장된 기록',
+            workspaceCopyHtml: '고급 모드에서 저장한 회차 기록, 성장 그래프, 오답노트가 한곳에 모입니다. 필요한 기록은 노션용 표나 엑셀용 CSV로 내보낼 수 있습니다.',
+            logoutButton: '로그아웃'
+        },
+        messages: {
+            advancedWelcomeTitle: '환영합니다',
+            advancedWelcomeBody: '현재 창에서 고급 모드가 활성화되었습니다.\n\n고급 모드 기능\n- 계정 상태: 만료일, 남은 시간, 아낀 시간 확인\n- 고급 활용: 정답 붙여넣기, CBT 정답률, 과목별 상세 통계\n- 기록 보관함: 회차 기록과 복기 자료 저장\n- OMR 개선: 폭과 여백, 문항별 시간 가이드 적용\n\n{닉네임}님, 이용해주셔서 감사합니다.\n준비에 도움이 되셨으면 좋겠습니다.\n불편한 점은 언제든지 zhdlsqpdj@gmail.com으로 보내주세요.',
+            advancedLoading: '고급 모드 정보를 확인하는 중…',
+            advancedCooldown: '로그인 정보를 여러 번 틀렸습니다. {seconds}초 후 다시 시도해 주세요.',
+            advancedUnlocked: '신청하신 이메일과 비밀번호로 로그인이 가능합니다. (만료: {expiry})',
+            advancedUnlockedPermanent: '신청하신 이메일과 비밀번호로 로그인이 가능합니다.',
+            advancedAvailable: '신청 이메일 또는 기존 로그인 ID와 비밀번호를 입력해 주세요.',
+            advancedNone: '아직 이용권이 없습니다. 아래에서 신청해 주세요.',
+            advancedConfigMissing: '서버 설정이 아직 준비되지 않았습니다. 잠시 후 다시 시도해 주세요.',
+            advancedNeedConfig: '정보를 불러오는 중입니다. 잠시 후 다시 시도해 주세요.',
+            advancedRetryAfter: '{seconds}초 후 다시 시도해 주세요.',
+            advancedChecking: '인증 정보를 확인하는 중…',
+            advancedOpening: '고급 모드를 여는 중…',
+            advancedNeedRelogin: '인증이 만료되었습니다. 다시 로그인해 주세요.',
+            advancedReuse: '신청하신 이메일과 비밀번호로 고급 모드를 다시 엽니다.',
+            archiveAccessChecking: '고급 모드 인증을 확인하는 중…',
+            archiveAccessDenied: '기록 보관함은 고급 모드 전용입니다. 메인 화면에서 고급 모드를 먼저 열어 주세요.',
+            archiveAuthRequired: '이메일과 비밀번호를 입력해 주세요.',
+            archiveAuthRegistering: '계정을 만드는 중…',
+            archiveAuthLoggingIn: '로그인 중…',
+            archiveAuthRegisterSuccess: '가입 완료! 이제 자료를 저장할 수 있습니다.',
+            archiveAuthLoginSuccess: '로그인되었습니다.',
+            archiveAuthInvalidCredential: '이메일 또는 비밀번호가 맞지 않습니다.',
+            archiveAuthEmailInUse: '이미 가입된 이메일입니다. 로그인 탭으로 전환해 주세요.',
+            archiveAuthWeakPassword: '비밀번호는 6자 이상이어야 합니다.',
+            archiveAuthOperationNotAllowed: '현재 회원가입이 비활성화되어 있습니다. 관리자에게 문의해 주세요.',
+            archiveAuthRegisterError: '가입 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.',
+            archiveAuthLoginError: '로그인 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.',
+            archiveGuestLabel: '로그인해 주세요.',
+            archiveSessionSuffix: '세션 로그인',
+            manualClosed: '현재 신청을 받지 않고 있습니다.',
+            manualConfigNotReady: '서버 설정이 준비되지 않았습니다. 잠시 후 다시 시도해 주세요.',
+            manualNoPlan: '아직 신청 가능한 이용권이 없습니다.',
+            manualRequiredFields: '이메일, 이용 시작일, 비밀번호를 모두 입력해 주세요.',
+            manualInvalidEmail: '올바른 이메일 형식을 입력해 주세요.',
+            manualPasswordShort: '비밀번호는 6자 이상이어야 합니다.',
+            manualPasswordMismatch: '비밀번호가 서로 다릅니다.',
+            manualSubmitSuccess: '신청이 완료되었습니다. 승인 메일을 기다려 주세요.',
+            manualSubmitError: '신청 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.',
+            manualLookupRequired: '이메일과 비밀번호를 입력해 주세요.',
+            manualLookupEmailOnly: '조회는 신청할 때 사용한 이메일로만 가능합니다.',
+            manualLookupError: '조회 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.',
+            manualLookupNotFound: '해당 이메일로 된 신청을 찾지 못했습니다. 이메일과 비밀번호를 다시 확인해 주세요.',
+            manualLookupDecryptError: '비밀번호가 맞지 않습니다. 다시 확인해 주세요.'
+        }
+    };
+
+    const LEGACY_SITE_TEXT_DEFAULTS = {
+        'meta.srTitle': ['SKCT 연습 툴 - SKCT 실제화면과 동일한 온라인 SKCT 환경 가이드'],
+        'statsModal.totalHint': ['그래프는 최근 기간만 표시하고, 누적 방문수는 2026년 4월 4일 이후 기준입니다.'],
+        'meta.srDescription': ["본 웹사이트는 SK그룹 인적성 검사를 대비하기 위한 완벽한 무료 SKCT 연습 애플리케이션입니다. SKCT 실제 환경, SKCT 실제화면 인터페이스, 그리고 SKCT 크기 체감까지 고려하여 최대한 정밀하게 구현하였습니다. SKCT 모의고사 인적성 테스트를 진행할 때 필수적인 'SKCT 타이머', 'SKCT 화면 계산기', 'SKCT 메모장', 'SKCT 그림판', 'SKCT 실제 OMR'의 모든 기능을 하나의 SKCT 툴 화면 안에서 제공합니다. 실제 시험과 동일한 감각으로 SKCT 모의 연습을 철저히 준비하세요!"],
+        'toolbar.popupButton': ['먼저 팝업으로 열기', '화면 더 줄이기', '팝업 연습'],
+        'helpModal.title': ['📖 사용 가이드', '📘 기본 사용 가이드', '📘 일반 사용 가이드', '📘 일반 모드 빠른 안내'],
+        'helpModal.firstUseTitle': ['처음이면 이 순서만 따라 하세요'],
+        'helpModal.firstUseLead': ['먼저 팝업으로 열고, 문제를 풀면서 필요한 기능만 씁니다.', '문제는 옆에 띄우고, 이 도구로 시간·메모·답 체크·채점만 합니다.'],
+        'helpModal.step1Title': ['문제 풀기'],
+        'helpModal.step1Body': ['상단 타이머 오른쪽의 <b>먼저 팝업으로 열기</b>를 누릅니다.', 'PDF/교재/CBT를 옆에 띄우고 타이머를 시작합니다. 필요하면 메모장·계산기를 씁니다.'],
+        'helpModal.step2Title': ['OMR에 답 체크'],
+        'helpModal.step2Body': ['메모장과 그림판은 탭으로 전환해 씁니다. 다음 문항으로 넘어가면 자동으로 지워집니다.', '왼쪽 <b>연습 OMR</b>을 열고 1~5번 답을 누릅니다. 답을 누르면 다음 문항으로 넘어갑니다.'],
+        'helpModal.step3Title': ['정답 입력 후 채점'],
+        'helpModal.step3Body': ['<b>연습 OMR</b>에서 답을 누릅니다. 답을 누르면 다음 문항으로 이동합니다.', '다 풀면 <b>정답 입력</b>으로 실제 정답을 넣고 <b>채점 및 통계</b>를 누릅니다.'],
+        'helpModal.step4Body': ['다 풀면 <b>정답 입력</b>으로 정답을 넣고 <b>채점 및 통계</b>를 누릅니다.'],
+        'helpModal.exampleSectionTitle': ['📷 추천 배치 예시', '📷 실제 툴 사용 권장 예시', '📷 화면 배치 예시'],
+        'helpModal.pdfCaption': ['좌측에 PDF나 e-book을 띄우고 예시와 비슷한 비율로 맞춰 연습하면 됩니다.'],
+        'helpModal.omrCaption': ['정답 마킹과 채점을 위해 OMR을 펼쳐두고 연습할 수 있습니다.'],
+        'helpModal.referenceBlockHtml': ['<strong style="color:#1e293b;">[참고사항]</strong><br>\n1. <strong>실제 시험장 사용 불가</strong>: 실제 온라인 SKCT 시험은 전용 보안 프로그램에서 진행되므로 본 연습 툴을 병행하여 띄워둘 수 없습니다.<br>\n2. <strong>유사 환경 구현</strong>: 본 도구는 실제 시험의 타이머 작동 방식, 리셋되는 메모장, 제한적 계산기 등 UI/UX를 최대한 비슷하게 체험하도록 제작한 모의 연습 도구입니다.<br>\n3. <strong>OMR은 연습 전용</strong>: 실제 시험에는 OMR이 없으며 문제 에 직접 정답을 체크하는 방식입니다. 본 서비스의 OMR 기능은 여러분의 채점 편의를 위해 가상으로 추가된 기능입니다.'],
+        'helpModal.featureSectionTitle': ['🗺️ 주요 기능', '🗺️ 기능 안내', '🗺️ 일반 모드 핵심 기능', '🗺️ 일반 모드 핵심 흐름'],
+        'helpModal.sidebarFeatureHtml': [
+            '<div style="position:absolute; top:-10px; left:10px; background:#1e293b; padding:0 5px; color:#3b82f6; font-weight:bold;">좌측 사이드바</div>\n<p>📖 <strong>GUIDE</strong> — 업데이트 공지, 사용 예시, 기능 설명 확인</p>\n<p>📝 <strong>연습용 OMR</strong> — 답안 마킹, 채점, 통계 확인</p>\n<p>⚙ <strong>설정</strong> — 실전/연습 모드, 타이머, 가이드 시간, 화면 비율 조정</p>\n<p>↗ <strong>화면 더 줄이기</strong> — 팝업으로 더 좁은 실전 화면 구성</p>\n<p>🔥 <strong>접속 현황</strong> — 일간, 주간, 월간 방문 추이</p>\n<p>💬 <strong>게시판</strong> — 공지, 질문·개선, 팁·후기, FAQ</p>\n<p>☕ <strong>커피후원</strong> — 운영 후원과 문의 링크</p>\n<hr style="border-color:#334155; margin: 8px 0;">\n<p style="color:#93c5fd;">OMR에서 답 마킹 → <strong>자동 다음 문제 이동</strong></p>\n<p style="color:#93c5fd;">[문항 건너뛰기] = 현재 문항을 미응답 상태로 넘김</p>\n<p style="color:#93c5fd;">[정답 입력 모드] = 채점용 정답 입력 모드 전환, 타이머 자동 정지</p>\n<p style="color:#93c5fd;">[채점 및 통계 확인] = 과목별 오답, 미응답, 소요 시간 확인</p>',
+            '<div style="position:absolute; top:-10px; left:10px; background:#1e293b; padding:0 5px; color:#3b82f6; font-weight:bold;">좌측 사이드바</div>\n<p>📘 <strong>도움말</strong> — 사용 예시, 공지, 핵심 기능 설명 확인</p>\n<p>📝 <strong>연습 OMR</strong> — 답안 마킹, 채점, 통계 확인</p>\n<p>⚙ <strong>설정</strong> — 실전/연습 모드, 타이머, 화면 비율 조정</p>\n<p>🔒 <strong>고급 안내</strong> — 신청, 승인 확인, 고급 기능 흐름 확인</p>\n<p>↗ <strong>팝업</strong> — 더 좁은 실전 화면으로 연습</p>\n<p>⋯ <strong>더보기</strong> — 활성 세션, 커뮤니티, 운영 후원 열기</p>\n<hr style="border-color:#334155; margin: 8px 0;">\n<p style="color:#93c5fd;">고급 모드에서는 <strong>기록 보관함</strong>이 더보기 안에 추가됩니다.</p>\n<p style="color:#93c5fd;">OMR에서 답 마킹 → <strong>자동 다음 문제 이동</strong></p>\n<p style="color:#93c5fd;">[문항 건너뛰기] = 현재 문항을 미응답 상태로 넘김</p>\n<p style="color:#93c5fd;">[정답 입력 모드] = 채점용 정답 입력 모드 전환, 타이머 자동 정지</p>\n<p style="color:#93c5fd;">[채점 및 통계 확인] = 과목별 오답, 미응답, 소요 시간 확인</p>',
+            '<div style="position:absolute; top:-10px; left:10px; background:#1e293b; padding:0 5px; color:#3b82f6; font-weight:bold;">좌측 사이드바</div>\n<p>📘 <strong>가이드</strong> — 일반 모드 기준과 기본 흐름 확인</p>\n<p>📝 <strong>연습 OMR</strong> — 답안 체크, 채점, 결과 확인</p>\n<p>⚙ <strong>설정</strong> — 모드, 시간, 화면 비율 조정</p>\n<p>🔒 <strong>고급 안내</strong> — 신청, 승인, 추가 기능 확인</p>\n<p>↗ <strong>팝업</strong> — 더 좁은 실전 폭으로 열기</p>\n<p>⋯ <strong>더보기</strong> — 활성 세션, 커뮤니티, 문서, 후원</p>\n<hr style="border-color:#334155; margin: 8px 0;">\n<p style="color:#93c5fd;"><strong>기본 순서</strong>: 답안 체크 → 정답 입력 모드 → 채점 및 통계</p>\n<p style="color:#93c5fd;">OMR 마킹 후에는 <strong>자동으로 다음 문항</strong>으로 이동합니다.</p>\n<p style="color:#93c5fd;">고급 전용 버튼과 기록 보관함은 이 창이 아니라 <strong>고급 안내</strong>에서 봅니다.</p>',
+            '<div style="position:absolute; top:-10px; left:10px; background:#1e293b; padding:0 5px; color:#3b82f6; font-weight:bold;">좌측 사이드바</div>\n<p>📘 <strong>안내</strong> — 사용법과 기본 안내</p>\n<p>📝 <strong>연습 OMR</strong> — 답 체크와 채점</p>\n<p>⚙ <strong>설정</strong> — 시간, 모드, 화면 비율 조정</p>\n<p>🔒 <strong>고급 모드</strong> — 신청과 진입</p>\n<p>↗ <strong>팝업</strong> — 실전 폭으로 열기</p>\n<p>⋯ <strong>더보기</strong> — 접속 현황, 커뮤니티, 후원</p>\n<hr style="border-color:#334155; margin: 8px 0;"/>\n<p style="color:#93c5fd;"><strong>핵심</strong>: 답 체크 → 정답 입력 → 채점</p>\n<p style="color:#93c5fd;">각 창의 <strong>?</strong>에서 상세 설명을 확인할 수 있습니다.</p>'
+        ],
+        'helpModal.advancedSectionTitle': ['🔒 고급 기능은 별도 버튼에서 확인', '🧭 고급 모드 활용 가이드', '🔒 고급 안내는 별도로 봅니다', '🔒 고급 설명은 따로 봅니다'],
+        'helpModal.advancedSectionLeadHtml': [
+            '이 가이드는 <strong>일반 모드 기준</strong>으로 정리되어 있습니다. 복기용 추가 버튼, 기록 보관함, 우측 실제환경 여백처럼 고급 모드에서만 열리는 기능은 좌측 <strong>고급 기능</strong> 버튼에서 따로 확인해 주세요.',
+            '고급 모드에서는 <strong>복기 버튼</strong>, <strong>기록 보관함</strong>, <strong>실제환경 우측 여백</strong>이 함께 열립니다. 아래 두 장만 먼저 보면 어디를 눌러야 할지 빠르게 감이 잡힙니다.',
+            '이 창은 <strong>일반 모드</strong>와 기본 연습 흐름만 설명합니다. 신청, 승인 확인, 추가 버튼, 기록 보관함, 우측 실제환경 여백은 <strong>고급 안내</strong>와 <strong>고급 활용</strong>에서 따로 확인해 주세요.'
+        ],
+        'helpModal.advancedLinkButton': ['고급 기능 보기', '고급 안내 열기'],
+        'helpModal.timerFeatureHtml': [
+            '<strong>🕒 다중 페이즈 타이머</strong><br>\n전체 시간, 과목 시간, 가이드 시간을 <strong>한 화면에서 동시 확인</strong><br>\n<span style="color:#c4b5fd;">과목 → 쉬는시간 자동 전환, 설정에서 시간 조절 가능</span>',
+            '<strong>🕒 다중 페이즈 타이머</strong><br>\n전체·과목 시간을 동시에 확인합니다.<br>\n<span style="color:#c4b5fd;">과목 전환과 쉬는 시간은 자동입니다.</span>'
+        ],
+        'helpModal.practiceFeatureHtml': [
+            '<strong>✏️ 연습장 (메모장 & 그림판)</strong><br>\n다음 문제 넘어가면 <strong>자동 초기화</strong><br>\n<span style="color:#fde68a;">문제 풀이 흔적이 남지 않도록 실제 흐름에 맞춰 동작</span>',
+            '<strong>✏️ 연습장 (메모장 & 그림판)</strong><br>\n문항 이동 시 자동 초기화됩니다.<br>\n<span style="color:#fde68a;">실전처럼 짧게 메모하세요.</span>'
+        ],
+        'helpModal.calculatorFeatureHtml': [
+            '<strong>🧮 키보드 사용 가능한 계산기</strong><br>\n숫자/연산 입력과 버튼 조작 지원<br>\n<span style="color:#86efac;">복잡한 공학 기능 없이 실전형 제한 계산기</span>',
+            '<strong>🧮 실전형 계산기</strong><br>\n기본 연산과 키보드 입력을 지원합니다.<br>\n<span style="color:#86efac;">실전형 제한 계산기입니다.</span>'
+        ],
+        'utilityModal.descriptionHtml': [
+            '핵심 연습 밖 기능만 모아 둔 공간입니다.',
+            '핵심 연습 흐름 밖의 기능을 한곳에 모았습니다. 일반 모드에서는 활성 세션 확인, 커뮤니티, 운영 후원을 여기서 엽니다.',
+            '핵심 연습 흐름 밖의 기능을 한곳에 모았습니다. 일반 모드에서는 활성 세션 확인, 커뮤니티, 운영 후원을 여기서 엽니다.'
+        ],
+        'utilityModal.descriptionAdvancedHtml': [
+            '핵심 연습 밖 기능과 보관함을 한곳에서 엽니다.',
+            '핵심 연습 흐름 밖의 기능을 한곳에 모았습니다. 고급 모드에서는 활성 세션 확인, 커뮤니티, 기록 보관함, 운영 후원을 여기서 엽니다.',
+            '핵심 연습 흐름 밖의 기능을 한곳에 모았습니다. 고급 모드에서는 활성 세션 확인, 커뮤니티, 기록 보관함, 확장 안내, 운영 후원을 여기서 엽니다.'
+        ],
+        'utilityModal.archiveDescription': ['고급 모드 전용 기능입니다. 로그인한 계정별로 회차 기록, 성장 그래프, 오답노트, 복기 메모를 저장하고 다시 확인합니다.', '고급 모드 전용입니다. 기록을 저장하려면 보관함 로그인으로 다시 확인합니다.'],
+        'advancedFeature.image1Title': ['1. 상태 바와 우측 실제환경 여백부터 확인', '1. 상단 상태와 우측 여백 확인'],
+        'advancedFeature.image1Caption': ['상단 상태 바에서는 이메일, 만료 시각, 기록 보관함 가능 여부를 바로 확인할 수 있고, 우측에는 실제환경 감각을 맞추는 버튼 자리와 여백이 함께 복원됩니다.'],
+        'advancedFeature.image2Title': ['2. OMR 아래 복기 버튼 흐름 따라가기', '2. OMR 아래 복기 버튼 익히기'],
+        'advancedFeature.image2Caption': ['정답 입력 모드, 채점, 상세 통계, 정오표 일괄입력은 모두 OMR 아래에 모여 있습니다. 순서만 익히면 일반 모드보다 복기 속도가 크게 빨라집니다.'],
+        'advancedGuide.title': ['🔒 고급 이용 안내', '🔒 고급 기능 안내', '🔒 고급 기능', '🔒 고급 모드 신청 · 진입 안내', '🔒 고급 모드 신청 · 진입'],
+        'advancedGuide.loginTitle': ['1. 신청 이메일과 비밀번호로 로그인', '1. 승인된 신청으로 고급 모드 열기', '1. 승인된 이용권으로 바로 열기', '1. 이미 승인된 경우 바로 열기', '1. 승인된 경우 바로 열기'],
+        'advancedGuide.loginBody': [
+            '승인된 로그인 ID 또는 신청 이메일과 비밀번호를 입력하면 이 브라우저에 라이선스를 저장하고 바로 고급 모드로 들어갈 수 있습니다.',
+            '승인 후에는 로그인 ID 또는 신청 이메일과 비밀번호로 라이선스를 확인하고, 바로 고급 모드로 들어갈 수 있습니다.',
+            '승인 후에는 로그인 ID 또는 신청 이메일과 비밀번호로 라이선스를 확인하고, 같은 브라우저에서 기록 보관함 접근도 함께 열 수 있습니다.',
+            '승인 후에는 로그인 ID 또는 신청 이메일과 비밀번호로 라이선스를 확인하고, 바로 고급 모드로 들어갈 수 있습니다. 같은 브라우저에서 기록 보관함 접근도 함께 열립니다. 신청번호는 로그인에 쓰지 않습니다.',
+            '로그인 ID 또는 신청 이메일과 비밀번호를 입력하면 바로 고급 모드로 들어갑니다. 신청번호는 로그인에 쓰지 않습니다.'
+        ],
+        'advancedGuide.accessIdPlaceholder': ['로그인 ID 또는 신청 이메일', '승인 이메일'],
+        'advancedGuide.featureTitle': ['고급 모드에서 편해지는 기능', '고급 모드로 추가되는 편의 기능'],
+        'advancedGuide.featureCard1Html': ['<strong style="display:block; color:#0f172a; margin-bottom:4px;">실전 배치</strong>\n우측 여백과 창 배치를 실제와 유사하게 맞춰 팝업 연습의 몰입감을 높입니다.', '<strong style="display:block; color:#0f172a; margin-bottom:4px;">실전 배치</strong>\n팝업 폭과 우측 여백을 실제 화면에 더 가깝게 맞춰, 문제 풀이 공간 감각을 유지합니다.'],
+        'advancedGuide.featureCard2Html': ['<strong style="display:block; color:#0f172a; margin-bottom:4px;">빠른 반복 제어</strong>\n과목 건너뛰기, 과목 초기화, 전체 초기화로 다시 풀 구간을 빠르게 정리합니다.', '<strong style="display:block; color:#0f172a; margin-bottom:4px;">타이머 제어</strong>\n다음 과목 이동, 현재 과목 초기화, 전체 초기화로 같은 세트를 빠르게 다시 돌립니다.', '<strong style="display:block; color:#0f172a; margin-bottom:4px;">타이머 제어</strong>\n다음 과목 이동, 현재 과목 초기화, 전체 초기화로 원하는 대로 활용이 가능합니다.'],
+        'advancedGuide.featureCard3Html': ['<strong style="display:block; color:#0f172a; margin-bottom:4px;">채점 후 복기</strong>\n정답을 하나씩 입력하지 않아도, CBT 답지 표를 붙여넣어 한 번에 채점할 수 있습니다. 과목별 통계, 문항별 시간, CBT 정답률까지 함께 보며 쉽게 복기하고 시간을 아낄 수 있습니다.', '<strong style="display:block; color:#0f172a; margin-bottom:4px;">복기 자료 정리</strong>\n과목별 통계, 문항별 시간, 정오표 일괄입력으로 틀린 흐름을 더 쉽게 모읍니다.', '<strong style="display:block; color:#0f172a; margin-bottom:4px;">채점 후 복기</strong>\n과목별 통계, 문항별 시간, 정오표 입력으로 틀린 흐름을 바로 확인합니다.'],
+        'advancedGuide.featureCard4Html': ['<strong style="display:block; color:#0f172a; margin-bottom:4px;">기록 보관함</strong>\n회차 기록, 성장 그래프, 오답노트, 복기 메모를 계정 기준으로 저장하고 다시 확인합니다.', '<strong style="display:block; color:#0f172a; margin-bottom:4px;">기록 보관함</strong>\n회차 기록, 성장 그래프, 오답노트, 복기 메모를 계정 기준으로 저장하고 다시 봅니다.', '<strong style="display:block; color:#0f172a; margin-bottom:4px;">기록 보관함</strong>\n회차 기록, 성장 그래프, 오답노트, 복기 메모를 개인 서버 보관함에 저장해두고 볼 수 있어, 별도로 노션이나 엑셀로 관리할 필요가 없습니다.'],
+        'advancedGuide.featureAccessHtml': [
+            '<strong>실전 배치와 복기 흐름을 더 가깝게 맞춥니다.</strong><br>우측 여백과 창 배치까지 실제와 유사하게 맞추고, 반복 연습과 복기 시간을 줄이는 기능을 추가합니다.',
+            '<strong>실전 배치와 복기 흐름을 더 가깝게 맞춥니다.</strong><br>고급 모드는 실제에 가까운 여백과 창 배치 위에서 채점, 통계, TXT, CSV, 정오표 입력을 한 흐름으로 이어가게 합니다.',
+            '<strong>일반 모드와의 차이</strong><br>일반모드는 기능 동작을 실제와 유사하게 맞추고, 고급 모드는 여백과 배치까지 더 실제에 가깝게 맞춥니다.'
+        ],
+        'advancedGuide.planTitle': ['고급모드 신청 순서 1 - 이용권 안내'],
+        'advancedGuide.planIntro': [
+            '이용권을 고른 뒤 후원/결제 내용을 복사하고 신청서를 저장합니다. 운영자가 확인하면 고급 모드를 열 수 있습니다.',
+            '후원 후 신청서를 작성하면 승인을 기다리게 됩니다.',
+            '현재는 <strong>7일권</strong>과 <strong>14일권</strong>을 이용할 수 있습니다. 필요한 기간을 선택해 신청하면 됩니다.',
+            '필요한 기간을 고르고 후원을 마친 뒤, 아래 신청서를 한 번만 저장하면 됩니다.',
+            '후원 후 신청서를 저장하고, 승인되면 같은 창에서 바로 들어가면 됩니다.',
+            '신청서 작성 -> 후원 내용 복사 -> 후원 페이지에 붙여넣기 -> 후원 완료 및 신청 저장 순서입니다.'
+        ],
+        'advancedGuide.donateButton': ['이용권 결제/후원하기'],
+        'advancedGuide.flowHtml': [
+            '이용권 선택 → 이메일 입력 → 이용 시작일 입력 → 비밀번호 입력 → 후원 내용 복사 → 이용권 결제/후원하기 → 신청하기',
+            '이용권 선택 -> 이메일 입력 -> 이용 시작일 입력 -> 비밀번호 입력 -> 후원 내용 복사 -> 이용권 결제/후원하기 -> 신청하기'
+        ],
+        'advancedGuide.formTitle': ['고급모드 신청 순서 2 - 신청서 작성'],
+        'advancedGuide.formDescription': [
+            '이메일, 이용 시작일, 비밀번호를 입력하면 후원 내용이 자동으로 만들어집니다. 승인이 되면, 신청하신 내용으로 고급모드에 로그인할 수 있습니다.',
+            '후원 내용에는 자동으로 만들어진 신청번호와 이메일이 들어갑니다. 승인이 되면 신청하신 내용으로 고급모드에 로그인할 수 있습니다.'
+        ],
+        'advancedGuide.passwordHint': [
+            '여기서 입력하는 비밀번호는 <strong>고급 로그인</strong>에 사용합니다. 로그인 ID 또는 신청 이메일과 함께 기억해 주세요.',
+            '비밀번호는 <strong>고급 모드 로그인</strong>에 씁니다. 로그인 ID 또는 신청 이메일과 함께 기억해 주세요.',
+            '신청번호를 따로 기억할 필요 없이, 로그인 ID 또는 신청 이메일과 비밀번호만 기억하면 됩니다.',
+            '같은 비밀번호를 <strong>고급 로그인</strong>에 씁니다. 신청번호를 기억할 필요는 없습니다.'
+        ],
+        'advancedGuide.submitButton': ['신청하기'],
+        'advancedGuide.lookupTitle': ['5. 신청 조회', '5. 신청 상태 확인'],
+        'advancedGuide.lookupDescription': [
+            '저장 후에는 <strong>신청 이메일</strong>과 직접 정한 <strong>조회 비밀번호</strong>를 입력하면 현재 상태를 확인하고, 승인된 경우 라이선스를 바로 적용할 수 있습니다.',
+            '신청 이메일과 조회 비밀번호로 현재 상태를 확인하고, 승인되면 바로 라이선스를 적용할 수 있습니다.',
+            '신청 상태 확인은 신청 이메일과 조회 비밀번호로만 진행합니다. 신청번호는 따로 쓸 필요가 없고, 승인 후 로그인은 이메일 또는 로그인 ID로 진행합니다.',
+            '신청 조회는 <strong>신청 이메일</strong>과 비밀번호로만 합니다. 승인 후 고급 로그인은 이메일 또는 로그인 ID로 진행합니다.',
+            '조회는 신청 이메일만 씁니다. 승인 뒤 로그인은 이메일 또는 로그인 ID를 씁니다.'
+        ],
+        'advancedGuide.contactHtml': ['문의가 있으면 <strong>zhdlsqpdj@gmail.com</strong>로 보내주세요.'],
+        'advancedGuide.lookupButton': ['조회', '상태 확인'],
+        'advancedFeature.title': ['🔒 고급 기능', '🔒 고급 기능 빠른 안내', '✨ 고급 활용 가이드', '✨ 고급 모드 빠른 사용'],
+        'advancedFeature.flowButton': ['고급 기능 신청 보기', '신청 안내 다시 보기', '신청 안내 보기'],
+        'advancedFeature.introHtml': [
+            '<div style="font-weight:800; margin-bottom:6px;">고급 모드 활용 가이드</div>\n대부분의 고급 기능은 <strong>OMR 탭</strong> 안에서 이어서 사용합니다. 이 창은 어디에서 무엇을 누르면 되는지만 빠르게 확인하는 용도로 보시면 됩니다.',
+            '<div style="font-weight:800; margin-bottom:6px;">이 창은 신청 절차가 아니라, 들어온 뒤 어디를 누르는지 다시 찾는 용도입니다.</div>\n고급 모드에서는 <strong>상단 상태 바</strong>, <strong>OMR 아래 복기 버튼</strong>, <strong>기록 보관함</strong>, <strong>우측 실제환경 여백</strong>이 추가됩니다.',
+            '<div style="font-weight:800; margin-bottom:6px;">이미 들어온 뒤 버튼 위치만 다시 찾는 창입니다.</div>\n핵심은 <strong>상단 상태 바</strong>, <strong>OMR 아래 복기 버튼</strong>, <strong>더보기 안 기록 보관함</strong>입니다.',
+            '<div style="font-weight:800; margin-bottom:6px;">고급에서 가장 많이 쓰는 버튼만 다시 확인하는 창입니다.</div>\n상단 상태, OMR 아래 복기 버튼, 더보기 안 기록 보관함만 기억하면 됩니다.'
+        ],
+        'advancedFeature.summaryHtml': [
+            '<strong>기본 흐름</strong><br>답안을 체크한 뒤 <strong>정답 입력 모드</strong>로 전환하고 정답을 넣은 다음, <strong>채점 및 통계 확인</strong>을 누르면 복기용 기능이 한 번에 열립니다.<br><br><strong>기록 보관함</strong>은 일반 모드에서 보이지 않으며, 고급 라이선스가 확인된 브라우저에서만 더보기 메뉴로 열 수 있습니다.',
+            '<strong>정답 입력</strong> -> <strong>채점 및 통계</strong> -> <strong>과목별 상세 통계</strong> -> <strong>TXT / 정오표</strong>'
+        ],
+        'advancedFeature.planHtml': [
+            '<strong>복기 기능 위치</strong><br><strong>과목별 상세 통계</strong>, <strong>문항별 상세 통계 TXT 다운로드</strong>, <strong>정오표 일괄입력</strong>, <strong>과목/전체 초기화</strong>, <strong>문항별 시간 가이드</strong>는 모두 고급 모드에서 씁니다.<br><br><strong>기록 보관함</strong>은 더보기 메뉴 안의 별도 페이지이며, 고급 라이선스와 페이지 로그인 둘 다 필요합니다.',
+            '<strong>기록 보관함 위치</strong><br>기록 보관함은 OMR 아래가 아니라 <strong>더보기</strong> 메뉴에서 따로 엽니다. 고급 모드가 열린 브라우저에서만 보입니다.',
+            '기록 보관함은 <strong>더보기</strong>에서 따로 엽니다.'
+        ],
+        'advancedFeature.feature1Html': [
+            '<strong>1. 채점 결과 먼저 보기</strong><br>OMR 탭에서 <strong>채점 및 통계 확인</strong>을 누르면 맞은 수, 정답률, 건너뜀, 못 푼 문제를 바로 확인할 수 있습니다.',
+            '<strong>1. 결과부터 확인</strong><br>채점 및 통계 확인으로 맞은 수, 정답률, 건너뜀, 못 푼 문제를 먼저 봅니다.'
+        ],
+        'advancedFeature.feature2Html': [
+            '<strong>2. 과목별 상세 통계 열기</strong><br><strong>과목별 상세 통계</strong> 버튼으로 과목별 정오답 분포와 문항 상태를 더 자세히 확인합니다.',
+            '<strong>2. 과목별 약점 확인</strong><br>과목별 상세 통계로 어떤 영역이 흔들렸는지 바로 확인합니다.'
+        ],
+        'advancedFeature.feature3Html': [
+            '<strong>3. TXT로 복기 기록 남기기</strong><br><strong>문항별 상세 통계 TXT 다운로드</strong> 버튼으로 정오답, 미응답, 문항별 시간 기록을 파일로 저장합니다.',
+            '<strong>3. TXT로 기록 남기기</strong><br>문항별 상세 통계 TXT 다운로드로 복기 기록을 저장합니다.'
+        ],
+        'advancedFeature.feature4Html': [
+            '<strong>4. 반복 연습 이어가기</strong><br><strong>정오표 일괄입력</strong>, <strong>과목 초기화</strong>, <strong>전체 초기화</strong>, <strong>문항별 시간 가이드</strong>를 조합하면 같은 세트를 빠르게 다시 돌릴 수 있습니다.',
+            '<strong>4. 반복 연습 준비</strong><br>정오표 일괄입력, 과↺, 전↺, 시간 가이드를 조합해 같은 세트를 다시 돌립니다.'
+        ],
+        'advancedMode.statusTitle': ['고급 모드 상태'],
+        'advancedMode.statusLeadHtml': ['고급 모드가 열린 브라우저입니다. 로그인, 이용권, 보관함, 실제환경 여백 상태를 여기서 확인합니다.'],
+        'advancedMode.labelState': ['상태'],
+        'advancedMode.labelLogin': ['로그인'],
+        'advancedMode.labelExpiry': ['만료'],
+        'advancedMode.labelPlan': ['이용권'],
+        'advancedMode.labelArchive': ['기록 보관함'],
+        'advancedMode.labelRail': ['실제환경 여백'],
+        'advancedMode.valueStateActive': ['활성'],
+        'advancedMode.valueStateInactive': ['비활성'],
+        'advancedMode.valueArchiveReady': ['사용 가능'],
+        'advancedMode.valueArchiveBlocked': ['잠김'],
+        'advancedMode.valueRailReady': ['적용됨'],
+        'advancedMode.valueRailBlocked': ['대기'],
+        'advancedMode.valuePermanentPlan': ['영구 이용권'],
+        'advancedMode.valueLoginFallback': ['확인 전'],
+        'advancedMode.valueExpiryFallback': ['확인 전'],
+        'advancedMode.footnoteHtml': ['기록 보관함은 <strong>더보기</strong>에서 열고, 보관함 안에서는 계정 로그인을 한 번 더 확인합니다.'],
+        'advancedMode.guideButton': ['고급 활용 보기'],
+        'advancedMode.archiveButton': ['기록 보관함'],
+        'advancedMode.coachTitle': ['복기 버튼 순서'],
+        'advancedMode.coachLeadHtml': ['풀이 후에는 아래 순서대로 누르면 됩니다.'],
+        'advancedMode.coachStep1Html': ['<strong>1. 정답 입력</strong><br>답안 체크가 끝나면 실제 정답을 넣습니다.'],
+        'advancedMode.coachStep2Html': ['<strong>2. 채점</strong><br>맞은 수, 정답률, 건너뜀, 미응답을 먼저 확인합니다.'],
+        'advancedMode.coachStep3Html': ['<strong>3. 복기 저장</strong><br>과목별 통계, TXT, CSV, 정오표로 이어갑니다.'],
+        'advancedMode.coachHintHtml': ['<strong>과↺</strong>는 현재 과목만 다시 시작하고, <strong>전↺</strong>는 전체 세트를 처음 상태로 되돌립니다.'],
+        'advancedMode.coachGuideButton': ['전체 흐름 보기'],
+        'advancedFeature.introHtml': ['<div style="font-weight:800; margin-bottom:6px;">고급 모드의 핵심 버튼만 정리한 창입니다.</div>\n풀이가 끝나면 OMR 아래에서 정답 입력, 채점, 통계, TXT, CSV, 정오표를 순서대로 사용하면 됩니다.'],
+        'advancedFeature.summaryHtml': ['<strong>답안 체크</strong> → <strong>정답 입력</strong> → <strong>채점</strong> → <strong>통계·TXT·CSV·정오표</strong>'],
+        'advancedFeature.planHtml': ['<strong>먼저 볼 위치</strong><br>상단은 고급 상태 확인, OMR 아래는 복기 버튼, 더보기는 기록 보관함입니다.'],
+        'advancedFeature.image1Title': ['1. 상단 상태와 실제환경 여백'],
+        'advancedFeature.image1Caption': ['고급 ON, 로그인 상태, 이용권 정보를 확인하고 실제 화면에 가까운 우측 여백으로 연습합니다.'],
+        'advancedFeature.image2Title': ['2. OMR 아래 복기 버튼 흐름 따라가기'],
+        'advancedFeature.image2Caption': ['정답 입력, 채점, 과목별 통계, TXT, CSV, 정오표 기능이 OMR 아래 흐름에 모여 있습니다.'],
+        'advancedFeature.feature1Html': ['<strong>1. 채점 결과 확인</strong><br>맞은 수, 정답률, 건너뜀, 미응답을 먼저 보고 전체 풀이 상태를 잡습니다.'],
+        'advancedFeature.feature2Html': ['<strong>2. 과목별 약점 확인</strong><br>과목별 상세 통계로 어느 영역에서 흔들렸는지 바로 확인합니다.'],
+        'advancedFeature.feature3Html': ['<strong>3. 기록 저장</strong><br>문항별 TXT와 회차 CSV로 정오답, 시간 기록, 누적 회차를 남깁니다.'],
+        'advancedFeature.feature4Html': ['<strong>4. 반복 연습 준비</strong><br>정오표 일괄입력, 과↺, 전↺, 시간 가이드로 같은 세트를 빠르게 다시 풉니다.'],
+        'messages.advancedAvailable': [
+            '로그인 ID 또는 신청 이메일과 비밀번호를 입력하면 고급 모드를 열고, 같은 브라우저에서 기록 보관함 접근도 함께 사용할 수 있습니다.',
+            '로그인 ID 또는 신청 이메일과 비밀번호를 입력하면 고급 모드를 열고, 같은 브라우저에서 기록 보관함 접근도 함께 사용할 수 있습니다.',
+            '로그인 ID 또는 신청 이메일과 비밀번호를 입력하면 바로 고급 모드로 들어갑니다.'
+        ],
+        'messages.advancedCooldown': ['ID 또는 이메일 / 비밀번호를 여러 번 틀려 {seconds}초 동안 다시 시도할 수 없습니다.'],
+        'messages.advancedUnlocked': ['이 브라우저에 유효한 라이선스가 저장되어 있어 바로 고급 모드를 열 수 있습니다. 만료: {expiry}', '저장된 인증으로 바로 고급 모드를 열 수 있습니다. (만료: {expiry})'],
+        'messages.advancedUnlockedPermanent': ['저장된 인증으로 바로 고급 모드를 열 수 있습니다.'],
+        'messages.advancedConfigMissing': ['아직 라이선스 검증 공개키가 설정되지 않았습니다. 관리자 설정 저장 후 다시 시도해주세요.'],
+        'messages.advancedChecking': ['로그인 ID 또는 신청 이메일과 비밀번호를 확인하고 있습니다...'],
+        'messages.advancedNeedRelogin': ['이 브라우저의 라이선스가 없거나 만료되었습니다. 로그인 ID 또는 신청 이메일과 비밀번호로 다시 확인해주세요.'],
+        'messages.archiveAccessDenied': ['기록 보관함은 고급 모드 전용입니다. 메인 화면의 고급 안내에서 승인된 로그인 ID 또는 신청 이메일로 고급 모드를 먼저 열어주세요.'],
+        'messages.archiveAuthRequired': ['이메일과 비밀번호를 모두 입력해주세요.'],
+        'archivePage.metaTitle': ['개인 학습 기록 보관함 | SKCT Tool'],
+        'archivePage.metaDescription': [
+            '고급 모드 이용자를 위한 개인 학습 기록 보관함입니다. 문제 원문, AI 응답, 복기 메모를 계정별로 저장합니다.',
+            '고급 모드 이용자를 위한 개인 학습 기록 보관함입니다. 풀이 과정, AI 응답, 오답 이유와 복기 메모를 계정별로 저장합니다.'
+        ],
+        'archivePage.heroTitle': ['개인 학습 기록 보관함'],
+        'archivePage.heroCopyHtml': [
+            '고급 모드 전용 보관함입니다. 로그인 후 문제 원문, AI 응답, 복기 메모를 계정별로 저장하고 다시 확인할 수 있습니다.',
+            '고급 모드 이용자 전용 보관함입니다. 자료보관함 로그인 후 문제 원문, AI 응답, 복기 메모를 계정별로 분리해 저장하고 다시 꺼내 볼 수 있습니다.',
+            '고급 모드 전용 보관함입니다. 로그인 후 풀이 과정, AI 응답, 오답 이유와 복기 메모를 계정별로 저장하고 다시 확인할 수 있습니다.',
+            '고급 모드 이용자 전용 보관함입니다. 자료보관함 로그인 후 풀이 과정, AI 응답, 오답 이유와 복기 메모를 계정별로 분리해 저장하고 다시 꺼내 볼 수 있습니다.'
+        ],
+        'archivePage.authLoginTitle': ['내 자료 로그인', '내 자료에 로그인'],
+        'archivePage.authLoginDescription': [
+            '보관함 계정으로 로그인하면 자료를 관리할 수 있습니다.',
+            '고급 모드가 확인된 뒤에는 자료보관함 전용 계정으로 로그인해야 자기 자료를 읽고 수정할 수 있습니다.'
+        ],
+        'archivePage.workspaceTitle': ['내 보관함', '내 보관함 작업 공간'],
+        'archivePage.workspaceCopyHtml': ['입력 폼에서 저장하고, 목록에서 필터링하며, 상세 패널에서 복기 내용을 확인합니다.', '풀이 기록은 로그인 후 자동으로 저장되고, 오답은 태그와 메모로 다시 관리합니다.'],
+        'messages.manualSubmitSuccess': ['신청서가 저장되었습니다. 승인 메일을 기다려 주세요.', '신청서가 저장되었습니다. 승인 후 이메일과 비밀번호로 고급 로그인합니다.'],
+        'messages.manualLookupRequired': ['이메일과 비밀번호를 모두 입력해주세요.'],
+        'messages.manualLookupNotFound': ['해당 이메일로 조회되는 신청을 찾지 못했습니다. 이메일 또는 비밀번호를 다시 확인해주세요.'],
+        'sidebar.helpLabel': ['가이드', '도움말'],
+        'sidebar.advancedGuideLabelHtml': ['고급<br>기능', '고급<br>안내'],
+        'toolbar.totalTimeLabel': ['전체 남은 시간', '전체 시간'],
+        'toolbar.guidePrefix': ['가이드:', '목표:'],
+        'toolbar.playButtonTitle': ['타이머 시작', '시작 / 일시정지'],
+        'tools.omrCollapseButton': ['◀ 탭 접기'],
+        'tools.omrModeLabel': ['응시 모드', '답안 체크 중'],
+        'tools.skipButton': ['문항 건너뛰기'],
+        'tools.modeToggleButton': ['📝 정답 입력 모드로 전환', '📝 정답 입력 모드'],
+        'tools.scoreButton': ['📊 채점 및 통계 확인', '📊 채점하기'],
+        'tools.detailStatsButton': ['📋 과목별 상세 통계', '📋 상세 통계'],
+        'tools.statsDownloadButton': ['문항별 통계 TXT 저장'],
+        'tools.statsCsvExportButton': ['📊 회차 누적 CSV 저장', '성장 기록 CSV 저장'],
+        'tools.statsCsvImportButton': ['📂 회차 CSV 불러오기', '성장 기록 CSV 불러오기'],
+        'tools.statsServerButton': ['기록 보관함에 저장'],
+        'tools.statsCsvServerButton': ['기록 보관함에 저장'],
+        'tools.statsCsvImportServerButton': ['서버에 반영'],
+        'tools.bulkImportButton': ['📥 정오표 입력', '📥 정오표 한번에 넣기'],
+        'tools.resetButton': ['🔄 RESET'],
+        'tools.statSummaryLabel': ['맞은 / 푼 / 전체', '맞힌 수 / 푼 수 / 전체'],
+        'tools.statRateAttemptedLabel': ['정답률(푼 문제 대비)', '정답률 (푼 것 중)'],
+        'tools.statRateOverallLabel': ['정답률(전체 문제 대비)', '정답률 (전체 중)'],
+        'tools.statSkippedLabel': ['건너뛴 문제', '건너뛴 문항'],
+        'tools.statUnansweredLabel': ['못 푼 문제', '미응답 문항'],
+        'tools.clearToolButton': ['삭제'],
+        'tools.notepadPlaceholder': ['이곳에 텍스트를 입력하거나 붙여넣기(Ctrl+V) 하세요...', '메모를 입력하세요…'],
+        'breakOverlay.title': ['쉬는 시간입니다'],
+        'breakOverlay.description': ['다음 과목이 시작될 때까지 통제됩니다.', '다음 과목이 시작되면 자동으로 넘어갑니다.'],
+        'breakOverlay.skipButton': ['쉬는 시간 건너뛰기'],
+        'breakOverlay.supportHint': ['개발에 큰 힘이 됩니다. 좌측 ☕ 아이콘을 통해 후원 부탁드립니다.', '이 도구가 도움이 되셨다면, 좌측 ☕로 응원해 주세요!', '이 도구가 도움이 되셨다면 ☕ 후원으로 응원해 주세요!'],
+        'utilityModal.title': ['⋯ 보조 기능 모음'],
+        'utilityModal.statsTitle': ['활성 세션 보기'],
+        'utilityModal.statsDescription': ['오늘 방문 수와 최근 방문 기록을 확인합니다.', '최근 방문 기록을 봅니다.'],
+        'utilityModal.communityDescription': ['공지, 질문, 후기, 개선요청을 한곳에서 확인합니다.', '질문, 후기, 개선 요청을 주고받는 게시판입니다.'],
+        'utilityModal.extensionTitle': ['확장 안내'],
+        'utilityModal.extensionDescription': ['고급 모드 전용 보조 연동 안내입니다. CBT 결과 표를 더 쉽게 옮기는 흐름을 설명합니다.'],
+        'statsModal.title': ['🔥 활성 세션 현황'],
+        'statsModal.activeTitle': ['오늘 방문', '오늘 방문자'],
+        'statsModal.activeHint': ['하루에 한 번씩, 브라우저 단위로 집계됩니다.', '오늘 처음 방문한 브라우저 기준으로 집계됩니다.'],
+        'statsModal.trendTitle': ['📈 방문 추이'],
+        'statsModal.totalTitle': ['🗓️ 누적 방문 기록', '🗓️ 전체 누적 방문', '🗓️ 누적 방문'],
+        'statsModal.totalHint': ['그래프는 최근 기간만 표시하고, 누적 방문수는 2026년 4월 4일 이후 기준입니다.', '브라우저 기준 방문 기록으로 집계됩니다.', '하루에 한 번씩, 브라우저 단위로 집계됩니다.', '하루 1회, 브라우저 단위로 집계됩니다.'],
+        'helpModal.pdfTitle': ['▶ PDF 활용 예시', 'PDF와 함께 쓰기'],
+        'helpModal.omrTitle': ['▶ 연습용 모드 (OMR 사용)', 'OMR과 함께 쓰기'],
+        'settingsModal.title': ['⚙ 통합 설정'],
+        'settingsModal.practiceModeTitle': ['🎯 모드', '🎯 모드 설정', '🎯 연습 모드'],
+        'settingsModal.practiceModeHint': ['OFF = 실전: 과목 시간이 끝나면 자동으로 잠깁니다.\nON = 자유 풀이: 시간 제한 없이 마킹합니다.', 'OFF = <strong style="color:#475569;">실전</strong>: 과목 시간이 끝나면 자동으로 잠깁니다.<br>\n                        ON = <strong style="color:#475569;">자유 풀이</strong>: 시간 제한 없이 마킹합니다.'],
+        'settingsModal.scoringTitle': ['📊 채점 기준', '📊 건너뛴 문항 처리'],
+        'settingsModal.timerTitle': ['🕒 타이머 설정'],
+        'settingsModal.guideTitle': ['⏱️ 문항별 시간 가이드'],
+        'settingsModal.toolTitle': ['🧰 도구 설정'],
+        'settingsModal.layoutTitle': ['📐 높이 비율 설정 (우측 영역)'],
+        'advancedGuide.accessButton': ['고급 모드 열기', '열기'],
+        'advancedGuide.accessIdPlaceholder': ['로그인 ID 또는 신청 이메일', '승인 이메일'],
+        'advancedMode.statusTitle': ['고급 모드 상태'],
+        'advancedMode.statusLeadHtml': ['고급 모드가 열린 브라우저입니다. 로그인, 이용권, 보관함, 실제환경 여백 상태를 여기서 확인합니다.'],
+        'advancedMode.labelRail': ['실제환경 여백'],
+        'advancedMode.guideButton': ['고급 활용 보기'],
+        'advancedMode.archiveButton': ['기록 보관함'],
+        'advancedMode.coachTitle': ['복기 버튼 순서'],
+        'advancedMode.coachGuideButton': ['전체 흐름 보기'],
+    };
+
+    const LEGACY_SITE_TEXT_PATTERNS = {
+        'archivePage.metaTitle': [/학습\s*자료\s*보관함/, /학습자료\s*보관함/],
+        'archivePage.metaDescription': [/학습\s*자료\s*보관함/, /학습자료\s*보관함/, /문제\s*원문.*AI\s*응답/],
+        'archivePage.heroTitle': [/학습\s*자료\s*보관함/, /학습자료\s*보관함/],
+        'archivePage.heroCopyHtml': [/자료보관함/, /문제\s*원문.*AI\s*응답/],
+        'archivePage.authLoginTitle': [/자료보관함/],
+        'archivePage.authLoginDescription': [/자료보관함/]
+    };
+
+    const SITE_TEXT_CATALOG = [
+        { key: 'meta.title', label: '브라우저 제목', category: '메타', selector: 'title', prop: 'text', visual: false },
+        { key: 'meta.description', label: '검색 설명', category: '메타', selector: 'meta[name="description"]', prop: 'content', visual: false },
+        { key: 'meta.ogTitle', label: 'OG 제목', category: '메타', selector: 'meta[property="og:title"]', prop: 'content', visual: false },
+        { key: 'meta.ogDescription', label: 'OG 설명', category: '메타', selector: 'meta[property="og:description"]', prop: 'content', visual: false },
+        { key: 'meta.twitterTitle', label: '트위터 제목', category: '메타', selector: 'meta[name="twitter:title"]', prop: 'content', visual: false },
+        { key: 'meta.twitterDescription', label: '트위터 설명', category: '메타', selector: 'meta[name="twitter:description"]', prop: 'content', visual: false },
+        { key: 'meta.srTitle', label: '숨김 H1 제목', category: '메타', selector: '#srMainTitle', prop: 'text' },
+        { key: 'meta.srDescription', label: '숨김 설명문', category: '메타', selector: '#srMainDescription', prop: 'text' },
+        { key: 'landing.eyebrow', label: '소개: 상단 문구', category: '소개 화면', selector: '#siteOverviewEyebrow', prop: 'text' },
+        { key: 'landing.title', label: '소개: 제목', category: '소개 화면', selector: '#siteOverviewTitle', prop: 'text' },
+        { key: 'landing.lead', label: '소개: 설명', category: '소개 화면', selector: '#siteOverviewLead', prop: 'text', multiline: true },
+        { key: 'landing.deviceHint', label: '소개: PC·팝업 안내', category: '소개 화면', selector: '#siteOverviewDeviceHint', prop: 'text', multiline: true },
+        { key: 'landing.primaryButton', label: '소개: 연습 시작 버튼', category: '소개 화면', selector: '#enterPracticeBtn strong', prop: 'text' },
+        { key: 'landing.guideLink', label: '소개: 가이드 링크', category: '소개 화면', selector: '#siteOverviewGuideLink', prop: 'text' },
+        { key: 'landing.returnButton', label: '연습 화면: 소개 버튼', category: '소개 화면', selector: '#sidebarBannerLabel', prop: 'text' },
+        { key: 'sidebar.helpLabel', label: '사이드바: 가이드', category: '메인 진입', selector: '#sidebarHelpLabel', prop: 'text' },
+        { key: 'sidebar.noticeLabel', label: '사이드바: 공지', category: '메인 진입', selector: '#sidebarNoticeLabel', prop: 'text' },
+        { key: 'sidebar.omrLabelHtml', label: '사이드바: OMR', category: '메인 진입', selector: '#sidebarOmrLabel', prop: 'html', multiline: true },
+        { key: 'sidebar.settingsLabel', label: '사이드바: 설정', category: '메인 진입', selector: '#sidebarSettingsLabel', prop: 'text' },
+        { key: 'sidebar.advancedGuideLabelHtml', label: '사이드바: 고급 기능', category: '메인 진입', selector: '#sidebarAdvancedGuideLabel', prop: 'html', multiline: true },
+        { key: 'sidebar.advancedModeLabelHtml', label: '사이드바: 고급 활용', category: '메인 진입', selector: '#sidebarAdvancedModeLabel', prop: 'html', multiline: true },
+        { key: 'sidebar.supportLabel', label: '사이드바: 후원', category: '메인 진입', selector: '#sidebarDonateLabel', prop: 'text' },
+        { key: 'sidebar.communityLabel', label: '사이드바: 채팅', category: '메인 진입', selector: '#sidebarCommunityLabel', prop: 'text' },
+        { key: 'sidebar.utilityLabel', label: '사이드바: 더보기', category: '메인 진입', selector: '#sidebarUtilityLabel', prop: 'text' },
+        { key: 'toolbar.popupButton', label: '상단 팝업 버튼', category: '상단 도구', selector: '#popupBtn', prop: 'text' },
+        { key: 'toolbar.totalTimeLabel', label: '전체 시간 라벨', category: '상단 도구', selector: '#displayTotalTimeLabel', prop: 'text' },
+        { key: 'toolbar.defaultPhaseName', label: '기본 과목명', category: '상단 도구', selector: '#displayPhaseName', prop: 'text' },
+        { key: 'toolbar.guidePrefix', label: '가이드 접두어', category: '상단 도구', selector: '#displayGuidePrefix', prop: 'text' },
+        { key: 'toolbar.playButtonTitle', label: '재생 버튼 툴팁', category: '상단 도구', selector: '#timerPlayBtn', prop: 'title', visual: false },
+        { key: 'toolbar.nextSubjectButton', label: '다음 과목 버튼', category: '상단 도구', selector: '#subjectSkipBtn', prop: 'text' },
+        { key: 'toolbar.resetSubjectButton', label: '과목 초기화 버튼', category: '상단 도구', selector: '#subjectResetBtn', prop: 'text' },
+        { key: 'toolbar.resetAllButton', label: '전체 초기화 버튼', category: '상단 도구', selector: '#fullResetBtn', prop: 'text' },
+        { key: 'tools.omrCollapseButton', label: 'OMR 접기 버튼', category: 'OMR/도구', selector: '#omrCollapseBtn', prop: 'text' },
+        { key: 'tools.omrModeLabel', label: 'OMR 기본 상태', category: 'OMR/도구', selector: '#omrModeLabel', prop: 'text' },
+        { key: 'tools.skipButton', label: '문항 건너뛰기 버튼', category: 'OMR/도구', selector: '#globalClearBtn', prop: 'text' },
+        { key: 'tools.modeToggleButton', label: '정답 입력 버튼', category: 'OMR/도구', selector: '#modeToggleBtn', prop: 'text' },
+        { key: 'tools.scoreButton', label: '채점 버튼', category: 'OMR/도구', selector: '#scoreBtn', prop: 'text' },
+        { key: 'tools.detailStatsButton', label: '상세 통계 버튼', category: 'OMR/도구', selector: '#detailScoreBtn', prop: 'text' },
+        { key: 'tools.statsDownloadButton', label: 'TXT 저장 버튼', category: 'OMR/도구', selector: '#advancedStatsDownloadBtn', prop: 'text' },
+        { key: 'tools.statsCsvExportButton', label: 'CSV 저장 버튼', category: 'OMR/도구', selector: '#advancedStatsCsvBtn', prop: 'text' },
+        { key: 'tools.statsCsvImportButton', label: 'CSV 불러오기 버튼', category: 'OMR/도구', selector: '#advancedStatsCsvImportBtn', prop: 'text' },
+        { key: 'tools.statsServerButton', label: '문항별 통계 보관함 저장 버튼', category: 'OMR/도구', selector: '#advancedStatsServerBtn', prop: 'text' },
+        { key: 'tools.statsCsvServerButton', label: '성장 기록 보관함 저장 버튼', category: 'OMR/도구', selector: '#advancedStatsCsvServerBtn', prop: 'text' },
+        { key: 'tools.statsCsvImportServerButton', label: '불러온 기록 보관함 반영 버튼', category: 'OMR/도구', selector: '#advancedStatsCsvImportServerBtn', prop: 'text' },
+        { key: 'tools.bulkImportButton', label: '정오표 일괄입력 버튼', category: 'OMR/도구', selector: '#bulkCorrectImportBtn', prop: 'text' },
+        { key: 'tools.resetButton', label: 'RESET 버튼', category: 'OMR/도구', selector: '#omrResetBtn', prop: 'text' },
+        { key: 'tools.statSummaryLabel', label: '채점 결과: 맞은/푼/전체', category: 'OMR/도구', selector: '#statSummaryLabel', prop: 'text' },
+        { key: 'tools.statRateAttemptedLabel', label: '채점 결과: 시도 대비', category: 'OMR/도구', selector: '#statRateAttemptedLabel', prop: 'text' },
+        { key: 'tools.statRateOverallLabel', label: '채점 결과: 전체 대비', category: 'OMR/도구', selector: '#statRateOverallLabel', prop: 'text' },
+        { key: 'tools.statSkippedLabel', label: '채점 결과: 건너뜀', category: 'OMR/도구', selector: '#statSkippedLabel', prop: 'text' },
+        { key: 'tools.statUnansweredLabel', label: '채점 결과: 못 푼 문제', category: 'OMR/도구', selector: '#statUnansweredLabel', prop: 'text' },
+        { key: 'tools.notepadTab', label: '메모장 탭', category: 'OMR/도구', selector: '#tabNotepad', prop: 'text' },
+        { key: 'tools.canvasTab', label: '그림판 탭', category: 'OMR/도구', selector: '#tabCanvas', prop: 'text' },
+        { key: 'tools.clearToolButton', label: '도구 삭제 버튼', category: 'OMR/도구', selector: '#clearCurrentToolBtn', prop: 'text' },
+        { key: 'tools.notepadPlaceholder', label: '메모장 placeholder', category: 'OMR/도구', selector: '#notepad', prop: 'placeholder', visual: false },
+        { key: 'tools.calculatorPanelLabel', label: '계산기 제목', category: 'OMR/도구', selector: '.section-panel-label', prop: 'text' },
+        { key: 'breakOverlay.title', label: '쉬는 시간 제목', category: '쉬는 시간', selector: '#breakOverlayTitle', prop: 'text' },
+        { key: 'breakOverlay.description', label: '쉬는 시간 설명', category: '쉬는 시간', selector: '#breakOverlayDescription', prop: 'text' },
+        { key: 'breakOverlay.skipButton', label: '쉬는 시간 건너뛰기', category: '쉬는 시간', selector: '#breakSkipBtn', prop: 'text' },
+        { key: 'breakOverlay.supportHint', label: '쉬는 시간 후원 안내', category: '쉬는 시간', selector: '#breakSupportHint', prop: 'html', multiline: true },
+        { key: 'utilityModal.title', label: '보조 기능 모달 제목', category: '보조 기능', selector: '#utilityModalTitle', prop: 'text' },
+        { key: 'utilityModal.descriptionHtml', label: '보조 기능 모달 설명', category: '보조 기능', selector: '#utilityModalDescription', prop: 'html', multiline: true },
+        { key: 'utilityModal.descriptionAdvancedHtml', label: '보조 기능 모달 설명(고급 모드)', category: '보조 기능', visual: false },
+        { key: 'utilityModal.statsTitle', label: '보조 기능: 활성 세션 제목', category: '보조 기능', selector: '#utilityStatsTitle', prop: 'text' },
+        { key: 'utilityModal.statsDescription', label: '보조 기능: 활성 세션 설명', category: '보조 기능', selector: '#utilityStatsDescription', prop: 'text' },
+        { key: 'utilityModal.communityTitle', label: '보조 기능: 커뮤니티 제목', category: '보조 기능', selector: '#utilityCommunityTitle', prop: 'text' },
+        { key: 'utilityModal.communityDescription', label: '보조 기능: 커뮤니티 설명', category: '보조 기능', selector: '#utilityCommunityDescription', prop: 'text' },
+        { key: 'utilityModal.archiveTitle', label: '보조 기능: 기록 보관함 제목', category: '보조 기능', selector: '#utilityArchiveTitle', prop: 'text' },
+        { key: 'utilityModal.archiveDescription', label: '보조 기능: 기록 보관함 설명', category: '보조 기능', selector: '#utilityArchiveDescription', prop: 'text' },
+        { key: 'utilityModal.extensionTitle', label: '보조 기능: 확장 안내 제목', category: '보조 기능', selector: '#utilityExtensionTitle', prop: 'text' },
+        { key: 'utilityModal.extensionDescription', label: '보조 기능: 확장 안내 설명', category: '보조 기능', selector: '#utilityExtensionDescription', prop: 'text' },
+        { key: 'statsModal.title', label: '방문 통계 모달 제목', category: '방문 통계', selector: '#statsModalTitle', prop: 'text' },
+        { key: 'statsModal.activeTitle', label: '방문 통계: 오늘 제목', category: '방문 통계', selector: '#statsActiveLabel', prop: 'text' },
+        { key: 'statsModal.activeHint', label: '방문 통계: 오늘 설명', category: '방문 통계', selector: '#statsActiveHint', prop: 'text' },
+        { key: 'statsModal.trendTitle', label: '방문 통계: 추세 제목', category: '방문 통계', selector: '#statsTrendTitle', prop: 'text' },
+        { key: 'statsModal.totalTitle', label: '방문 통계: 누적 제목', category: '방문 통계', selector: '#statsTotalLabel', prop: 'text' },
+        { key: 'statsModal.totalHint', label: '방문 통계: 누적 설명', category: '방문 통계', selector: '#statsTotalHint', prop: 'text' },
+        { key: 'noticeModal.title', label: '공지 모달 제목', category: '공지 모달', selector: '#noticeModalTitle', prop: 'text' },
+        { key: 'noticeModal.emptyBody', label: '공지 모달 빈 내용', category: '공지 모달', visual: false },
+        { key: 'noticeModal.updatedPrefix', label: '공지 모달 업데이트 접두어', category: '공지 모달', visual: false },
+        { key: 'helpModal.title', label: '기본 가이드 제목', category: '가이드 모달', selector: '#helpModalTitle', prop: 'text' },
+        { key: 'helpModal.firstUseTitle', label: '처음 사용 안내 제목', category: '가이드 모달', selector: '#helpFirstUseTitle', prop: 'text' },
+        { key: 'helpModal.firstUseLead', label: '처음 사용 안내 설명', category: '가이드 모달', selector: '#helpFirstUseLead', prop: 'text' },
+        { key: 'helpModal.step1Title', label: '처음 사용 1단계 제목', category: '가이드 모달', selector: '#helpStep1Title', prop: 'text' },
+        { key: 'helpModal.step1Body', label: '처음 사용 1단계 설명', category: '가이드 모달', selector: '#helpStep1Body', prop: 'html', multiline: true },
+        { key: 'helpModal.step2Title', label: '처음 사용 2단계 제목', category: '가이드 모달', selector: '#helpStep2Title', prop: 'text' },
+        { key: 'helpModal.step2Body', label: '처음 사용 2단계 설명', category: '가이드 모달', selector: '#helpStep2Body', prop: 'html', multiline: true },
+        { key: 'helpModal.step3Title', label: '처음 사용 3단계 제목', category: '가이드 모달', selector: '#helpStep3Title', prop: 'text' },
+        { key: 'helpModal.step3Body', label: '처음 사용 3단계 설명', category: '가이드 모달', selector: '#helpStep3Body', prop: 'html', multiline: true },
+        { key: 'helpModal.step4Title', label: '처음 사용 4단계 제목', category: '가이드 모달', selector: '#helpStep4Title', prop: 'text' },
+        { key: 'helpModal.step4Body', label: '처음 사용 4단계 설명', category: '가이드 모달', selector: '#helpStep4Body', prop: 'html', multiline: true },
+        { key: 'helpModal.exampleSectionTitle', label: '예시 섹션 제목', category: '가이드 모달', selector: '#helpExampleSectionTitle', prop: 'text' },
+        { key: 'helpModal.pdfTitle', label: 'PDF 예시 제목', category: '가이드 모달', selector: '#helpPdfExampleTitle', prop: 'text' },
+        { key: 'helpModal.pdfCaption', label: 'PDF 예시 설명', category: '가이드 모달', selector: '#helpPdfExampleCaption', prop: 'text' },
+        { key: 'helpModal.omrTitle', label: 'OMR 예시 제목', category: '가이드 모달', selector: '#helpOmrExampleTitle', prop: 'text' },
+        { key: 'helpModal.omrCaption', label: 'OMR 예시 설명', category: '가이드 모달', selector: '#helpOmrExampleCaption', prop: 'text' },
+        { key: 'helpModal.advancedSectionTitle', label: '가이드 내 고급 기능 안내 제목', category: '가이드 모달', selector: '#helpAdvancedSectionTitle', prop: 'text' },
+        { key: 'helpModal.advancedSectionLeadHtml', label: '가이드 내 고급 기능 안내 설명', category: '가이드 모달', selector: '#helpAdvancedSectionLead', prop: 'html', multiline: true },
+        { key: 'helpModal.advancedLinkButton', label: '가이드 내 고급 기능 이동 버튼', category: '가이드 모달', selector: '#helpAdvancedLinkBtn', prop: 'text' },
+        { key: 'helpModal.referenceBlockHtml', label: '참고사항 본문', category: '가이드 모달', selector: '#helpReferenceBlock', prop: 'html', multiline: true },
+        { key: 'helpModal.featureSectionTitle', label: '기능 안내 제목', category: '가이드 모달', selector: '#helpFeatureSectionTitle', prop: 'text' },
+        { key: 'helpModal.sidebarFeatureHtml', label: '좌측 사이드바 설명', category: '가이드 모달', selector: '#helpSidebarFeatureBlock', prop: 'html', multiline: true },
+        { key: 'helpModal.timerFeatureHtml', label: '타이머 설명 카드', category: '가이드 모달', selector: '#helpTimerFeatureBlock', prop: 'html', multiline: true },
+        { key: 'helpModal.practiceFeatureHtml', label: '연습장 설명 카드', category: '가이드 모달', selector: '#helpPracticeFeatureBlock', prop: 'html', multiline: true },
+        { key: 'helpModal.calculatorFeatureHtml', label: '계산기 설명 카드', category: '가이드 모달', selector: '#helpCalculatorFeatureBlock', prop: 'html', multiline: true },
+        { key: 'settingsModal.title', label: '설정 모달 제목', category: '설정 모달', selector: '#settingsTitleTrigger', prop: 'text' },
+        { key: 'settingsModal.practiceModeTitle', label: '모드 설정 제목', category: '설정 모달', selector: '#settingsPracticeModeTitle', prop: 'text' },
+        { key: 'settingsModal.practiceModeHint', label: '모드 설정 설명', category: '설정 모달', selector: '#settingsPracticeModeHint', prop: 'html', multiline: true },
+        { key: 'settingsModal.scoringTitle', label: '채점 기준 제목', category: '설정 모달', selector: '#settingsScoringTitle', prop: 'text' },
+        { key: 'settingsModal.scoringHint', label: '채점 기준 설명', category: '설정 모달', selector: '#settingsScoringHint', prop: 'html', multiline: true },
+        { key: 'settingsModal.timerTitle', label: '타이머 설정 제목', category: '설정 모달', selector: '#settingsTimerTitle', prop: 'text' },
+        { key: 'settingsModal.guideTitle', label: '문항 가이드 제목', category: '설정 모달', selector: '#settingsGuideTitle', prop: 'text' },
+        { key: 'settingsModal.layoutTitle', label: '높이 비율 제목', category: '설정 모달', selector: '#settingsLayoutTitle', prop: 'text' },
+        { key: 'settingsModal.toolTitle', label: '도구 설정 제목', category: '설정 모달', selector: '#settingsToolTitle', prop: 'text' },
+        { key: 'advancedGuide.title', label: '고급 기능 제목', category: '고급 안내', selector: '#advancedGuideModalTitle', prop: 'text' },
+        { key: 'advancedGuide.loginTitle', label: '고급 기능: 로그인 제목', category: '고급 안내', selector: '#advancedGuideLoginTitle', prop: 'text' },
+        { key: 'advancedGuide.loginBody', label: '고급 기능: 로그인 설명', category: '고급 안내', selector: '#advancedGuideLoginBody', prop: 'html', multiline: true },
+        { key: 'advancedGuide.accessIdPlaceholder', label: '고급 기능: 로그인 이메일/ID placeholder', category: '고급 안내', selector: '#advancedAccessIdInput', prop: 'placeholder', visual: false },
+        { key: 'advancedGuide.accessPasswordPlaceholder', label: '고급 기능: 로그인 비밀번호 placeholder', category: '고급 안내', selector: '#advancedAccessPasswordInput', prop: 'placeholder', visual: false },
+        { key: 'advancedGuide.accessButton', label: '고급 기능: 로그인 버튼', category: '고급 안내', selector: '#advancedAccessSubmitBtn', prop: 'text' },
+        { key: 'advancedGuide.featureTitle', label: '고급 기능: 차이점 제목', category: '고급 안내', selector: '#advancedGuideFeatureTitle', prop: 'text' },
+        { key: 'advancedGuide.featureCard1Html', label: '고급 기능 카드 1', category: '고급 안내', selector: '#advancedGuideFeatureCard1', prop: 'html', multiline: true },
+        { key: 'advancedGuide.featureCard2Html', label: '고급 기능 카드 2', category: '고급 안내', selector: '#advancedGuideFeatureCard2', prop: 'html', multiline: true },
+        { key: 'advancedGuide.featureCard3Html', label: '고급 기능 카드 3', category: '고급 안내', selector: '#advancedGuideFeatureCard3', prop: 'html', multiline: true },
+        { key: 'advancedGuide.featureCard4Html', label: '고급 기능 카드 4', category: '고급 안내', selector: '#advancedGuideFeatureCard4', prop: 'html', multiline: true },
+        { key: 'advancedGuide.featureAccessHtml', label: '고급 기능: 일반 모드와의 차이', category: '고급 안내', selector: '#advancedGuideFeatureAccess', prop: 'html', multiline: true },
+        { key: 'advancedGuide.planTitle', label: '고급 기능: 신청 제목', category: '고급 안내', selector: '#advancedGuidePlanTitle', prop: 'text' },
+        { key: 'advancedGuide.planIntro', label: '고급 기능: 신청 소개', category: '고급 안내', selector: '#advancedGuidePlanIntro', prop: 'html', multiline: true },
+        { key: 'advancedGuide.donateButton', label: '고급 기능: 후원 버튼', category: '고급 안내', selector: '#manualSubscriptionDonateLink', prop: 'text' },
+        { key: 'advancedGuide.flowHtml', label: '고급 기능: 신청 흐름', category: '고급 안내', selector: '#advancedGuideFlow', prop: 'html', multiline: true },
+        { key: 'advancedGuide.formTitle', label: '고급 기능: 신청서 제목', category: '고급 안내', selector: '#advancedGuideFormTitle', prop: 'text' },
+        { key: 'advancedGuide.formDescription', label: '고급 기능: 신청서 설명', category: '고급 안내', selector: '#advancedGuideFormDescription', prop: 'html', multiline: true },
+        { key: 'advancedGuide.passwordHint', label: '고급 기능: 비밀번호 안내', category: '고급 안내', selector: '#advancedGuidePasswordHint', prop: 'html', multiline: true },
+        { key: 'advancedGuide.lookupTitle', label: '고급 기능: 신청 조회 제목', category: '고급 안내', selector: '#advancedGuideLookupTitle', prop: 'text' },
+        { key: 'advancedGuide.lookupDescription', label: '고급 기능: 신청 조회 설명', category: '고급 안내', selector: '#advancedGuideLookupDescription', prop: 'html', multiline: true },
+        { key: 'advancedGuide.lookupIdPlaceholder', label: '고급 기능: 조회 이메일 placeholder', category: '고급 안내', selector: '#manualSubscriptionLookupIdInput', prop: 'placeholder', visual: false },
+        { key: 'advancedGuide.lookupPasswordPlaceholder', label: '고급 기능: 조회 비밀번호 placeholder', category: '고급 안내', selector: '#manualSubscriptionLookupPasswordInput', prop: 'placeholder', visual: false },
+        { key: 'advancedGuide.lookupButton', label: '고급 기능: 조회 버튼', category: '고급 안내', selector: '#manualSubscriptionLookupBtn', prop: 'text' },
+        { key: 'advancedGuide.contactHtml', label: '고급 기능: 문의 문구', category: '고급 안내', selector: '#advancedGuideContact', prop: 'html', multiline: true },
+        { key: 'advancedFeature.title', label: '고급 기능 모달 제목', category: '고급 기능', selector: '#advancedFeatureModalTitle', prop: 'text' },
+        { key: 'advancedFeature.introHtml', label: '고급 기능: 안내 상단', category: '고급 기능', selector: '#advancedFeatureIntro', prop: 'html', multiline: true },
+        { key: 'advancedFeature.summaryHtml', label: '고급 기능: 요약', category: '고급 기능', selector: '#advancedFeatureSummary', prop: 'html', multiline: true },
+        { key: 'advancedFeature.planHtml', label: '고급 기능: 위치 안내', category: '고급 기능', selector: '#advancedFeaturePlanInfo', prop: 'html', multiline: true },
+        { key: 'advancedFeature.image1Title', label: '고급 기능: 도식 1 제목', category: '고급 기능', selector: '#advancedFeatureImage1Title', prop: 'text' },
+        { key: 'advancedFeature.image1Caption', label: '고급 기능: 도식 1 설명', category: '고급 기능', selector: '#advancedFeatureImage1Caption', prop: 'text' },
+        { key: 'advancedFeature.image2Title', label: '고급 기능: 도식 2 제목', category: '고급 기능', selector: '#advancedFeatureImage2Title', prop: 'text' },
+        { key: 'advancedFeature.image2Caption', label: '고급 기능: 도식 2 설명', category: '고급 기능', selector: '#advancedFeatureImage2Caption', prop: 'text' },
+        { key: 'advancedFeature.flowButton', label: '고급 기능: 신청 안내 버튼', category: '고급 기능', selector: '#advancedFeatureManualFlowBtn', prop: 'text' },
+        { key: 'advancedFeature.statsButton', label: '고급 기능: 통계 다운로드 버튼', category: '고급 기능', visual: false },
+        { key: 'advancedFeature.feature1Html', label: '고급 기능 설명 1', category: '고급 기능', selector: '#advancedFeatureItem1', prop: 'html', multiline: true },
+        { key: 'advancedFeature.feature2Html', label: '고급 기능 설명 2', category: '고급 기능', selector: '#advancedFeatureItem2', prop: 'html', multiline: true },
+        { key: 'advancedFeature.feature3Html', label: '고급 기능 설명 3', category: '고급 기능', selector: '#advancedFeatureItem3', prop: 'html', multiline: true },
+        { key: 'advancedFeature.feature4Html', label: '고급 기능 설명 4', category: '고급 기능', selector: '#advancedFeatureItem4', prop: 'html', multiline: true },
+        { key: 'advancedMode.statusTitle', label: '고급 상태 바 제목', category: '고급 상태 바', selector: '#advancedModeStatusTitle', prop: 'text' },
+        { key: 'advancedMode.statusLeadHtml', label: '고급 상태 바 설명', category: '고급 상태 바', selector: '#advancedModeStatusLead', prop: 'html', multiline: true },
+        { key: 'advancedMode.labelState', label: '고급 상태: 상태 라벨', category: '고급 상태 바', selector: '#advancedModeLabelState', prop: 'text' },
+        { key: 'advancedMode.labelLogin', label: '고급 상태: 로그인 라벨', category: '고급 상태 바', selector: '#advancedModeLabelLogin', prop: 'text' },
+        { key: 'advancedMode.labelExpiry', label: '고급 상태: 만료 라벨', category: '고급 상태 바', selector: '#advancedModeLabelExpiry', prop: 'text' },
+        { key: 'advancedMode.labelPlan', label: '고급 상태: 이용권 라벨', category: '고급 상태 바', visual: false },
+        { key: 'advancedMode.labelArchive', label: '고급 상태: 보관함 라벨', category: '고급 상태 바', selector: '#advancedModeLabelArchive', prop: 'text' },
+        { key: 'advancedMode.labelRail', label: '고급 상태: 우측 여백 라벨', category: '고급 상태 바', selector: '#advancedModeLabelRail', prop: 'text' },
+        { key: 'advancedMode.valueStateActive', label: '고급 상태: 활성 값', category: '고급 상태 바', visual: false },
+        { key: 'advancedMode.valueStateInactive', label: '고급 상태: 비활성 값', category: '고급 상태 바', visual: false },
+        { key: 'advancedMode.valueArchiveReady', label: '고급 상태: 보관함 사용 가능 값', category: '고급 상태 바', visual: false },
+        { key: 'advancedMode.valueArchiveBlocked', label: '고급 상태: 보관함 잠김 값', category: '고급 상태 바', visual: false },
+        { key: 'advancedMode.valueRailReady', label: '고급 상태: 여백 복원 값', category: '고급 상태 바', visual: false },
+        { key: 'advancedMode.valueRailBlocked', label: '고급 상태: 여백 숨김 값', category: '고급 상태 바', visual: false },
+        { key: 'advancedMode.valuePermanentPlan', label: '고급 상태: 영구 이용권 값', category: '고급 상태 바', visual: false },
+        { key: 'advancedMode.valueLoginFallback', label: '고급 상태: 로그인 기본값', category: '고급 상태 바', visual: false },
+        { key: 'advancedMode.valueExpiryFallback', label: '고급 상태: 만료 기본값', category: '고급 상태 바', visual: false },
+        { key: 'advancedMode.footnoteHtml', label: '고급 상태 바 하단 설명', category: '고급 상태 바', selector: '#advancedModeStatusFootnote', prop: 'html', multiline: true },
+        { key: 'advancedMode.guideButton', label: '고급 상태 바 활용 버튼', category: '고급 상태 바', selector: '#advancedModeGuideBtn', prop: 'text' },
+        { key: 'advancedMode.archiveButton', label: '고급 상태 바 보관함 버튼', category: '고급 상태 바', selector: '#advancedModeArchiveBtn', prop: 'text' },
+        { key: 'advancedMode.coachTitle', label: '고급 버튼 순서 제목', category: '고급 버튼 가이드', selector: '#advancedCoachTitle', prop: 'text' },
+        { key: 'advancedMode.coachLeadHtml', label: '고급 버튼 순서 설명', category: '고급 버튼 가이드', selector: '#advancedCoachLead', prop: 'html', multiline: true },
+        { key: 'advancedMode.coachStep1Html', label: '고급 버튼 순서 1', category: '고급 버튼 가이드', selector: '#advancedCoachStep1', prop: 'html', multiline: true },
+        { key: 'advancedMode.coachStep2Html', label: '고급 버튼 순서 2', category: '고급 버튼 가이드', selector: '#advancedCoachStep2', prop: 'html', multiline: true },
+        { key: 'advancedMode.coachStep3Html', label: '고급 버튼 순서 3', category: '고급 버튼 가이드', selector: '#advancedCoachStep3', prop: 'html', multiline: true },
+        { key: 'advancedMode.coachHintHtml', label: '고급 버튼 순서 하단 힌트', category: '고급 버튼 가이드', selector: '#advancedCoachHint', prop: 'html', multiline: true },
+        { key: 'advancedMode.coachGuideButton', label: '고급 버튼 순서 활용 버튼', category: '고급 버튼 가이드', selector: '#advancedCoachGuideBtn', prop: 'text' },
+        { key: 'archivePage.metaTitle', label: '기록 보관함: 브라우저 제목', category: '기록 보관함', visual: false },
+        { key: 'archivePage.metaDescription', label: '기록 보관함: 설명 메타', category: '기록 보관함', visual: false },
+        { key: 'archivePage.heroEyebrow', label: '기록 보관함: 상단 소제목', category: '기록 보관함', selector: '#archiveHeroEyebrow', prop: 'text', visual: false },
+        { key: 'archivePage.heroTitle', label: '기록 보관함: 상단 제목', category: '기록 보관함', selector: '#archiveHeroTitle', prop: 'text', visual: false },
+        { key: 'archivePage.heroCopyHtml', label: '기록 보관함: 상단 설명', category: '기록 보관함', selector: '#archiveHeroCopy', prop: 'html', multiline: true, visual: false },
+        { key: 'archivePage.backButton', label: '기록 보관함: 메인 복귀 버튼', category: '기록 보관함', selector: '#archiveBackButton', prop: 'text', visual: false },
+        { key: 'archivePage.gateTitle', label: '기록 보관함: 접근 제한 제목', category: '기록 보관함', selector: '#archiveAccessGateTitle', prop: 'text', visual: false },
+        { key: 'archivePage.gateBodyHtml', label: '기록 보관함: 접근 제한 설명', category: '기록 보관함', selector: '#archiveAccessGateBody', prop: 'html', multiline: true, visual: false },
+        { key: 'archivePage.gateButton', label: '기록 보관함: 접근 제한 버튼', category: '기록 보관함', selector: '#archiveAccessGuideLink', prop: 'text', visual: false },
+        { key: 'archivePage.authLoginTab', label: '기록 보관함: 로그인 탭', category: '기록 보관함', selector: '#authLoginTab', prop: 'text', visual: false },
+        { key: 'archivePage.authRegisterTab', label: '기록 보관함: 회원가입 탭', category: '기록 보관함', selector: '#authRegisterTab', prop: 'text', visual: false },
+        { key: 'archivePage.authEmailLabel', label: '기록 보관함: 이메일 라벨', category: '기록 보관함', selector: '#authEmailLabel', prop: 'text', visual: false },
+        { key: 'archivePage.authPasswordLabel', label: '기록 보관함: 비밀번호 라벨', category: '기록 보관함', selector: '#authPasswordLabel', prop: 'text', visual: false },
+        { key: 'archivePage.authEmailPlaceholder', label: '기록 보관함: 이메일 placeholder', category: '기록 보관함', selector: '#authEmailInput', prop: 'placeholder', visual: false },
+        { key: 'archivePage.authPasswordPlaceholder', label: '기록 보관함: 비밀번호 placeholder', category: '기록 보관함', selector: '#authPasswordInput', prop: 'placeholder', visual: false },
+        { key: 'archivePage.authLoginTitle', label: '기록 보관함: 로그인 제목', category: '기록 보관함', visual: false },
+        { key: 'archivePage.authLoginDescription', label: '기록 보관함: 로그인 설명', category: '기록 보관함', visual: false },
+        { key: 'archivePage.authRegisterTitle', label: '기록 보관함: 회원가입 제목', category: '기록 보관함', visual: false },
+        { key: 'archivePage.authRegisterDescription', label: '기록 보관함: 회원가입 설명', category: '기록 보관함', visual: false },
+        { key: 'archivePage.authLoginButton', label: '기록 보관함: 로그인 버튼', category: '기록 보관함', visual: false },
+        { key: 'archivePage.authRegisterButton', label: '기록 보관함: 회원가입 버튼', category: '기록 보관함', visual: false },
+        { key: 'archivePage.authFootnoteHtml', label: '기록 보관함: 로그인 안내 문구', category: '기록 보관함', selector: '#archiveAuthFootnote', prop: 'html', multiline: true, visual: false },
+        { key: 'archivePage.workspaceTitle', label: '기록 보관함: 작업 공간 제목', category: '기록 보관함', selector: '#archiveWorkspaceTitle', prop: 'text', visual: false },
+        { key: 'archivePage.workspaceCopyHtml', label: '기록 보관함: 작업 공간 설명', category: '기록 보관함', selector: '#archiveWorkspaceCopy', prop: 'html', multiline: true, visual: false },
+        { key: 'archivePage.logoutButton', label: '기록 보관함: 로그아웃 버튼', category: '기록 보관함', selector: '#authLogoutBtn', prop: 'text', visual: false },
+        { key: 'messages.advancedLoading', label: '상태 메시지: 고급 로딩', category: '상태 메시지', visual: false },
+        { key: 'messages.advancedCooldown', label: '상태 메시지: 고급 재시도 대기', category: '상태 메시지', visual: false },
+        { key: 'messages.advancedUnlocked', label: '상태 메시지: 고급 인증 유지', category: '상태 메시지', visual: false },
+        { key: 'messages.advancedUnlockedPermanent', label: '상태 메시지: 고급 영구 인증 유지', category: '상태 메시지', visual: false },
+        { key: 'messages.advancedAvailable', label: '상태 메시지: 고급 이용권 있음', category: '상태 메시지', visual: false },
+        { key: 'messages.advancedNone', label: '상태 메시지: 고급 이용권 없음', category: '상태 메시지', visual: false },
+        { key: 'messages.advancedConfigMissing', label: '상태 메시지: 공개키 없음', category: '상태 메시지', visual: false },
+        { key: 'messages.advancedNeedConfig', label: '상태 메시지: 고급 준비 중', category: '상태 메시지', visual: false },
+        { key: 'messages.advancedRetryAfter', label: '상태 메시지: 고급 재시도 초', category: '상태 메시지', visual: false },
+        { key: 'messages.advancedWelcomeTitle', label: '상태 메시지: 고급 환영 제목', category: '상태 메시지', visual: false },
+        { key: 'messages.advancedWelcomeBody', label: '상태 메시지: 고급 환영 본문', category: '상태 메시지', multiline: true, visual: false },
+        { key: 'messages.advancedChecking', label: '상태 메시지: 고급 확인 중', category: '상태 메시지', visual: false },
+        { key: 'messages.advancedOpening', label: '상태 메시지: 고급 열기 중', category: '상태 메시지', visual: false },
+        { key: 'messages.advancedNeedRelogin', label: '상태 메시지: 재로그인 필요', category: '상태 메시지', visual: false },
+        { key: 'messages.advancedReuse', label: '상태 메시지: 저장된 인증 재사용', category: '상태 메시지', visual: false },
+        { key: 'messages.archiveAccessChecking', label: '상태 메시지: 보관함 라이선스 확인 중', category: '상태 메시지', visual: false },
+        { key: 'messages.archiveAccessDenied', label: '상태 메시지: 보관함 접근 제한', category: '상태 메시지', visual: false },
+        { key: 'messages.archiveAuthRequired', label: '상태 메시지: 보관함 로그인 필수값', category: '상태 메시지', visual: false },
+        { key: 'messages.archiveAuthRegistering', label: '상태 메시지: 보관함 회원가입 중', category: '상태 메시지', visual: false },
+        { key: 'messages.archiveAuthLoggingIn', label: '상태 메시지: 보관함 로그인 중', category: '상태 메시지', visual: false },
+        { key: 'messages.archiveAuthRegisterSuccess', label: '상태 메시지: 보관함 회원가입 성공', category: '상태 메시지', visual: false },
+        { key: 'messages.archiveAuthLoginSuccess', label: '상태 메시지: 보관함 로그인 성공', category: '상태 메시지', visual: false },
+        { key: 'messages.archiveAuthInvalidCredential', label: '상태 메시지: 보관함 자격 증명 오류', category: '상태 메시지', visual: false },
+        { key: 'messages.archiveAuthEmailInUse', label: '상태 메시지: 보관함 이메일 중복', category: '상태 메시지', visual: false },
+        { key: 'messages.archiveAuthWeakPassword', label: '상태 메시지: 보관함 비밀번호 길이', category: '상태 메시지', visual: false },
+        { key: 'messages.archiveAuthOperationNotAllowed', label: '상태 메시지: 보관함 가입 비활성', category: '상태 메시지', visual: false },
+        { key: 'messages.archiveAuthRegisterError', label: '상태 메시지: 보관함 회원가입 오류', category: '상태 메시지', visual: false },
+        { key: 'messages.archiveAuthLoginError', label: '상태 메시지: 보관함 로그인 오류', category: '상태 메시지', visual: false },
+        { key: 'messages.archiveGuestLabel', label: '상태 메시지: 보관함 로그아웃 상태 라벨', category: '상태 메시지', visual: false },
+        { key: 'messages.archiveSessionSuffix', label: '상태 메시지: 보관함 세션 접미사', category: '상태 메시지', visual: false },
+        { key: 'messages.manualClosed', label: '상태 메시지: 신청 닫힘', category: '상태 메시지', visual: false },
+        { key: 'messages.manualConfigNotReady', label: '상태 메시지: 신청 설정 미완료', category: '상태 메시지', visual: false },
+        { key: 'messages.manualNoPlan', label: '상태 메시지: 신청 플랜 없음', category: '상태 메시지', visual: false },
+        { key: 'messages.manualRequiredFields', label: '상태 메시지: 신청 필수값', category: '상태 메시지', visual: false },
+        { key: 'messages.manualInvalidEmail', label: '상태 메시지: 이메일 오류', category: '상태 메시지', visual: false },
+        { key: 'messages.manualPasswordShort', label: '상태 메시지: 비밀번호 길이', category: '상태 메시지', visual: false },
+        { key: 'messages.manualPasswordMismatch', label: '상태 메시지: 비밀번호 불일치', category: '상태 메시지', visual: false },
+        { key: 'messages.manualSubmitSuccess', label: '상태 메시지: 신청 저장 성공', category: '상태 메시지', visual: false },
+        { key: 'messages.manualSubmitError', label: '상태 메시지: 신청 저장 실패', category: '상태 메시지', visual: false },
+        { key: 'messages.manualLookupRequired', label: '상태 메시지: 조회 필수값', category: '상태 메시지', visual: false },
+        { key: 'messages.manualLookupEmailOnly', label: '상태 메시지: 조회 이메일 전용 안내', category: '상태 메시지', visual: false },
+        { key: 'messages.manualLookupError', label: '상태 메시지: 조회 오류', category: '상태 메시지', visual: false },
+        { key: 'messages.manualLookupNotFound', label: '상태 메시지: 신청 조회 없음', category: '상태 메시지', visual: false },
+        { key: 'messages.manualLookupDecryptError', label: '상태 메시지: 조회 복호화 실패', category: '상태 메시지', visual: false }
+    ];
+    const PREVIEW_APPLY_EVENT = 'skct-site-text-preview-apply';
+    const PREVIEW_HIGHLIGHT_EVENT = 'skct-site-text-preview-highlight';
+    const PREVIEW_SELECTION_MODE_EVENT = 'skct-site-text-preview-selection-mode';
+    const PREVIEW_SELECTED_EVENT = 'skct-site-text-selected';
+    let currentConfig = deepMerge(deepClone(DEFAULT_SITE_TEXT_CONFIG), {});
+    let selectionModeEnabled = false;
+
+    function isPlainObject(value) {
+        return Object.prototype.toString.call(value) === '[object Object]';
+    }
+
+    function deepClone(value) {
+        if (Array.isArray(value)) return value.map((item) => deepClone(item));
+        if (!isPlainObject(value)) return value;
+        const next = {};
+        Object.keys(value).forEach((key) => {
+            next[key] = deepClone(value[key]);
+        });
+        return next;
+    }
+
+    function deepMerge(base, incoming) {
+        const target = deepClone(base);
+        if (!isPlainObject(incoming)) return target;
+        Object.keys(incoming).forEach((key) => {
+            const value = incoming[key];
+            if (isPlainObject(value) && isPlainObject(target[key])) {
+                target[key] = deepMerge(target[key], value);
+            } else {
+                target[key] = deepClone(value);
+            }
+        });
+        return target;
+    }
+
+    function getValueByPath(source, path) {
+        return String(path || '').split('.').reduce((acc, part) => (acc == null ? undefined : acc[part]), source);
+    }
+
+    function setValueByPath(target, path, value) {
+        const segments = String(path || '').split('.');
+        let pointer = target;
+        segments.forEach((segment, index) => {
+            if (index === segments.length - 1) {
+                pointer[segment] = value;
+                return;
+            }
+            if (!isPlainObject(pointer[segment])) {
+                pointer[segment] = {};
+            }
+            pointer = pointer[segment];
+        });
+        return target;
+    }
+
+    function applyLegacyValueMigrations(config, rawConfig) {
+        Object.entries(LEGACY_SITE_TEXT_DEFAULTS).forEach(([path, legacyValues]) => {
+            const rawValue = getValueByPath(rawConfig, path);
+            if (rawValue == null) return;
+            if (legacyValues.includes(rawValue)) {
+                const nextValue = getValueByPath(DEFAULT_SITE_TEXT_CONFIG, path);
+                if (nextValue != null) {
+                    setValueByPath(config, path, nextValue);
+                }
+            }
+        });
+        Object.entries(LEGACY_SITE_TEXT_PATTERNS).forEach(([path, patterns]) => {
+            const rawValue = getValueByPath(rawConfig, path);
+            if (rawValue == null) return;
+            const rawText = String(rawValue || '');
+            if (patterns.some((pattern) => pattern.test(rawText))) {
+                const nextValue = getValueByPath(DEFAULT_SITE_TEXT_CONFIG, path);
+                if (nextValue != null) {
+                    setValueByPath(config, path, nextValue);
+                }
+            }
+        });
+        return config;
+    }
+
+    function normalizeSiteTextConfig(rawConfig) {
+        return applyLegacyValueMigrations(deepMerge(DEFAULT_SITE_TEXT_CONFIG, rawConfig || {}), rawConfig || {});
+    }
+
+    function sanitizeHtml(value, options = {}) {
+        const { multiline = false } = options;
+        const source = String(value ?? '');
+        const normalized = multiline ? source.replace(/\n/g, '<br>') : source;
+        const template = document.createElement('template');
+        template.innerHTML = normalized;
+        const allowedTags = new Set(['A', 'B', 'BR', 'DIV', 'EM', 'I', 'P', 'SMALL', 'SPAN', 'STRONG', 'U']);
+        const walker = document.createTreeWalker(template.content, NodeFilter.SHOW_ELEMENT);
+        const elements = [];
+        while (walker.nextNode()) {
+            elements.push(walker.currentNode);
+        }
+        elements.forEach((element) => {
+            if (!allowedTags.has(element.tagName)) {
+                element.replaceWith(document.createTextNode(element.textContent || ''));
+                return;
+            }
+            Array.from(element.attributes).forEach((attribute) => {
+                const name = attribute.name.toLowerCase();
+                const attrValue = String(attribute.value || '').trim();
+                const allowHref = element.tagName === 'A' && name === 'href' && /^(https?:|mailto:)/i.test(attrValue);
+                if (!allowHref) {
+                    element.removeAttribute(attribute.name);
+                }
+            });
+            if (element.tagName === 'A') {
+                element.setAttribute('target', '_blank');
+                element.setAttribute('rel', 'noopener noreferrer');
+            }
+        });
+        return template.innerHTML;
+    }
+
+    function formatHtmlValue(value, multiline) {
+        return sanitizeHtml(value, { multiline });
+    }
+
+    function applyProperty(element, entry, value) {
+        if (entry.prop === 'text') element.textContent = String(value ?? '');
+        if (entry.prop === 'html') element.innerHTML = formatHtmlValue(value, entry.multiline);
+        if (entry.prop === 'placeholder') element.setAttribute('placeholder', String(value ?? ''));
+        if (entry.prop === 'title') element.setAttribute('title', String(value ?? ''));
+        if (entry.prop === 'content') element.setAttribute('content', String(value ?? ''));
+    }
+
+    function injectPreviewStyles(doc = document) {
+        if (doc.getElementById('skctSiteTextPreviewStyles')) return;
+        const style = doc.createElement('style');
+        style.id = 'skctSiteTextPreviewStyles';
+        style.textContent = `
+            [data-site-text-key] { position: relative; }
+            .site-text-selection-mode [data-site-text-key] { cursor: crosshair !important; }
+            .site-text-selection-mode [data-site-text-key]:hover { outline: 2px dashed rgba(37, 99, 235, 0.7); outline-offset: 3px; }
+            [data-site-text-key].site-text-highlight { outline: 3px solid rgba(245, 158, 11, 0.95); outline-offset: 4px; box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.18); }
+        `;
+        doc.head.appendChild(style);
+    }
+
+    function clearVisualMarkers(doc = document) {
+        doc.querySelectorAll('[data-site-text-key]').forEach((element) => {
+            element.removeAttribute('data-site-text-key');
+            element.classList.remove('site-text-highlight');
+        });
+    }
+
+    function annotateVisualTargets(doc = document) {
+        SITE_TEXT_CATALOG.forEach((entry) => {
+            if (!entry.selector || entry.visual === false) return;
+            doc.querySelectorAll(entry.selector).forEach((element) => {
+                element.setAttribute('data-site-text-key', entry.key);
+            });
+        });
+    }
+
+    function applySiteTextConfig(rawConfig, options = {}) {
+        currentConfig = normalizeSiteTextConfig(rawConfig);
+        const doc = options.document || document;
+        SITE_TEXT_CATALOG.forEach((entry) => {
+            if (!entry.selector) return;
+            const value = getValueByPath(currentConfig, entry.key);
+            doc.querySelectorAll(entry.selector).forEach((element) => applyProperty(element, entry, value));
+        });
+        if (window.SKCT_FLAGS?.textEditor === true || options.annotate === true) {
+            injectPreviewStyles(doc);
+            clearVisualMarkers(doc);
+            annotateVisualTargets(doc);
+        }
+        return currentConfig;
+    }
+
+    function applyRemoteSiteTextConfig(config) {
+        return applySiteTextConfig(config || {});
+    }
+
+    function getTextValue(path, fallback = '', tokens = {}) {
+        let value = getValueByPath(currentConfig, path);
+        if (value == null || value === '') value = getValueByPath(DEFAULT_SITE_TEXT_CONFIG, path);
+        const baseText = value == null ? fallback : String(value);
+        return baseText.replace(/\{([^{}]+)\}/g, (_, token) => (Object.prototype.hasOwnProperty.call(tokens, token) ? String(tokens[token]) : `{${token}}`));
+    }
+
+    function highlightKey(key, options = {}) {
+        const doc = options.document || document;
+        doc.querySelectorAll('.site-text-highlight').forEach((element) => element.classList.remove('site-text-highlight'));
+        doc.querySelectorAll(`[data-site-text-key="${CSS.escape(key)}"]`).forEach((element, index) => {
+            element.classList.add('site-text-highlight');
+            if (index === 0 && options.scroll !== false) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+            }
+        });
+    }
+
+    function setSelectionMode(enabled) {
+        selectionModeEnabled = Boolean(enabled);
+        document.documentElement.classList.toggle('site-text-selection-mode', selectionModeEnabled);
+    }
+
+    function handlePreviewClick(event) {
+        if (!selectionModeEnabled) return;
+        const target = event.target.closest('[data-site-text-key]');
+        if (!target) return;
+        event.preventDefault();
+        event.stopPropagation();
+        highlightKey(target.dataset.siteTextKey, { scroll: false });
+        if (window.parent && window.parent !== window) {
+            window.parent.postMessage(
+                { type: PREVIEW_SELECTED_EVENT, key: target.dataset.siteTextKey },
+                window.location.origin
+            );
+        }
+    }
+
+    function bindPreviewMessaging() {
+        window.addEventListener('message', (event) => {
+            if (event.origin !== window.location.origin || event.source !== window.parent) return;
+            const data = event.data || {};
+            if (data.type === PREVIEW_APPLY_EVENT) applySiteTextConfig(data.config || {});
+            if (data.type === PREVIEW_HIGHLIGHT_EVENT && data.key) highlightKey(data.key);
+            if (data.type === PREVIEW_SELECTION_MODE_EVENT) setSelectionMode(Boolean(data.enabled));
+        });
+        document.addEventListener('click', handlePreviewClick, true);
+    }
+
+    window.SKCTSiteTextConfig = {
+        DEFAULT_SITE_TEXT_CONFIG,
+        SITE_TEXT_CATALOG,
+        PREVIEW_APPLY_EVENT,
+        PREVIEW_HIGHLIGHT_EVENT,
+        PREVIEW_SELECTION_MODE_EVENT,
+        PREVIEW_SELECTED_EVENT,
+        normalizeSiteTextConfig,
+        applySiteTextConfig,
+        applyRemoteSiteTextConfig,
+        deepClone,
+        getValueByPath,
+        setValueByPath,
+        getTextValue,
+        sanitizeHtml,
+        highlightKey,
+        setSelectionMode
+    };
+    window.applyRemoteSiteTextConfig = applyRemoteSiteTextConfig;
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.SKCT_FLAGS?.textEditor === true) applySiteTextConfig(currentConfig);
+            bindPreviewMessaging();
+        }, { once: true });
+    } else {
+        if (window.SKCT_FLAGS?.textEditor === true) applySiteTextConfig(currentConfig);
+        bindPreviewMessaging();
+    }
+})();

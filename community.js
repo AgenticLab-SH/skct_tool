@@ -1,0 +1,754 @@
+// ============================================================
+// SKCT Tool Community System v2 - DCInside Style (ES Module)
+// ============================================================
+import { getApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+import { getDatabase, ref, push, set, get, update, onValue, off, runTransaction, query, orderByChild, limitToLast
+} from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
+
+const db = getDatabase(getApp());
+
+// ── State ──
+let currentTab = 'questions';
+let popularConfig = { minLikes: 5, minComments: 3 };
+let allPosts = {};
+let replyCache = {}; // 댓글 캐시
+let expandedPost = null;
+let isAdmin = false;
+let postsListener = null;
+let pendingOpenPostId = new URLSearchParams(window.location.search).get('post') || '';
+const COMMUNITY_POST_LIMIT = 120;
+const COMMUNITY_REPLY_LIMIT = 80;
+const COMMUNITY_MAX_ATTACHMENTS = 3;
+const COMMUNITY_MAX_ATTACHMENT_BYTES = 260 * 1024;
+const COMMUNITY_MAX_ATTACHMENT_TOTAL_BYTES = 780 * 1024;
+let pendingAttachments = [];
+
+// Session ID for likes (anonymous, per-browser)
+const sessionId = localStorage.getItem('skct_sid') || (() => {
+    const bytes = new Uint8Array(12);
+    crypto.getRandomValues(bytes);
+    const id = 'S' + Array.from(bytes, (b) => b.toString(36).padStart(2, '0')).join('').slice(0, 18);
+    localStorage.setItem('skct_sid', id);
+    return id;
+})();
+
+const WRITABLE_TABS = ['qna', 'tip', 'review', 'improvement'];
+const COMBINED_TABS = {
+    questions: ['qna', 'improvement'],
+    stories: ['tip', 'review']
+};
+const CATEGORY_LABELS = {
+    qna: '질문',
+    improvement: '개선요청',
+    tip: '팁',
+    review: '후기',
+    faq: 'FAQ'
+};
+const IMPROVEMENT_STATUSES = ['접수', '검토', '처리완료', '반영', '보류'];
+
+// ── Utilities ──
+async function sha256(str) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+function timeAgo(ts) {
+    const d = Date.now() - ts, m = Math.floor(d/60000), h = Math.floor(d/3600000), dy = Math.floor(d/86400000);
+    if (m < 1) return '방금 전'; if (m < 60) return m+'분 전'; if (h < 24) return h+'시간 전'; if (dy < 30) return dy+'일 전';
+    const dt = new Date(ts); return `${dt.getFullYear()}.${String(dt.getMonth()+1).padStart(2,'0')}.${String(dt.getDate()).padStart(2,'0')}`;
+}
+function getSavedNick() { return localStorage.getItem('skct_cm_nick') || ''; }
+function saveNick(n) { localStorage.setItem('skct_cm_nick', n); }
+function isValidEmail(value) {
+    const text = String(value || '').trim();
+    return !text || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text);
+}
+function estimateDataUrlBytes(dataUrl) {
+    const base64 = String(dataUrl || '').split(',')[1] || '';
+    return Math.ceil(base64.length * 0.75);
+}
+function attachmentAllowedForCategory(category) {
+    return category === 'qna' || category === 'improvement';
+}
+
+function feedbackEmailAllowedForCategory(category) {
+    return category === 'qna' || category === 'improvement';
+}
+function renderAttachmentPreview() {
+    const preview = document.getElementById('cmAttachmentPreview');
+    if (!preview) return;
+    if (!pendingAttachments.length) {
+        preview.innerHTML = '<div class="cm-attachment-empty">첨부된 이미지가 없습니다.</div>';
+        return;
+    }
+    preview.innerHTML = pendingAttachments.map((item, index) => `
+        <div class="cm-attachment-item">
+            <img src="${item.dataUrl}" alt="첨부 이미지 ${index + 1}">
+            <button type="button" data-attach-remove="${index}" aria-label="첨부 이미지 삭제">×</button>
+        </div>
+    `).join('');
+    preview.querySelectorAll('[data-attach-remove]').forEach((button) => {
+        button.onclick = () => {
+            const index = parseInt(button.dataset.attachRemove || '-1', 10);
+            if (index >= 0) pendingAttachments.splice(index, 1);
+            renderAttachmentPreview();
+        };
+    });
+}
+function clearAttachments() {
+    pendingAttachments = [];
+    const input = document.getElementById('cmImageInput');
+    if (input) input.value = '';
+    renderAttachmentPreview();
+}
+function readImageFileAsDataUrl(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(String(reader.result || ''));
+        reader.onerror = () => reject(new Error('이미지를 읽지 못했습니다.'));
+        reader.readAsDataURL(file);
+    });
+}
+function loadImage(dataUrl) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.onerror = () => reject(new Error('이미지를 처리하지 못했습니다.'));
+        img.src = dataUrl;
+    });
+}
+async function compressImageFile(file) {
+    if (!file || !/^image\/(png|jpe?g|webp)$/i.test(file.type || '')) {
+        throw new Error('PNG, JPG, WebP 이미지만 첨부할 수 있습니다.');
+    }
+    const source = await readImageFileAsDataUrl(file);
+    const img = await loadImage(source);
+    const maxSide = 1280;
+    const scale = Math.min(1, maxSide / Math.max(img.naturalWidth || img.width, img.naturalHeight || img.height));
+    const width = Math.max(1, Math.round((img.naturalWidth || img.width) * scale));
+    const height = Math.max(1, Math.round((img.naturalHeight || img.height) * scale));
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0, width, height);
+    let dataUrl = canvas.toDataURL('image/jpeg', 0.78);
+    if (estimateDataUrlBytes(dataUrl) > COMMUNITY_MAX_ATTACHMENT_BYTES) {
+        dataUrl = canvas.toDataURL('image/jpeg', 0.62);
+    }
+    if (estimateDataUrlBytes(dataUrl) > COMMUNITY_MAX_ATTACHMENT_BYTES) {
+        throw new Error('이미지 용량이 큽니다. 화면 일부만 잘라 다시 첨부해주세요.');
+    }
+    return {
+        name: String(file.name || 'attachment.jpg').slice(0, 80),
+        type: 'image/jpeg',
+        width,
+        height,
+        size: estimateDataUrlBytes(dataUrl),
+        dataUrl
+    };
+}
+async function addAttachmentFiles(files) {
+    const category = document.getElementById('cmCategorySelect')?.value || currentTab;
+    if (!attachmentAllowedForCategory(category)) return;
+    const list = Array.from(files || []).filter((file) => /^image\//i.test(file.type || ''));
+    if (!list.length) return;
+    for (const file of list) {
+        if (pendingAttachments.length >= COMMUNITY_MAX_ATTACHMENTS) {
+            alert('이미지는 최대 3장까지 첨부할 수 있습니다.');
+            break;
+        }
+        try {
+            const item = await compressImageFile(file);
+            const nextTotal = pendingAttachments.reduce((sum, current) => sum + (current.size || estimateDataUrlBytes(current.dataUrl)), 0) + item.size;
+            if (nextTotal > COMMUNITY_MAX_ATTACHMENT_TOTAL_BYTES) {
+                alert('첨부 이미지 전체 용량이 큽니다. 일부 이미지를 삭제하거나 더 작게 캡처해주세요.');
+                break;
+            }
+            pendingAttachments.push(item);
+        } catch (error) {
+            alert(error.message || '이미지 첨부에 실패했습니다.');
+        }
+    }
+    renderAttachmentPreview();
+}
+
+// ── Firebase Config (One-shot fetch) ──
+const COMMUNITY_PUBLIC_CONFIG_KEYS = ['notice_community', 'popularConfig', 'manualSubscriptionConfig'];
+
+// 보안 API(서버측 비밀번호 검증) base URL. config/manualSubscriptionConfig 에서 읽는다.
+let secureApiBaseUrl = 'https://us-central1-skct-tool.cloudfunctions.net/skctSecureApi';
+
+function buildCommunityApiUrl(path) {
+    const base = String(secureApiBaseUrl || '').trim().replace(/\/+$/, '');
+    if (!base) return '';
+    const normalized = String(path || '').startsWith('/') ? path : `/${path}`;
+    return `${base}${normalized}`;
+}
+
+// 익명 글/댓글 수정·삭제는 서버가 비밀번호를 검증한 뒤에만 반영한다.
+async function postToCommunityApi(path, payload) {
+    const url = buildCommunityApiUrl(path);
+    if (!url) {
+        return { ok: false, errorMessage: '보안 서버 설정이 아직 준비되지 않았습니다. 잠시 후 다시 시도해주세요.' };
+    }
+    let response = null;
+    try {
+        response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload || {})
+        });
+    } catch (error) {
+        return { ok: false, errorMessage: '서버 연결에 실패했습니다. 잠시 후 다시 시도해주세요.' };
+    }
+    let data = null;
+    try { data = await response.json(); } catch (error) { data = null; }
+    if (!response.ok || !data || data.ok !== true) {
+        return { ok: false, errorMessage: String(data?.errorMessage || '처리에 실패했습니다.') };
+    }
+    return { ok: true, data };
+}
+
+async function listenConfig() {
+    try {
+        const entries = await Promise.all(COMMUNITY_PUBLIC_CONFIG_KEYS.map(async (key) => {
+            const snap = await get(ref(db, `config/${key}`));
+            return [key, snap.exists() ? snap.val() : undefined];
+        }));
+        const cfg = Object.fromEntries(entries.filter(([, value]) => value !== undefined));
+        const noticeData = cfg.notice_community;
+        if (noticeData) renderNotice(noticeData);
+        else { const el = document.getElementById('cmNotice'); if (el) el.innerHTML = ''; }
+        if (cfg.popularConfig) popularConfig = cfg.popularConfig;
+        if (cfg.manualSubscriptionConfig) {
+            secureApiBaseUrl = String(cfg.manualSubscriptionConfig.secureApiBaseUrl || '').trim().replace(/\/+$/, '');
+        }
+        // re-render if popular tab is active
+        if (currentTab === 'popular') renderTab();
+    } catch(e) { console.error("Config load error:", e); }
+}
+
+function sanitizeNoticeHtml(value) {
+    if (window.SKCTSiteTextConfig?.sanitizeHtml) {
+        return window.SKCTSiteTextConfig.sanitizeHtml(value, { multiline: true });
+    }
+    return esc(String(value || '')).replace(/\n/g, '<br>');
+}
+
+function renderNotice(data) {
+    const el = document.getElementById('cmNotice');
+    if (!el) return;
+    if (!data || !data.show) { el.innerHTML = ''; return; }
+    const colors = { info:{bg:'#eff6ff',br:'#3b82f6',ic:'💡'}, warning:{bg:'#fffbeb',br:'#f59e0b',ic:'⚠️'}, update:{bg:'#f0fdf4',br:'#22c55e',ic:'🆕'}, event:{bg:'#fdf4ff',br:'#a855f7',ic:'🎉'} };
+    const s = colors[data.type] || colors.info;
+    el.innerHTML = `<div id="cmNoticeWrapper" class="cm-notice" style="cursor:pointer; background:${s.bg};border:1px solid ${s.br};border-left:4px solid ${s.br};">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div style="font-weight:bold;color:#1e293b;">${s.ic} ${esc(data.title || '채팅 공지사항')}</div>
+            <div id="cmNoticeToggleIcon" style="font-size:10px; color:#64748b; background:rgba(0,0,0,0.05); padding:2px 6px; border-radius:4px;">▼ 펼치기</div>
+        </div>
+        <div id="cmNoticeBody" style="display:none; margin-top:8px; border-top:1px dashed ${s.br}; padding-top:8px;">
+            <div style="color:#475569;line-height:1.5;font-size:13px;">${sanitizeNoticeHtml(data.message || '')}</div>
+            ${data.updated?`<div style="font-size:11px;color:#94a3b8;margin-top:6px;text-align:right;">📅 ${esc(data.updated)}</div>`:''}
+        </div>
+    </div>`;
+
+    document.getElementById('cmNoticeWrapper').onclick = () => {
+        const body = document.getElementById('cmNoticeBody');
+        const icon = document.getElementById('cmNoticeToggleIcon');
+        if (body.style.display === 'none') {
+            body.style.display = 'block';
+            icon.textContent = '▲ 접기';
+        } else {
+            body.style.display = 'none';
+            icon.textContent = '▼ 펼치기';
+        }
+    };
+}
+
+// ── Posts CRUD (DC-style: nickname + password per post) ──
+async function createPost(category, nickname, password, content, feedbackEmail = '', attachments = []) {
+    if (!WRITABLE_TABS.includes(category)) return false;
+    if (!nickname || !password || !content.trim()) { alert('닉네임, 비밀번호, 내용을 모두 입력해주세요.'); return false; }
+    if (content.length > 1000) { alert('1000자 이내로 작성해주세요.'); return false; }
+    if (!isValidEmail(feedbackEmail)) { alert('메일 형식을 확인해주세요.'); return false; }
+    const lastPost = parseInt(localStorage.getItem('skct_last_post') || '0');
+    if (Date.now() - lastPost < 30000) { alert('30초 후에 다시 작성할 수 있습니다.'); return false; }
+    saveNick(nickname);
+    try {
+        const result = await postToCommunityApi('/community/post/create', {
+            category,
+            nickname,
+            password,
+            content: content.trim(),
+            feedbackEmail: String(feedbackEmail || '').trim(),
+            attachments: attachmentAllowedForCategory(category) ? attachments : []
+        });
+        if (!result.ok) throw new Error(result.errorMessage || '글 작성에 실패했습니다.');
+        localStorage.setItem('skct_last_post', Date.now());
+        await loadPostsOnce();
+        return true;
+    } catch (e) {
+        alert(e?.message || '글 작성에 실패했습니다. 잠시 후 다시 시도해주세요.');
+        return false;
+    }
+}
+
+async function editPost(pid, newContent, password) {
+    const p = allPosts[pid]; if (!p) return false;
+    if (!newContent || !newContent.trim()) { alert('내용을 입력해주세요.'); return false; }
+    if (newContent.length > 1000) { alert('1000자 이내로 작성해주세요.'); return false; }
+    if (isAdmin) {
+        try {
+            await update(ref(db, `posts/${pid}`), { content: newContent.trim(), editedAt: Date.now() });
+            await loadPostsOnce();
+            return true;
+        } catch (e) { alert('수정에 실패했습니다. 잠시 후 다시 시도해주세요.'); return false; }
+    }
+    // 익명 수정: 서버가 비밀번호를 검증한 뒤에만 반영한다.
+    const result = await postToCommunityApi('/community/post/edit', {
+        postId: pid, password, content: newContent.trim()
+    });
+    if (!result.ok) { alert(result.errorMessage); return false; }
+    await loadPostsOnce();
+    return true;
+}
+
+async function softDeletePost(pid, password) {
+    const p = allPosts[pid]; if (!p) return;
+    if (isAdmin) {
+        try {
+            await update(ref(db, `posts/${pid}`), { deleted: true, deletedAt: Date.now() });
+            await loadPostsOnce();
+        } catch (e) { alert('삭제에 실패했습니다. 잠시 후 다시 시도해주세요.'); }
+        return;
+    }
+    // 익명 삭제: 서버가 비밀번호를 검증한 뒤에만 반영한다.
+    const result = await postToCommunityApi('/community/post/delete', { postId: pid, password });
+    if (!result.ok) { alert(result.errorMessage); return; }
+    await loadPostsOnce();
+}
+
+async function toggleLike(pid) {
+    const p = allPosts[pid]; if (!p) return;
+    const likedRef = ref(db, `userLikes/${sessionId}/${pid}`);
+    const likesRef = ref(db, `posts/${pid}/likes`);
+    const prevLiked = p.likedByMe, prevLikes = p.likes || 0;
+
+    // Optimistic update
+    if (prevLiked) { p.likedByMe = false; p.likes = Math.max(prevLikes - 1, 0); }
+    else { p.likedByMe = true; p.likes = prevLikes + 1; }
+    renderTab();
+
+    try {
+        if (prevLiked) { await set(likedRef, null); await runTransaction(likesRef, c => Math.max((c||0)-1, 0)); }
+        else { await set(likedRef, true); await runTransaction(likesRef, c => (c||0)+1); }
+    } catch (e) {
+        // 실패 시 화면-DB 불일치 방지를 위해 롤백
+        p.likedByMe = prevLiked; p.likes = prevLikes;
+        renderTab();
+        alert('좋아요 처리에 실패했습니다. 잠시 후 다시 시도해주세요.');
+    }
+}
+
+// ── Replies CRUD ──
+async function createReply(pid, nickname, password, content) {
+    if (!nickname || !password || !content.trim()) { alert('닉네임, 비밀번호, 내용을 모두 입력해주세요.'); return; }
+    if (content.length > 1000) { alert('1000자 이내로 작성해주세요.'); return; }
+    const lastReply = parseInt(localStorage.getItem('skct_last_reply') || '0');
+    if (Date.now() - lastReply < 10000) { alert('10초 후에 다시 작성할 수 있습니다.'); return; }
+    saveNick(nickname);
+    try {
+        const result = await postToCommunityApi('/community/reply/create', {
+            postId: pid,
+            nickname,
+            password,
+            content: content.trim()
+        });
+        if (!result.ok) throw new Error(result.errorMessage || '댓글 작성에 실패했습니다.');
+        localStorage.setItem('skct_last_reply', Date.now());
+        delete replyCache[pid];
+    } catch (e) {
+        alert(e?.message || '답글 작성에 실패했습니다. 잠시 후 다시 시도해주세요.');
+    }
+}
+
+async function editReply(pid, rid, newContent, password) {
+    const s = await get(ref(db, `replies/${pid}/${rid}`)); if (!s.exists()) return false;
+    if (!newContent || !newContent.trim()) { alert('내용을 입력해주세요.'); return false; }
+    if (newContent.length > 1000) { alert('1000자 이내로 작성해주세요.'); return false; }
+    if (isAdmin) {
+        try {
+            await update(ref(db, `replies/${pid}/${rid}`), { content: newContent.trim(), editedAt: Date.now() });
+            delete replyCache[pid]; return true;
+        } catch (e) { alert('수정에 실패했습니다.'); return false; }
+    }
+    // 익명 댓글 수정: 서버가 비밀번호를 검증한 뒤에만 반영한다.
+    const result = await postToCommunityApi('/community/reply/edit', {
+        postId: pid, replyId: rid, password, content: newContent.trim()
+    });
+    if (!result.ok) { alert(result.errorMessage); return false; }
+    delete replyCache[pid]; return true;
+}
+
+async function softDeleteReply(pid, rid, password) {
+    const s = await get(ref(db, `replies/${pid}/${rid}`)); if (!s.exists()) return;
+    if (isAdmin) {
+        try {
+            await update(ref(db, `replies/${pid}/${rid}`), { deleted: true, deletedAt: Date.now() });
+            await runTransaction(ref(db, `posts/${pid}/replyCount`), c => Math.max((c||0)-1, 0));
+            delete replyCache[pid];
+        } catch (e) { alert('삭제에 실패했습니다. 잠시 후 다시 시도해주세요.'); }
+        return;
+    }
+    // 익명 댓글 삭제: 서버가 비밀번호를 검증한 뒤 replyCount 까지 함께 정리한다.
+    const result = await postToCommunityApi('/community/reply/delete', { postId: pid, replyId: rid, password });
+    if (!result.ok) { alert(result.errorMessage); return; }
+    delete replyCache[pid];
+}
+
+async function adminMoveToFaq(pid) { if (!isAdmin) return; await update(ref(db, `posts/${pid}`), { category: 'faq' }); }
+async function adminPinPost(pid) { if (!isAdmin) return; const s = await get(ref(db, `posts/${pid}/pinned`)); await update(ref(db, `posts/${pid}`), { pinned: !(s.val()||false) }); }
+async function adminSetRequestStatus(pid, status) {
+    if (!isAdmin || !IMPROVEMENT_STATUSES.includes(status)) return;
+    await update(ref(db, `posts/${pid}`), { requestStatus: status });
+    if (allPosts[pid]) allPosts[pid].requestStatus = status;
+    renderTab();
+}
+async function adminReply(pid, content) {
+    if (!isAdmin || !content) return;
+    await set(push(ref(db, `replies/${pid}`)), { nickname:'🛡️ 관리자', passwordHash:'', content, timestamp:Date.now(), isAdmin:true, pinned:true, deleted:false });
+    await runTransaction(ref(db, `posts/${pid}/replyCount`), c => (c||0)+1);
+    await runTransaction(ref(db, `posts/${pid}/adminReplyCount`), c => (c||0)+1);
+    delete replyCache[pid];
+}
+async function adminPinReply(pid, rid) { if (!isAdmin) return; const s = await get(ref(db, `replies/${pid}/${rid}/pinned`)); await update(ref(db, `replies/${pid}/${rid}`), { pinned: !(s.val()||false) }); delete replyCache[pid]; }
+async function reportPost(pid) {
+    const p = allPosts[pid];
+    if (!p) return;
+    const reportRef = ref(db, `postReports/${pid}/${sessionId}`);
+    try {
+        const existing = await get(reportRef);
+        if (existing.exists()) {
+            alert('이미 신고한 글입니다.');
+            return;
+        }
+        await set(reportRef, { postId: pid, sessionId, createdAt: Date.now() });
+        await runTransaction(ref(db, `posts/${pid}/reportCount`), c => (c || 0) + 1);
+        p.reportCount = (p.reportCount || 0) + 1;
+        alert('신고가 접수되었습니다.');
+    } catch (e) {
+        alert('신고 처리에 실패했습니다. 잠시 후 다시 시도해주세요.');
+    }
+}
+
+// ── Data Loading ──
+async function loadPostsOnce() {
+    try {
+        const snap = await get(query(ref(db, 'posts'), orderByChild('timestamp'), limitToLast(COMMUNITY_POST_LIMIT)));
+        allPosts = {};
+        if (snap.exists()) {
+            snap.forEach(c => { const p = c.val(); p.id = c.key; allPosts[c.key] = p; });
+        }
+        
+        // 내가 좋아요 누른 내역 조회
+        const likesSnap = await get(ref(db, `userLikes/${sessionId}`));
+        const userLikes = likesSnap.exists() ? likesSnap.val() : {};
+        
+        for (const pid in allPosts) {
+            allPosts[pid].likedByMe = !!userLikes[pid];
+        }
+        if (pendingOpenPostId && allPosts[pendingOpenPostId]) {
+            const category = allPosts[pendingOpenPostId].category;
+            currentTab = category === 'tip' || category === 'review' ? 'stories' : 'questions';
+            expandedPost = pendingOpenPostId;
+        }
+        renderTab();
+        if (pendingOpenPostId && allPosts[pendingOpenPostId]) {
+            const targetId = pendingOpenPostId;
+            pendingOpenPostId = '';
+            setTimeout(async () => {
+                document.querySelector(`[data-pid="${CSS.escape(targetId)}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                await doToggleReplies(targetId, true);
+            }, 80);
+        }
+    } catch(e) { console.error("Posts load error:", e); }
+}
+
+// 하위 호환성 및 기존 호출 대응
+window.startListening = loadPostsOnce;
+function stopListening() {}
+
+function getFilteredPosts(tab) {
+    const posts = Object.values(allPosts).filter(p => !p.deleted);
+    if (tab === 'popular') return posts.filter(p => (p.likes||0)>=popularConfig.minLikes||(p.replyCount||0)>=popularConfig.minComments).sort((a,b)=>(b.likes||0)-(a.likes||0));
+    const categories = COMBINED_TABS[tab] || [tab];
+    return posts.filter(p => categories.includes(p.category)).sort((a,b)=>{
+        if(a.pinned&&!b.pinned) return -1;
+        if(!a.pinned&&b.pinned) return 1;
+        if((a.adminReplyCount || 0) && !(b.adminReplyCount || 0)) return -1;
+        if(!(a.adminReplyCount || 0) && (b.adminReplyCount || 0)) return 1;
+        return b.timestamp-a.timestamp;
+    });
+}
+
+// ── UI Rendering ──
+function renderTab() {
+    const posts = getFilteredPosts(currentTab);
+    const list = document.getElementById('cmPostList');
+    if (!list) return;
+    document.querySelectorAll('.cm-tab').forEach(b => b.classList.toggle('active', b.dataset.tab === currentTab));
+    const wf = document.getElementById('cmWriteForm');
+    const canWrite = currentTab === 'questions' || currentTab === 'stories' || WRITABLE_TABS.includes(currentTab);
+    if (wf) wf.style.display = canWrite ? 'flex' : 'none';
+    updateCategorySelect();
+    // Restore saved nickname
+    const nickInput = document.getElementById('cmNick');
+    if (nickInput && !nickInput.value) nickInput.value = getSavedNick();
+
+    if (!posts.length) { list.innerHTML = `<div class="cm-empty"><span>📭</span><p>아직 게시글이 없습니다.</p></div>`; return; }
+    list.innerHTML = posts.map(p => postCardHTML(p)).join('');
+    attachPostEvents();
+}
+
+function postCardHTML(p) {
+    const liked = p.likedByMe;
+    let badges = '';
+    if (p.pinned) badges += '<span class="cm-badge pin">📌 고정</span>';
+    badges += `<span class="cm-badge cat">${CATEGORY_LABELS[p.category] || ''}</span>`;
+    if (p.category === 'improvement') badges += `<span class="cm-badge status">${esc(p.requestStatus || '접수')}</span>`;
+    if (p.editedAt) badges += '<span class="cm-badge edit">(수정됨)</span>';
+    const statusSelect = isAdmin && p.category === 'improvement'
+        ? `<select data-act="status" data-id="${p.id}">${IMPROVEMENT_STATUSES.map((status) => `<option value="${status}" ${(p.requestStatus || '접수') === status ? 'selected' : ''}>${status}</option>`).join('')}</select>`
+        : '';
+    const adm = isAdmin ? `<div class="cm-admin-acts"><button data-act="pin" data-id="${p.id}">📌</button>${p.category!=='faq'?`<button data-act="faq" data-id="${p.id}">→FAQ</button>`:''}<button data-act="areply" data-id="${p.id}">관리자 답변</button>${statusSelect}</div>` : '';
+
+    const attachments = Array.isArray(p.attachments)
+        ? p.attachments
+        : (p.attachments && typeof p.attachments === 'object' ? Object.values(p.attachments) : []);
+    const attachmentHtml = attachments.length
+        ? `<div class="cm-attachments">${attachments.map((item, index) => `<a href="${esc(item.dataUrl || '')}" target="_blank" rel="noopener noreferrer"><img src="${esc(item.dataUrl || '')}" alt="첨부 이미지 ${index + 1}"></a>`).join('')}</div>`
+        : '';
+    return `<div class="cm-card ${p.pinned?'pinned':''} ${pendingOpenPostId === p.id ? 'targeted' : ''}" data-pid="${p.id}">
+        <div class="cm-card-head"><div class="cm-meta">${badges}<span class="cm-nick">${esc(p.nickname)}</span><span class="cm-time">${timeAgo(p.timestamp)}</span></div>${adm}</div>
+        <div class="cm-body" id="cmBody_${p.id}">${esc(p.content).replace(/\n/g,'<br>')}</div>
+        ${attachmentHtml}
+        <div class="cm-foot"><div class="cm-stats">
+            <button class="cm-like ${liked?'liked':''}" data-act="like" data-id="${p.id}">${liked?'❤️':'🤍'} <span>${p.likes||0}</span></button>
+            <button class="cm-reply-toggle" data-act="replies" data-id="${p.id}">💬 <span>${p.replyCount||0}</span></button>
+        </div><div class="cm-author-acts">
+            <button class="cm-act-btn" data-act="report" data-id="${p.id}">신고</button>
+            <button class="cm-act-btn" data-act="edit" data-id="${p.id}">수정</button>
+            <button class="cm-act-btn cm-del" data-act="del" data-id="${p.id}">삭제</button>
+        </div></div>
+        <div class="cm-replies ${expandedPost===p.id?'':'hidden'}" id="cmReplies_${p.id}"></div>
+    </div>`;
+}
+
+function attachPostEvents() {
+    document.querySelectorAll('#cmPostList [data-act]').forEach(btn => {
+        const handler = async e => {
+            e.stopPropagation();
+            const act = btn.dataset.act, id = btn.dataset.id;
+            if (act === 'like') await toggleLike(id);
+            else if (act === 'replies') await doToggleReplies(id);
+            else if (act === 'edit') { const pw = prompt('비밀번호를 입력하세요:'); if (pw !== null) showEditForm(id, pw); }
+            else if (act === 'del') { const pw = prompt('삭제하려면 비밀번호를 입력하세요:'); if (pw !== null) await softDeletePost(id, pw); }
+            else if (act === 'pin') await adminPinPost(id);
+            else if (act === 'faq') { if (confirm('FAQ로 이동?')) await adminMoveToFaq(id); }
+            else if (act === 'status') await adminSetRequestStatus(id, btn.value);
+            else if (act === 'report') await reportPost(id);
+            else if (act === 'areply') { 
+                const c = prompt('관리자 답글:'); 
+                if (c) { 
+                    await adminReply(id, c); 
+                    if (allPosts[id]) allPosts[id].replyCount = (allPosts[id].replyCount || 0) + 1;
+                    if (allPosts[id]) allPosts[id].adminReplyCount = (allPosts[id].adminReplyCount || 0) + 1;
+                    expandedPost = null; renderTab(); await doToggleReplies(id, true); 
+                } 
+            }
+        };
+        if (btn.tagName === 'SELECT') btn.onchange = handler;
+        else btn.onclick = handler;
+    });
+}
+
+// ── Edit Form ──
+async function showEditForm(pid, password) {
+    const p = allPosts[pid]; if (!p) return;
+    if (!isAdmin && (await sha256(password)) !== p.passwordHash) { alert('비밀번호가 일치하지 않습니다.'); return; }
+    const el = document.getElementById(`cmBody_${pid}`); if (!el) return;
+    el.innerHTML = `<textarea class="cm-edit-ta" id="cmEI_${pid}">${esc(p.content)}</textarea>
+        <div class="cm-edit-acts"><button id="cmES_${pid}" class="cm-edit-save">저장</button><button id="cmEC_${pid}" class="cm-edit-cancel">취소</button></div>`;
+    document.getElementById(`cmES_${pid}`).onclick = async () => {
+        const v = document.getElementById(`cmEI_${pid}`).value.trim();
+        if (v) await editPost(pid, v, password);
+    };
+    document.getElementById(`cmEC_${pid}`).onclick = () => renderTab();
+}
+
+// ── Replies UI ──
+async function doToggleReplies(pid, forceReload = false) {
+    if (!forceReload && expandedPost === pid) { expandedPost = null; const s = document.getElementById(`cmReplies_${pid}`); if (s) s.classList.add('hidden'); return; }
+    expandedPost = pid;
+    const section = document.getElementById(`cmReplies_${pid}`);
+    if (!section) return;
+    section.classList.remove('hidden');
+    
+    if (!forceReload && replyCache[pid] && (Date.now() - replyCache[pid].time < 60000)) {
+        renderReplies(pid, replyCache[pid].data);
+        return;
+    }
+    
+    section.innerHTML = '<div class="cm-loading">로딩 중...</div>';
+    const snap = await get(query(ref(db, `replies/${pid}`), orderByChild('timestamp'), limitToLast(COMMUNITY_REPLY_LIMIT)));
+    let replies = [];
+    if (snap.exists()) snap.forEach(c => { const r = c.val(); r.id = c.key; replies.push(r); });
+    replies.sort((a, b) => { if (a.pinned && !b.pinned) return -1; if (!a.pinned && b.pinned) return 1; return a.timestamp - b.timestamp; });
+    
+    const finalData = replies.filter(r => !r.deleted);
+    replyCache[pid] = { data: finalData, time: Date.now() };
+    renderReplies(pid, finalData);
+}
+
+function renderReplies(pid, replies) {
+    const section = document.getElementById(`cmReplies_${pid}`); if (!section) return;
+    let html = replies.map(r => {
+        const acts = (!r.isAdmin ? `<button data-ract="redit" data-pid="${pid}" data-rid="${r.id}">수정</button><button data-ract="rdel" data-pid="${pid}" data-rid="${r.id}">삭제</button>` : '') +
+            (isAdmin && !r.isAdmin ? `<button data-ract="rpin" data-pid="${pid}" data-rid="${r.id}">${r.pinned ? '해제' : '📌'}</button>` : '');
+        return `<div class="cm-reply ${r.isAdmin ? 'admin' : ''} ${r.pinned ? 'pinned' : ''}">
+            <div class="cm-reply-meta">${r.isAdmin ? '<span class="cm-admin-badge">🛡️</span>' : ''}${r.pinned && !r.isAdmin ? '<span class="cm-badge pin">📌</span>' : ''}
+                <span class="cm-nick">${esc(r.nickname)}</span><span class="cm-time">${timeAgo(r.timestamp)}</span>${r.editedAt ? '<span class="cm-badge edit">(수정됨)</span>' : ''}</div>
+            <div class="cm-reply-body" id="cmRB_${r.id}">${esc(r.content).replace(/\n/g, '<br>')}</div>
+            <div class="cm-reply-acts">${acts}</div></div>`;
+    }).join('');
+
+    // Reply write form (DC-style: nickname + password)
+    html += `<div class="cm-reply-form">
+        <div class="cm-reply-form-top"><input type="text" id="cmRN_${pid}" placeholder="닉네임" value="${esc(getSavedNick())}" maxlength="20"><input type="password" id="cmRP_${pid}" placeholder="비밀번호"></div>
+        <div class="cm-reply-form-bot"><textarea id="cmRI_${pid}" placeholder="답글을 입력하세요..." rows="2"></textarea><button id="cmRS_${pid}" class="cm-reply-submit">등록</button></div>
+    </div>`;
+    section.innerHTML = html;
+
+    // Reply submit
+    document.getElementById(`cmRS_${pid}`).onclick = async () => {
+        const nick = document.getElementById(`cmRN_${pid}`).value.trim();
+        const pw = document.getElementById(`cmRP_${pid}`).value;
+        const content = document.getElementById(`cmRI_${pid}`).value.trim();
+        if (!nick || !pw || !content) { alert('닉네임, 비밀번호, 내용을 모두 입력하세요.'); return; }
+        await createReply(pid, nick, pw, content);
+        if (allPosts[pid]) allPosts[pid].replyCount = (allPosts[pid].replyCount || 0) + 1;
+        expandedPost = null; renderTab(); await doToggleReplies(pid);
+    };
+
+    // Reply edit/delete events
+    section.querySelectorAll('[data-ract]').forEach(btn => {
+        btn.onclick = async () => {
+            const a = btn.dataset.ract, p = btn.dataset.pid, rid = btn.dataset.rid;
+            if (a === 'redit') {
+                const pw = prompt('비밀번호:');
+                if (pw === null) return;
+                const snap = await get(ref(db, `replies/${p}/${rid}`)); if (!snap.exists()) return;
+                const r = snap.val();
+                if (!isAdmin && (await sha256(pw)) !== r.passwordHash) { alert('비밀번호가 일치하지 않습니다.'); return; }
+                const el = document.getElementById(`cmRB_${rid}`); if (!el) return;
+                el.innerHTML = `<textarea class="cm-edit-ta" id="cmERI_${rid}">${esc(r.content)}</textarea><div class="cm-edit-acts"><button id="cmERS_${rid}">저장</button><button id="cmERC_${rid}">취소</button></div>`;
+                document.getElementById(`cmERS_${rid}`).onclick = async () => { const v = document.getElementById(`cmERI_${rid}`).value.trim(); if (v) { await editReply(p, rid, v, pw); expandedPost = null; await doToggleReplies(p, true); } };
+                document.getElementById(`cmERC_${rid}`).onclick = async () => { expandedPost = null; await doToggleReplies(p, true); };
+            } else if (a === 'rdel') {
+                const pw = prompt('비밀번호:'); if (pw === null) return;
+                await softDeleteReply(p, rid, pw); 
+                if (allPosts[p]) allPosts[p].replyCount = Math.max((allPosts[p].replyCount || 0) - 1, 0);
+                expandedPost = null; renderTab(); await doToggleReplies(p, true);
+            } else if (a === 'rpin') {
+                await adminPinReply(p, rid); expandedPost = null; await doToggleReplies(p, true);
+            }
+        };
+    });
+}
+
+// ── Tab Switch ──
+function updateCategorySelect() {
+    const select = document.getElementById('cmCategorySelect');
+    if (!select) return;
+    const options = currentTab === 'stories'
+        ? [['tip', '팁'], ['review', '후기']]
+        : currentTab === 'questions'
+            ? [['qna', '질문'], ['improvement', '개선요청']]
+            : [[currentTab, CATEGORY_LABELS[currentTab] || '글']];
+    select.innerHTML = options.map(([value, label]) => `<option value="${value}">${label}</option>`).join('');
+    select.style.display = options.length > 1 || WRITABLE_TABS.includes(currentTab) ? 'block' : 'none';
+    syncFeedbackEmailVisibility();
+}
+
+function syncFeedbackEmailVisibility() {
+    const category = document.getElementById('cmCategorySelect')?.value || currentTab;
+    const isImprovement = category === 'improvement';
+    const allowFeedbackEmail = feedbackEmailAllowedForCategory(category);
+    const allowAttachments = attachmentAllowedForCategory(category);
+    document.getElementById('cmImprovementGuide')?.classList.toggle('hidden', !isImprovement);
+    document.getElementById('cmFeedbackEmailRow')?.classList.toggle('hidden', !allowFeedbackEmail);
+    document.getElementById('cmAttachmentRow')?.classList.toggle('hidden', !allowAttachments);
+    if (!allowAttachments && pendingAttachments.length) clearAttachments();
+}
+
+function switchTab(tab) { currentTab = tab; expandedPost = null; renderTab(); }
+
+// ── Submit Post ──
+function submitPost() {
+    const categorySelect = document.getElementById('cmCategorySelect');
+    const category = WRITABLE_TABS.includes(categorySelect?.value) ? categorySelect.value : currentTab;
+    const nick = document.getElementById('cmNick')?.value.trim();
+    const pw = document.getElementById('cmPw')?.value;
+    const content = document.getElementById('cmInput')?.value.trim();
+    const feedbackEmail = feedbackEmailAllowedForCategory(category)
+        ? (document.getElementById('cmFeedbackEmail')?.value || '').trim()
+        : '';
+    if (!nick || !pw || !content) { alert('닉네임, 비밀번호, 내용을 모두 입력해주세요.'); return; }
+    const attachments = pendingAttachments.slice();
+    createPost(category, nick, pw, content, feedbackEmail, attachments).then((ok) => {
+        if (!ok) return;
+        document.getElementById('cmInput').value = '';
+        document.getElementById('cmPw').value = '';
+        const feedbackEmailInput = document.getElementById('cmFeedbackEmail');
+        if (feedbackEmailInput) feedbackEmailInput.value = '';
+        clearAttachments();
+    });
+}
+
+// ── Modal Open/Close ──
+function openModal() {
+    const m = document.getElementById('cmModal');
+    if (m) { m.classList.remove('hidden'); listenConfig(); startListening(); }
+}
+function closeModal() {
+    const m = document.getElementById('cmModal');
+    if (m) { m.classList.add('hidden'); stopListening(); expandedPost = null; }
+}
+
+// ── Init ──
+function init() {
+    document.getElementById('commentToggle')?.addEventListener('click', openModal);
+    document.getElementById('cmCloseBtn')?.addEventListener('click', closeModal);
+    document.getElementById('cmRefreshBtn')?.addEventListener('click', async () => {
+        const btn = document.getElementById('cmRefreshBtn');
+        if(btn) { btn.textContent = '⏳ 로딩중'; btn.disabled = true; }
+        await loadPostsOnce();
+        if(btn) { btn.textContent = '🔄 새로고침'; btn.disabled = false; }
+    });
+    document.querySelectorAll('.cm-tab').forEach(b => b.addEventListener('click', () => switchTab(b.dataset.tab)));
+    document.getElementById('cmCategorySelect')?.addEventListener('change', syncFeedbackEmailVisibility);
+    document.getElementById('cmSubmitBtn')?.addEventListener('click', submitPost);
+    document.getElementById('cmImageInput')?.addEventListener('change', (event) => addAttachmentFiles(event.target.files));
+    document.getElementById('cmInput')?.addEventListener('paste', (event) => {
+        const files = Array.from(event.clipboardData?.files || []).filter((file) => /^image\//i.test(file.type || ''));
+        if (files.length) addAttachmentFiles(files);
+    });
+    renderAttachmentPreview();
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('openCommunity') === '1' || pendingOpenPostId) {
+        openModal();
+    }
+}
+
+init();

@@ -1,16 +1,1550 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+    <meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="naver-site-verification" content="1186c844f5dfb20e661721c2b68725f8cbddb9ed" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SKCT 연습 도구로 이동 중…</title>
-    <meta http-equiv="refresh" content="0;url=https://skct.agenticfabworks.com/">
+    <title>SKCT 온라인 연습 도구 | OMR·타이머·채점·복기</title>
+    <meta name="description" content="SKCT 연습용 OMR, 과목별 타이머, 메모장, 그림판, 계산기, 채점과 복기를 한 화면에서 사용하는 무료 온라인 연습 도구입니다.">
+    <meta name="author" content="AgenticLab">
+    <meta name="robots" content="index, follow">
+    <!-- Open Graph (SNS 공유시 썸네일 카드 노출) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="SKCT 온라인 연습 도구 | OMR·타이머·채점·복기">
+    <meta property="og:description" content="보유한 문제 자료를 보며 OMR, 시간 관리, 메모 도구와 채점·복기 흐름을 반복 연습합니다.">
+    <meta property="og:url" content="https://skct.agenticfabworks.com/">
+    <meta property="og:image" content="https://skct.agenticfabworks.com/images/og-image.png">
+    <meta property="og:locale" content="ko_KR">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SKCT 온라인 연습 도구 | OMR·타이머·채점·복기">
+    <meta name="twitter:description" content="보유한 문제 자료를 보며 OMR, 시간 관리, 메모 도구와 채점·복기 흐름을 반복 연습합니다.">
+    <meta name="twitter:image" content="https://skct.agenticfabworks.com/images/og-image.png">
     <link rel="canonical" href="https://skct.agenticfabworks.com/">
-    <script>
-        location.replace('https://skct.agenticfabworks.com/' + location.search + location.hash);
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "SKCT 온라인 연습 도구",
+      "url": "https://skct.agenticfabworks.com/",
+      "description": "온라인 검사 환경과 유사한 화면 배치로 연습할 수 있는 무료 SKCT 연습 도구. 연습용 OMR, 다중 페이즈 타이머, 메모장, 그림판, 화면 계산기, 자동 채점/통계를 제공하며 고급 모드는 우측 여백과 창 배치를 더 가깝게 맞추고 복기 기능을 더합니다.",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Web",
+      "inLanguage": "ko",
+      "isAccessibleForFree": true,
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "KRW" },
+      "publisher": { "@type": "Organization", "name": "AgenticFabWorks", "url": "https://agenticfabworks.com/" },
+      "isPartOf": { "@type": "WebSite", "name": "AgenticFabWorks", "url": "https://agenticfabworks.com/" }
+    }
     </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZLHB1RM91X"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ZLHB1RM91X');
+    </script>
+    <link rel="stylesheet" href="main.css?v=2026071020">
+    <!-- Google Fonts & Pretendard -->
+    <link rel="stylesheet" as="style" integrity="sha384-uGEvnSEpW2nM9xJFsrxrwakwrk9QdDTQIBJh0hVMu90OaVyMAMpAK1rIn0/Kh1/k" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link rel="icon" href="images/sk_ci.png">
 </head>
-<body>
-    <p>새 주소로 이동합니다: <a href="https://skct.agenticfabworks.com/">SKCT 온라인 연습 도구</a></p>
+<body data-site-view="intro">
+    <!-- Screen Reader 및 문서 구조용 숨김 텍스트 -->
+    <p id="srMainTitle" class="sr-only">SKCT 온라인 연습 도구</p>
+    <p id="srMainDescription" class="sr-only">OMR, 타이머, 메모장, 그림판, 계산기를 한 화면에서 사용하는 SKCT 온라인 연습 도구입니다.</p>
+
+    <section id="siteOverview" class="site-overview" aria-labelledby="siteOverviewTitle">
+        <div class="site-overview-inner">
+            <header class="site-overview-nav">
+                <a class="site-overview-brand" href="?view=intro" aria-label="SKCT Practice 홈">
+                    <span aria-hidden="true">S</span>
+                    <strong>SKCT Practice</strong>
+                </a>
+                <nav aria-label="소개 페이지 바로가기">
+                    <a href="guide/">Guide</a>
+                    <a href="faq/">FAQ</a>
+                </nav>
+            </header>
+
+            <div class="site-overview-hero">
+                <div class="site-overview-heading">
+                    <span id="siteOverviewEyebrow">SKCT PRACTICE</span>
+                    <h1 id="siteOverviewTitle" tabindex="-1">문제 풀이는 그대로.
+도구 사용은 더 익숙하게.</h1>
+                    <p id="siteOverviewLead">가지고 있는 문제 PDF나 E-book을 띄우고, 무료 연습 도구로 시간 관리와 답안 마킹까지 함께 연습해 보세요.</p>
+                    <div class="site-overview-cta-row">
+                        <button id="enterPracticeBtn" class="site-overview-quick-jump" type="button">
+                            <strong>연습 시작</strong><span aria-hidden="true">→</span>
+                        </button>
+                        <a id="siteOverviewGuideLink" class="site-overview-guide-link" href="guide/">사용법 보기</a>
+                    </div>
+                    <p id="siteOverviewDeviceHint" class="site-overview-device-note">PC 화면에 최적화되어 있습니다. 연습할 때는 ‘팝업으로 열기’를 권장합니다.</p>
+                </div>
+
+                <div class="site-overview-preview" aria-label="연습 도구 화면 미리보기">
+                    <div class="preview-window-bar" aria-hidden="true">
+                        <span></span><span></span><span></span><b>practice</b>
+                    </div>
+                    <div class="preview-workspace" aria-hidden="true">
+                        <div class="preview-rail"><i></i><i></i><i></i><i></i></div>
+                        <div class="preview-question">
+                            <div class="preview-timer"><small>언어이해 · 03번</small><strong><span>14:32</span><span>14:31</span><span>14:30</span></strong></div>
+                            <div class="preview-lines"><i></i><i></i><i></i><i></i></div>
+                            <div class="preview-options"><span>A</span><span>B</span><span class="selected">C</span><span>D</span></div>
+                            <div class="preview-memo"><b>복기 메모</b><span>조건을 먼저 표시하고 다시 풀기</span></div>
+                        </div>
+                        <div class="preview-omr">
+                            <strong>답안지 <em>2 / 4</em></strong>
+                            <div><small>01</small><i></i><i></i><i class="filled"></i><i></i></div>
+                            <div><small>02</small><i></i><i></i><i></i><i></i></div>
+                            <div><small>03</small><i></i><i class="filled"></i><i></i><i></i></div>
+                            <div><small>04</small><i></i><i></i><i></i><i></i></div>
+                            <p><span></span>마킹 완료</p>
+                        </div>
+                    </div>
+                    <div class="preview-flow" aria-hidden="true"><span>자료 보기</span><span>마킹</span><span>복기</span></div>
+                </div>
+            </div>
+
+            <footer class="site-overview-footer">
+                <span>개인 제작 연습 도구 · 문제 콘텐츠 미제공</span>
+                <nav aria-label="운영 정보">
+                    <a href="about/">소개</a><a href="privacy/">개인정보</a><a href="https://agenticfabworks.com/">AgenticFabWorks</a>
+                </nav>
+            </footer>
+        </div>
+    </section>
+
+    <div class="app-container" id="practice-tool">
+        <h2 id="practiceWorkspaceTitle" class="sr-only" tabindex="-1">SKCT 연습 도구</h2>
+
+        <!-- OMR Sidebar (Left) -->
+        <aside class="omr-sidebar collapsed" id="omrSidebar">
+            <div class="sidebar-controls compact-sidebar-controls">
+                <div class="help-toggle sidebar-shortcut" id="helpToggle" title="사용 안내 열기">
+                    <span class="sidebar-shortcut-icon">📘</span>
+                    <span class="sidebar-shortcut-label compact" id="sidebarHelpLabel">사용<br>안내</span>
+                </div>
+                <div class="notice-toggle sidebar-shortcut" id="noticeToggle" title="운영 상태 공지 열기">
+                    <span class="sidebar-shortcut-icon notice-shortcut-icon">✓</span>
+                    <span class="sidebar-shortcut-label compact" id="sidebarNoticeLabel">공지</span>
+                </div>
+                <button class="first-visit-toggle sidebar-shortcut" id="returnToIntroBtn" type="button" title="도구 소개 화면으로 돌아가기">
+                    <span class="sidebar-shortcut-icon first-visit-shortcut-icon" aria-hidden="true">i</span>
+                    <span class="sidebar-shortcut-label compact" id="sidebarBannerLabel">소개</span>
+                </button>
+                <div class="omr-toggle sidebar-shortcut" id="omrToggleBtn" title="연습용 OMR 탭 열기/닫기">
+                    <span class="sidebar-shortcut-icon">📝</span>
+                    <span class="sidebar-shortcut-label compact" id="sidebarOmrLabel">OMR</span>
+                </div>
+                <div class="settings-toggle sidebar-shortcut" id="settingsToggle" title="타이머 & 레이아웃 설정">
+                    <span class="sidebar-shortcut-icon">⚙</span>
+                    <span class="sidebar-shortcut-label compact" id="sidebarSettingsLabel">설정</span>
+                </div>
+                <div class="advanced-guide-toggle normal-only sidebar-shortcut" id="advancedGuideToggle" title="고급 안내 보기">
+                    <span class="sidebar-shortcut-icon">🔒</span>
+                    <span class="sidebar-shortcut-label compact" id="sidebarAdvancedGuideLabel">고급<br>모드</span>
+                </div>
+                <div class="advanced-only sidebar-divider"></div>
+                <div class="advanced-status-toggle advanced-only sidebar-shortcut hidden" id="advancedStatusToggle" title="계정 상태 보기">
+                    <span class="sidebar-shortcut-icon advanced-status-icon">ON</span>
+                    <span class="sidebar-shortcut-label compact" id="sidebarAdvancedStatusLabel">계정<br>상태</span>
+                </div>
+                <div class="advanced-toggle advanced-only sidebar-shortcut" id="advancedToggle" title="고급 활용 열기">
+                    <span class="sidebar-shortcut-icon">✨</span>
+                    <span class="sidebar-shortcut-label compact" id="sidebarAdvancedModeLabel">고급<br>활용</span>
+                </div>
+                <div class="advanced-only sidebar-divider"></div>
+                <div class="sidebar-divider normal-only"></div>
+                <div class="donate-toggle normal-only sidebar-shortcut" id="donateToggle" title="운영 응원 열기">
+                    <span class="sidebar-shortcut-icon">☕</span>
+                    <span class="sidebar-shortcut-label compact" id="sidebarDonateLabel">후원</span>
+                </div>
+                <div class="sidebar-divider"></div>
+                <div class="stats-toggle sidebar-shortcut" id="statsToggle" title="접속 현황 열기">
+                    <span class="sidebar-shortcut-icon">🔥</span>
+                    <span class="sidebar-shortcut-label compact" id="sidebarStatsLabel">접속</span>
+                </div>
+                <div class="comment-toggle sidebar-shortcut" id="commentToggle" title="커뮤니티 열기">
+                    <span class="sidebar-shortcut-icon">💬</span>
+                    <span class="sidebar-shortcut-label compact" id="sidebarCommunityLabel">채팅</span>
+                </div>
+                <div class="advanced-only sidebar-shortcut hidden" id="studyArchiveOpenBtn" title="기록 보관함 열기">
+                    <span class="sidebar-shortcut-icon">🗂</span>
+                    <span class="sidebar-shortcut-label compact" id="sidebarArchiveLabel">기록<br>보관함</span>
+                </div>
+                <a class="extension-info-toggle advanced-only sidebar-shortcut" id="extensionInfoLink" href="extension-info.html" target="_blank" rel="noopener noreferrer nofollow" title="확장 안내 열기">
+                    <span class="sidebar-shortcut-icon">🔗</span>
+                    <span class="sidebar-shortcut-label compact" id="sidebarExtensionLabel">확장<br>안내</span>
+                </a>
+                <div class="advanced-rail-collapse-toggle advanced-only sidebar-shortcut" id="advancedRailCollapseBtn" title="좌측 버튼 패널 접기">
+                    <span class="sidebar-shortcut-icon">‹</span>
+                    <span class="sidebar-shortcut-label compact">패널<br>접기</span>
+                </div>
+            </div>
+            <div class="omr-content hidden" id="omrContent">
+                <!-- 탭 접기 (최상단) -->
+                <div class="omr-top-bar">
+                    <div class="omr-top-bar-actions">
+                        <button id="omrCollapseBtn" class="omr-collapse-btn">◀ 접기</button>
+                        <button id="omrFlowHelpBtn" type="button" class="context-help-btn omr-top-help-btn" data-context-help="omr-flow" aria-label="OMR 사용 순서 도움말" title="OMR 사용 순서">?</button>
+                    </div>
+                    <span id="omrModeLabel" class="omr-mode-label">답안 마킹</span>
+                </div>
+                <div id="omrModeHint" class="omr-mode-hint hidden"></div>
+
+                <!-- OMR 칸 (절반 높이) -->
+                <div class="omr-body" id="omrBody">
+                    <!-- Sections will be injected via JS -->
+                </div>
+
+                <!-- 하단 세로 배열 버튼 -->
+                <div class="omr-actions">
+                    <button id="globalClearBtn" class="omr-action-btn skip-btn">건너뛰기</button>
+                    <button id="modeToggleBtn" class="omr-action-btn mode-btn">📝 정답 입력</button>
+                    <button id="bulkCorrectImportBtn" type="button" class="omr-action-btn detail-btn hidden advanced-action-only">링커리어 CBT 정오표 일괄입력</button>
+                    <button id="scoreBtn" class="omr-action-btn grade-btn">📊 채점</button>
+                    <div id="scoreResult" class="score-result hidden">
+                        <div class="stat-line"><span id="statSummaryLabel">맞힘 / 응답 / 전체</span> <strong id="statSummary">0 / 0 / 100</strong></div>
+                        <div class="stat-line"><span id="statRateAttemptedLabel">정답률 (응답 기준)</span> <strong id="statRateAttempted">0%</strong></div>
+                        <div class="stat-line"><span id="statRateOverallLabel">정답률 (전체 기준)</span> <strong id="statRateOverall">0%</strong></div>
+                        <div class="stat-line"><span id="statSkippedLabel">건너뜀</span> <strong id="statSkipped">0</strong></div>
+                        <div class="stat-line"><span id="statUnansweredLabel">미응답</span> <strong id="statUnanswered">0</strong></div>
+                        <div id="advancedSaveSummary" class="advanced-save-summary hidden">
+                            <span id="advancedSaveSessionStatus">채점 결과는 아래 기록 컨트롤에서 다운로드하거나 보관함에 저장할 수 있습니다.</span>
+                        </div>
+                    </div>
+                    <button id="detailScoreBtn" class="omr-action-btn detail-btn hidden advanced-action-only">📋 과목별 통계</button>
+                    <div id="advancedRecordControls" class="advanced-record-controls hidden advanced-action-only" aria-label="고급 기록 저장과 내보내기">
+                        <div class="advanced-record-meta" aria-label="기록 분류 정보">
+                            <label>
+                                <span>풀이 일시</span>
+                                <input id="advancedRecordDateTime" type="datetime-local">
+                            </label>
+                            <label>
+                                <span>교재/자료</span>
+                                <select id="advancedRecordMaterial">
+                                    <option value="__add__">옵션 추가하기</option>
+                                    <option value="링커리어 CBT" selected>링커리어 CBT</option>
+                                    <option value="에듀윌">에듀윌</option>
+                                    <option value="해커스">해커스</option>
+                                    <option value="시대에듀">시대에듀</option>
+                                    <option value="렛유인">렛유인</option>
+                                </select>
+                            </label>
+                            <label>
+                                <span>회차</span>
+                                <select id="advancedRecordRound">
+                                    <option value="__add__">옵션 추가하기</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="advanced-record-row">
+                            <button id="advancedStatsDownloadBtn" class="advanced-record-btn download" type="button">TXT 다운로드</button>
+                            <div class="advanced-record-label">
+                                <strong>문항별 통계</strong>
+                                <span>정오답과 문항별 소요시간</span>
+                            </div>
+                            <button id="advancedStatsServerBtn" class="advanced-record-btn save" type="button">보관함 저장</button>
+                        </div>
+                        <div class="advanced-record-row">
+                            <button id="advancedStatsCsvBtn" class="advanced-record-btn download" type="button">CSV 다운로드</button>
+                            <div class="advanced-record-label">
+                                <strong>성장 기록</strong>
+                                <span>회차별 정답률과 풀이 흐름</span>
+                            </div>
+                            <button id="advancedStatsCsvServerBtn" class="advanced-record-btn save" type="button">보관함 저장</button>
+                        </div>
+                        <div class="advanced-record-row">
+                            <button id="advancedStatsCsvImportBtn" class="advanced-record-btn import" type="button">CSV 불러오기</button>
+                            <div class="advanced-record-label">
+                                <strong>불러온 성장 기록</strong>
+                                <span>가져온 CSV를 서버에 반영</span>
+                            </div>
+                            <button id="advancedStatsCsvImportServerBtn" class="advanced-record-btn save" type="button">보관함 반영</button>
+                        </div>
+                    </div>
+                    <button id="advancedArchiveOpenBtn" class="omr-action-btn archive-action-btn hidden advanced-action-only" type="button">기록 보관함 열기</button>
+                    <input id="advancedStatsCsvFileInput" type="file" accept=".csv,text/csv" class="hidden" />
+                    <div id="advancedToolsStatus" class="advanced-tools-status hidden advanced-action-only" aria-live="polite"></div>
+                    <button id="omrResetBtn" class="omr-action-btn reset-action-btn">🔄 초기화</button>
+                </div>
+            </div>
+
+
+            <div class="omr-resizer" id="omrResizer"></div>
+        </aside>
+        <button id="advancedRailRestoreBtn" class="advanced-rail-restore" type="button" aria-label="좌측 고급 버튼 패널 펼치기">
+            <span>›</span>
+            <strong>고급</strong>
+        </button>
+
+        <!-- Main View (Right Side Tools) -->
+        <main class="main-content">
+
+            <!-- Top / Timer Bar -->
+            <header class="top-bar">
+                <div class="timer-wrapper advanced-timer-shell">
+                    <div class="timer-summary-block timer-total-block">
+                        <span id="displayTotalTimeLabel" class="timer-summary-label">전체 시간</span>
+                        <span id="displayTotalTime" class="timer-summary-value total">75:00</span>
+                    </div>
+                    <div class="timer-divider" aria-hidden="true"></div>
+                    <div class="timer-summary-block timer-phase-block">
+                        <span id="displayPhaseName" class="timer-phase-name">1과목 언어이해</span>
+                        <div class="timer-phase-line">
+                            <span id="displayPhaseTime" class="timer-summary-value phase">15:00</span>
+                        </div>
+                        <div id="guideTimerWrapper" class="timer-guide-row" style="display:none;">
+                            <span id="displayGuidePrefix">문항 가이드:</span> <span id="displayGuideTime" class="timer-guide-value">00:00</span>
+                        </div>
+                    </div>
+                    <div class="timer-controls advanced-timer-controls">
+                        <button id="timerPlayBtn" class="timer-play-btn" aria-label="시작 / 일시정지" title="시작 / 일시정지">▶</button>
+                        <button id="subjectSkipBtn" class="advanced-action-only timer-skip-btn timer-next-btn" type="button" title="현재 과목을 끝내고 다음 과목으로 이동">다음</button>
+                        <button id="subjectResetBtn" class="advanced-action-only timer-skip-btn timer-reset-btn" type="button" title="이전 과목으로 돌아가기">이전 과목</button>
+                        <button id="fullResetBtn" class="advanced-action-only timer-skip-btn timer-full-reset-btn" type="button" title="전체 세트를 처음 상태로 되돌리기">처음부터</button>
+                    </div>
+                </div>
+                <div class="popup-entry-cta" aria-label="팝업 전환 안내">
+                    <button id="popupBtn" class="popup-btn" title="실전 폭 팝업으로 열기">팝업으로 열기</button>
+                    <div class="popup-entry-hint">팝업으로 열어야 실제와 유사합니다!</div>
+                </div>
+            </header>
+            <div class="layout-resizer horizontal hidden" id="topBarResizer" aria-hidden="true"></div>
+
+            <!-- Tools Grid -->
+            <div class="tools-layout" style="position: relative;">
+
+                <!-- Break Time Overlay (Moved from sidebar) -->
+                <div id="omrBreakOverlay" class="omr-break-overlay hidden">
+                    <span style="font-size:32px;">☕</span>
+                    <div id="breakOverlayTitle" style="font-weight:bold; font-size:16px; color:#f97316; margin-top:10px;">⏸ 쉬는 시간</div>
+                    <div id="breakOverlayDescription" style="font-size:12px; color:#64748b; margin-top:5px; padding:0 10px;">다음 과목이 시작되면 자동으로 넘어갑니다.</div>
+                    <button id="breakSkipBtn" type="button" style="margin-top:14px; padding:10px 14px; border:none; border-radius:8px; background:#2563eb; color:#fff; font-size:12px; font-weight:700; cursor:pointer;">건너뛰기</button>
+                    <div style="margin-top:20px; font-size:11px; color:#94a3b8; padding-top:10px; border-top:1px dashed rgba(0,0,0,0.1);">
+                        <span id="breakSupportHint">이 도구가 도움이 되셨다면 ☕ 후원으로 응원해 주세요!</span>
+                    </div>
+                </div>
+
+                <!-- Utilities (Top right area in layout logic, but here taking upper flow) -->
+                <section class="utility-section">
+                    <div class="tool-header">
+                        <div class="tool-tabs">
+                            <button id="tabNotepad" class="tab-btn active">메모장</button>
+                            <button id="tabCanvas" class="tab-btn">그림판</button>
+                        </div>
+                        <button id="clearCurrentToolBtn" class="tool-delete-btn" type="button">지우기</button>
+                    </div>
+
+                    <div class="tool-body">
+                        <!-- Notepad -->
+                        <div id="notepadWrapper" class="tool-wrapper">
+                            <textarea id="notepad" placeholder="메모를 입력하세요…"></textarea>
+                        </div>
+
+                        <!-- Drawing Board -->
+                        <div id="canvasWrapper" class="tool-wrapper hidden">
+                            <canvas id="drawingBoard"></canvas>
+                            <div id="canvasCursorIndicator" class="canvas-cursor-indicator hidden" aria-hidden="true">
+                                <span class="canvas-cursor-ring"></span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="layout-resizer horizontal hidden" id="toolsSectionResizer" aria-hidden="true"></div>
+
+                <!-- Calculator (Bottom right area in layout logic) -->
+                <section class="calculator-section">
+                    <div class="section-panel-label">계산기</div>
+                    <div class="calc-display-shell">
+                        <div id="calcHistory" class="calc-history" aria-live="polite"></div>
+                    </div>
+                    <div class="calc-keys">
+                        <button class="calc-btn fn-btn" data-val="C">C</button>
+                        <button class="calc-btn fn-btn" data-val="BACK">←</button>
+                        <button class="calc-btn op-btn" data-val="/">÷</button>
+                        <button class="calc-btn fn-btn sqrt-btn advanced-calc-slot" data-val="SQRT">√</button>
+
+                        <button class="calc-btn num-btn" data-val="7">7</button>
+                        <button class="calc-btn num-btn" data-val="8">8</button>
+                        <button class="calc-btn num-btn" data-val="9">9</button>
+                        <button class="calc-btn op-btn" data-val="*">×</button>
+
+                        <button class="calc-btn num-btn" data-val="4">4</button>
+                        <button class="calc-btn num-btn" data-val="5">5</button>
+                        <button class="calc-btn num-btn" data-val="6">6</button>
+                        <button class="calc-btn op-btn" data-val="-">-</button>
+
+                        <button class="calc-btn num-btn" data-val="1">1</button>
+                        <button class="calc-btn num-btn" data-val="2">2</button>
+                        <button class="calc-btn num-btn" data-val="3">3</button>
+                        <button class="calc-btn op-btn" data-val="+">+</button>
+
+                        <button class="calc-btn num-btn" data-val="0">0</button>
+                        <button class="calc-btn num-btn" data-val="00">00</button>
+                        <button class="calc-btn num-btn" data-val=".">.</button>
+                        <button class="calc-btn fn-btn equal-btn" data-val="=">=</button>
+                    </div>
+                </section>
+
+                <button id="mockChatBtn" class="skct-floating-btn chat-btn advanced-layout-only" type="button" aria-label="고급 활용 빠른 열기" title="고급 활용 빠른 열기">
+                    <span class="chat-bubble-icon" aria-hidden="true"></span>
+                </button>
+                <button id="mockQuestionBtn" class="skct-floating-btn question-btn advanced-layout-only" type="button" aria-label="우측 안내 버튼 설명" title="우측 안내 버튼 설명">?</button>
+
+            </div>
+        </main>
+
+    </div>
+
+    <div id="popupEditorPanel" class="popup-editor-panel hidden collapsed" aria-live="polite">
+        <div class="popup-editor-header">
+            <div class="popup-editor-title">팝업 기본값 편집</div>
+            <button id="popupEditorToggleBtn" type="button" class="popup-editor-toggle-btn" aria-expanded="false">펼치기</button>
+        </div>
+        <div class="popup-editor-content">
+            <div class="popup-editor-desc">창 위치, 크기, 세로 비율, 하단 여백을 조절한 뒤 서버 기본값으로 저장하세요.</div>
+            <label class="popup-editor-field">
+                <span>하단 여백</span>
+                <input type="range" id="popupBottomPaddingRange" min="0" max="0.9" step="0.005" value="0.11">
+                <strong id="popupBottomPaddingValue">11.0%</strong>
+            </label>
+            <label class="popup-editor-field">
+                <span>우측 버튼 열</span>
+                <input type="range" id="popupSideColumnRange" min="0.03" max="0.24" step="0.005" value="0.09">
+                <strong id="popupSideColumnValue">9.0%</strong>
+            </label>
+            <div id="popupEditorMetrics" class="popup-editor-metrics"></div>
+            <div class="popup-editor-actions">
+                <button id="popupEditorReloadBtn" type="button" class="popup-editor-btn ghost">서버값 다시 적용</button>
+                <button id="popupEditorSaveBtn" type="button" class="popup-editor-btn primary">서버 기본값 저장</button>
+            </div>
+            <div id="popupEditorStatus" class="popup-editor-status">관리자 페이지에서 연 편집 팝업에서만 저장됩니다.</div>
+        </div>
+    </div>
+
+    <!-- Help Modal Overlay -->
+    <div id="helpModal" class="modal-overlay hidden">
+        <div class="modal-content help-modal-content">
+            <div class="modal-header help-modal-header">
+                <h3 id="helpModalTitle">📘 사용 안내</h3>
+                <button class="close-modal btn-close">×</button>
+            </div>
+            <div class="help-modal-body">
+                <section class="help-start-guide" aria-labelledby="helpFirstUseTitle">
+                    <div class="help-start-copy">
+                        <div id="helpFirstUseTitle" class="help-start-title">사용 순서</div>
+                        <div id="helpFirstUseLead" class="help-start-lead"></div>
+                    </div>
+                    <div class="help-step-list">
+                        <div class="help-step-card">
+                            <span class="help-step-number">1</span>
+                            <div>
+                                <strong id="helpStep1Title">팝업으로 열기</strong>
+                                <p id="helpStep1Body">상단 타이머 오른쪽의 <b>팝업으로 열기</b>를 눌러 시작합니다.</p>
+                            </div>
+                        </div>
+                        <div class="help-step-card">
+                            <span class="help-step-number">2</span>
+                            <div>
+                                <strong id="helpStep2Title">문제 풀기</strong>
+                                <p id="helpStep2Body">메모장과 그림판은 전환하여 사용합니다. 다음 문항으로 넘어가면 자동으로 지워집니다.</p>
+                            </div>
+                        </div>
+                        <div class="help-step-card">
+                            <span class="help-step-number">3</span>
+                            <div>
+                                <strong id="helpStep3Title">OMR 체크</strong>
+                                <p id="helpStep3Body"><b>연습 OMR</b>을 눌러 답을 선택합니다. 답을 누르면 다음 문항으로 이동합니다. 문항을 건너뛰기도 가능합니다.</p>
+                            </div>
+                        </div>
+                        <div class="help-step-card">
+                            <span class="help-step-number">4</span>
+                            <div>
+                                <strong id="helpStep4Title">채점</strong>
+                                <p id="helpStep4Body">다 풀면 <b>OMR 하단 정답 입력</b>으로 정답을 넣고 <b>채점 및 통계</b>를 누릅니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div id="helpNoticeFold" class="guide-fold guide-notice-fold hidden">
+                    <button id="helpNoticeToggleBtn" type="button" class="guide-fold-toggle" aria-expanded="false" aria-controls="helpNoticeBody">공지와 업데이트 보기</button>
+                    <div id="helpNoticeBody" class="guide-fold-body hidden">
+                        <div id="devNotice"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="noticeModal" class="modal-overlay hidden">
+        <div class="modal-content" style="max-width:420px;">
+            <div class="modal-header">
+                <h3 id="noticeModalTitle">공지사항</h3>
+                <button class="close-modal btn-close">×</button>
+            </div>
+            <div class="modal-body" style="display:flex; flex-direction:column; gap:12px;">
+                <div id="noticeModalBody" style="padding:14px 16px; border-radius:10px; background:#fff7ed; border:1px solid #fdba74; color:#7c2d12; line-height:1.65; font-size:14px;"></div>
+                <div id="noticeModalUpdated" style="font-size:11px; color:#94a3b8; text-align:right;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 통합 설정 Modal (타이머 + 높이 비율) -->
+    <div id="settingsModal" class="modal-overlay hidden">
+        <div class="modal-content" style="max-width: 320px;">
+            <div class="modal-header">
+                <h3 id="settingsTitleTrigger">⚙ 설정</h3>
+                <div class="modal-header-actions">
+                    <button class="close-modal btn-close">×</button>
+                </div>
+            </div>
+            <div class="modal-body" style="display:flex; flex-direction:column; gap:16px;">
+                <div style="padding:10px 12px; border-radius:8px; background:#f8fafc; border:1px solid #e2e8f0; font-size:11px; color:#64748b; line-height:1.6;">
+                    <div><strong style="color:#334155;">현재 업데이트 일시</strong>: <span id="settingsUpdatedAt">-</span></div>
+                    <div id="settingsVersionRow"><strong style="color:#334155;">현재 버전</strong>: -</div>
+                </div>
+                <!-- 모드 설정 -->
+                <div>
+                    <div id="settingsPracticeModeTitle" style="font-weight:bold; color:#1e293b; margin-bottom:10px; font-size:13px; border-bottom:1px solid #e2e8f0; padding-bottom:6px;">🎯 풀이 방식</div>
+                    <div style="display:flex; align-items:center; gap:8px; padding:10px; border-radius:6px; background:#f8fafc; border:1px solid #e2e8f0;">
+                        <label style="display:flex; align-items:center; gap:6px; cursor:pointer; font-size:13px; color:#334155; margin:0; flex:1;">
+                            <input type="checkbox" id="cfgPracticeMode" style="margin:0; width:16px; height:16px; accent-color:#3b82f6;">
+                            <span style="font-weight:600;">자유 풀이 모드</span>
+                        </label>
+                    </div>
+                    <div id="settingsPracticeModeHint" class="settings-inline-hint">
+                        <div><strong>기본 세팅은 실제 시험과 같이</strong> 과목이 시간에 맞춰 전환됩니다.</div>
+                        <div><strong>고급 모드에서 자유 풀이 모드를 켜면</strong> 시간 제한과 전환 없이 연습할 수 있습니다.</div>
+                    </div>
+                </div>
+                <div>
+                    <div id="settingsScoringTitle" style="font-weight:bold; color:#1e293b; margin-bottom:10px; font-size:13px; border-bottom:1px solid #e2e8f0; padding-bottom:6px;">📊 건너뛴 문항</div>
+                    <div style="display:flex; flex-direction:column; gap:8px; padding:10px; border-radius:6px; background:#f8fafc; border:1px solid #e2e8f0;">
+                        <label style="display:flex; align-items:center; gap:6px; cursor:pointer; font-size:13px; color:#334155; margin:0;">
+                            <input type="checkbox" id="cfgSkippedAsWrong" style="margin:0; width:16px; height:16px; accent-color:#3b82f6;">
+                            <span style="font-weight:600;">건너뛴 문제를 오답으로 처리</span>
+                        </label>
+                        <div id="settingsScoringHint" class="context-help-source" hidden>
+                            OFF = 건너뜀으로 별도 집계<br>
+                            ON = 상세 통계와 오답 복기에서 건너뜀도 오답으로 함께 봄
+                        </div>
+                    </div>
+                </div>
+                <div class="advanced-panel-only">
+                    <div style="font-weight:bold; color:#1e293b; margin-bottom:10px; font-size:13px; border-bottom:1px solid #e2e8f0; padding-bottom:6px;">💾 저장 파일</div>
+                    <div style="display:flex; flex-direction:column; gap:8px; padding:10px; border-radius:6px; background:#f8fafc; border:1px solid #e2e8f0;">
+                        <label style="display:flex; align-items:center; gap:6px; cursor:pointer; font-size:13px; color:#334155; margin:0;">
+                            <input type="checkbox" id="cfgExportIdentity" style="margin:0; width:16px; height:16px; accent-color:#3b82f6;" checked>
+                            <span style="font-weight:600;">내보내기 파일에 계정 식별 정보 포함</span>
+                        </label>
+                        <div class="settings-inline-hint">포함하면 TXT/CSV 상단에 로그인 계정이 표시되어 파일을 구분하기 쉽습니다.</div>
+                    </div>
+                </div>
+                <!-- 타이머 설정 -->
+                <div>
+                    <div id="settingsTimerTitle" style="font-weight:bold; color:#1e293b; margin-bottom:10px; font-size:13px; border-bottom:1px solid #e2e8f0; padding-bottom:6px;">🕒 타이머</div>
+                    <div class="settings-row" style="margin-bottom:8px;">
+                        <label style="color:#334155;">전체 제한 시간 (분)</label>
+                        <input type="number" id="cfgTotal" value="75" style="background:white; color:black; border:1px solid #cbd5e1; width:60px;">
+                    </div>
+                    <div class="settings-row" style="margin-bottom:8px;">
+                        <label style="color:#334155;">각 과목당 시간 (분)</label>
+                        <input type="number" id="cfgSubj" value="15" style="background:white; color:black; border:1px solid #cbd5e1; width:60px;">
+                    </div>
+                    <div class="settings-row" style="margin-bottom:0;">
+                        <label style="color:#334155;">과목 간 쉬는 시간 (분)</label>
+                        <input type="number" id="cfgBreak" value="1" style="background:white; color:black; border:1px solid #cbd5e1; width:60px;">
+                    </div>
+                </div>
+                <!-- 문항 가이드 설정 -->
+                <div class="advanced-panel-only">
+                    <div id="settingsGuideTitle" style="font-weight:bold; color:#1e293b; margin-bottom:10px; font-size:13px; border-bottom:1px solid #e2e8f0; padding-bottom:6px; display:flex; justify-content:space-between; align-items:center;">
+                        ⏱️ 시간 가이드
+                        <label style="font-size:11px; font-weight:normal; display:flex; align-items:center; gap:4px; margin:0;">
+                            <input type="checkbox" id="cfgGuideEnabled" checked style="margin:0;"> 표시하기
+                        </label>
+                    </div>
+                    <div class="settings-row" style="margin-bottom:0;">
+                        <label style="color:#334155;">1문항당 권장 시간 (초)</label>
+                        <input type="number" id="cfgGuideSec" value="45" style="background:white; color:black; border:1px solid #cbd5e1; width:60px;">
+                    </div>
+                </div>
+                <!-- 높이 비율 설정 -->
+                <div>
+                    <div id="settingsLayoutTitle" style="font-weight:bold; color:#1e293b; margin-bottom:10px; font-size:13px; border-bottom:1px solid #e2e8f0; padding-bottom:6px;">📐 화면 비율</div>
+                    <div class="settings-row" style="margin-bottom:8px;">
+                        <label style="color:#334155;">타이머 영역</label>
+                        <input type="number" id="ratioTimer" value="8.6" min="0" step="0.1" style="background:white; color:black; border:1px solid #cbd5e1; width:60px;">
+                    </div>
+                    <div class="settings-row" style="margin-bottom:8px;">
+                        <label style="color:#334155;">메모/그림 영역</label>
+                        <input type="number" id="ratioUtils" value="45.0" min="0" step="0.1" style="background:white; color:black; border:1px solid #cbd5e1; width:60px;">
+                    </div>
+                    <div class="settings-row" style="margin-bottom:0;">
+                        <label style="color:#334155;">계산기 영역</label>
+                        <input type="number" id="ratioCalc" value="46.4" min="0" step="0.1" style="background:white; color:black; border:1px solid #cbd5e1; width:60px;">
+                    </div>
+                </div>
+                <div class="advanced-panel-only">
+                    <div id="settingsToolTitle" style="font-weight:bold; color:#1e293b; margin-bottom:10px; font-size:13px; border-bottom:1px solid #e2e8f0; padding-bottom:6px;">🧰 도구</div>
+                    <label class="settings-slider-row" for="noteFontSizeRange">
+                        <span class="settings-slider-label">메모장 글씨 크기</span>
+                        <div class="settings-slider-control" id="noteFontControl">
+                            <input type="range" id="noteFontSizeRange" min="12" max="22" step="1" value="12">
+                            <strong id="noteFontSizeValue">12</strong>
+                        </div>
+                    </label>
+                    <label class="settings-slider-row" for="canvasLineWidthRange" style="margin-top:10px;">
+                        <span class="settings-slider-label">그림판 선 굵기</span>
+                        <div class="settings-slider-control" id="canvasLineWidthControl">
+                            <input type="range" id="canvasLineWidthRange" min="2" max="12" step="1" value="2">
+                            <strong id="canvasLineWidthValue">2</strong>
+                        </div>
+                    </label>
+                </div>
+                <button id="settingsApplyBtn" style="padding:10px; background:#3b82f6; color:white; border:none; border-radius:4px; font-weight:bold; cursor:pointer; font-size:14px;">✅ 적용하고 닫기</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="advancedGuideModal" class="modal-overlay hidden">
+        <div class="modal-content advanced-guide-modal-content">
+            <div class="modal-header">
+                <h3 id="advancedGuideModalTitle">🔒 고급 모드</h3>
+                <div class="modal-header-actions">
+                    <button class="close-modal btn-close">×</button>
+                </div>
+            </div>
+            <div class="modal-body advanced-guide-modal-body">
+                <div id="advancedGuideFlow" class="guide-flow-strip guide-flow-strip-warm">
+                    이용권 선택 → 신청서 입력 → 후원 내용 복사 → 이용권 결제/후원하기 → 후원 완료
+                </div>
+                <div class="advanced-guide-section advanced-guide-section-login">
+                    <div id="advancedGuideLoginTitle" class="advanced-guide-section-title advanced-guide-section-title-blue">고급모드 로그인하기</div>
+                    <div id="advancedGuideLoginBody" class="advanced-guide-info advanced-guide-info-blue">
+                        승인된 이메일과 비밀번호를 입력해 주세요.
+                    </div>
+                    <div class="advanced-guide-login-grid">
+                        <input id="advancedAccessIdInput" type="text" autocomplete="username" placeholder="신청 이메일" style="min-width:0; padding:10px 12px; border:1px solid #93c5fd; border-radius:8px; font-size:13px;">
+                        <input id="advancedAccessPasswordInput" type="password" autocomplete="off" placeholder="비밀번호" style="min-width:0; padding:10px 12px; border:1px solid #93c5fd; border-radius:8px; font-size:13px;">
+                        <button id="advancedAccessSubmitBtn" type="button" style="padding:10px 14px; background:#2563eb; color:white; border:none; border-radius:8px; font-weight:700; cursor:pointer; white-space:nowrap;">고급 모드 열기</button>
+                    </div>
+                    <div id="advancedAccessStatus" style="min-height:18px; font-size:12px; color:#64748b; line-height:1.5;"></div>
+                </div>
+                <div class="advanced-guide-section advanced-guide-section-neutral">
+                    <div class="advanced-guide-section-head">
+                        <div id="advancedGuideFeatureTitle" class="advanced-guide-section-title">고급 모드에서 편해지는 기능</div>
+                    </div>
+                    <div id="advancedGuideFeatureAccess" class="advanced-guide-note">
+                        <strong>실제와 가까운 비율과 배치로 환경에 익숙해질 수 있습니다.</strong><br>채점, 복기, 기록 등의 기능을 쉽게 할 수 있게 하여 시간을 아낄 수 있습니다.
+                    </div>
+                    <details class="guide-fold">
+                        <summary>복기와 반복 연습이 편해지는 기능 보기</summary>
+                        <div class="guide-fold-body">
+                            <div class="advanced-guide-card-grid">
+                                <div id="advancedGuideFeatureCard1" style="padding:12px; border-radius:8px; background:#ffffff; border:1px solid #e2e8f0; font-size:12px; color:#334155; line-height:1.7;">
+                                    <strong style="display:block; color:#0f172a; margin-bottom:4px;">실전 배치</strong>
+                                    우측 여백과 창 배치를 실제와 유사하게 맞춰 환경에 대해 익숙해질 수 있습니다.
+                                </div>
+                                <div id="advancedGuideFeatureCard2" style="padding:12px; border-radius:8px; background:#ffffff; border:1px solid #e2e8f0; font-size:12px; color:#334155; line-height:1.7;">
+                                    <strong style="display:block; color:#0f172a; margin-bottom:4px;">빠른 반복 제어</strong>
+                                    이전 과목과 처음부터 버튼으로 필요한 범위만 다시 풀 수 있어 원하는 대로 활용이 가능합니다.
+                                </div>
+                                <div id="advancedGuideFeatureCard3" style="padding:12px; border-radius:8px; background:#ffffff; border:1px solid #e2e8f0; font-size:12px; color:#334155; line-height:1.7;">
+                                    <strong style="display:block; color:#0f172a; margin-bottom:4px;">채점 후 복기</strong>
+                                    정답을 하나씩 입력하지 않아도, CBT 답지 표를 붙여넣어 한 번에 채점할 수 있습니다. 과목별 통계, 문항별 시간, CBT 정답률까지 함께 보며 쉽게 복기하고 시간을 아낄 수 있습니다.
+                                </div>
+                                <div id="advancedGuideFeatureCard4" style="padding:12px; border-radius:8px; background:#ffffff; border:1px solid #e2e8f0; font-size:12px; color:#334155; line-height:1.7;">
+                                    <strong style="display:block; color:#0f172a; margin-bottom:4px;">기록 보관함</strong>
+                                    회차 기록, 성장 그래프, 오답노트, 복기 메모를 개인 서버 보관함에 바로 저장하고, 필요하면 CSV나 복사용 표로 내보낼 수 있습니다.
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+                <div class="advanced-guide-section advanced-guide-section-warm">
+                    <div class="advanced-guide-section-head">
+                        <div id="advancedGuidePlanTitle" class="advanced-guide-section-title advanced-guide-section-title-warm">신청 순서 1 - 이용권 안내</div>
+                    </div>
+                    <div id="advancedGuidePlanIntro" class="advanced-guide-plan-intro">
+                        채점과 복기, 기록 정리에 드는 시간을 줄이는 데 초점을 맞춘 이용권입니다. 필수 연습 기능은 계속 무료로 유지하고, 고급 기능은 시간을 아끼고 싶은 분들이 선택해서 사용할 수 있게 구성했습니다.
+                    </div>
+                    <div id="manualSubscriptionPlanCards" class="advanced-guide-plan-cards">
+                        <div style="padding:12px; border-radius:8px; background:#ffffff; border:1px solid #fdba74;">
+                            <div style="font-size:12px; color:#9a3412; font-weight:700;">3일 이용권</div>
+                            <div style="font-size:20px; font-weight:800; color:#7c2d12; margin-top:4px;">3,000원 <span class="plan-daily-cost">1일 약 1,000원</span></div>
+                            <div style="font-size:11px; color:#9a3412; line-height:1.6; margin-top:6px;">시험 직전 3일 압축 대비용</div>
+                        </div>
+                        <div style="padding:12px; border-radius:8px; background:#ffffff; border:1px solid #fdba74;">
+                            <div style="font-size:12px; color:#9a3412; font-weight:700;">7일 이용권</div>
+                            <div style="font-size:20px; font-weight:800; color:#7c2d12; margin-top:4px;">6,000원 <span class="plan-daily-cost">1일 약 857원</span></div>
+                            <div style="font-size:11px; color:#9a3412; line-height:1.6; margin-top:6px;">일주일 집중 대비용</div>
+                        </div>
+                        <div style="padding:12px; border-radius:8px; background:#ffffff; border:1px solid #fdba74;">
+                            <div style="font-size:12px; color:#9a3412; font-weight:700;">14일 이용권</div>
+                            <div style="font-size:20px; font-weight:800; color:#7c2d12; margin-top:4px;">9,900원 <span class="plan-daily-cost">1일 약 707원</span></div>
+                            <div style="font-size:11px; color:#9a3412; line-height:1.6; margin-top:6px;">7일권 2회보다 2,100원 절약</div>
+                        </div>
+                        <div style="padding:12px; border-radius:8px; background:#ffffff; border:1px solid #fdba74;">
+                            <div style="font-size:12px; color:#9a3412; font-weight:700;">30일 이용권</div>
+                            <div style="font-size:20px; font-weight:800; color:#7c2d12; margin-top:4px;">17,900원 <span class="plan-daily-cost">1일 약 597원</span></div>
+                            <div style="font-size:11px; color:#9a3412; line-height:1.6; margin-top:6px;">14일권 2회보다 1,900원 절약</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="advanced-guide-section advanced-guide-section-neutral">
+                    <div class="advanced-guide-section-head">
+                        <div id="advancedGuideFormTitle" class="advanced-guide-section-title advanced-guide-section-title-small">신청 순서 2 - 신청서 작성</div>
+                    </div>
+                    <div id="advancedGuideFormDescription" class="advanced-guide-description">
+                        이메일, 이용 시작일, 비밀번호를 입력하면 후원 내용이 자동으로 만들어집니다. 후원 내용 복사를 눌러 복사된 텍스트를 후원 사이트에서 입력해주시면 승인처리가 됩니다. (새벽 시간에는 승인이 지연될 수 있습니다.) 승인이 되면, 신청하신 내용으로 고급모드에 로그인할 수 있습니다.
+                    </div>
+                    <div class="advanced-guide-form-grid">
+                        <label style="display:flex; flex-direction:column; gap:5px; font-size:11px; color:#475569;">
+                            <span>이용권 선택</span>
+                            <select id="manualSubscriptionPlanSelect" style="min-width:0; padding:10px 12px; border:1px solid #cbd5e1; border-radius:8px; font-size:13px;">
+                                <option value="manual-3d">3일 이용권</option>
+                                <option value="manual-7d">7일 이용권</option>
+                                <option value="manual-14d">14일 이용권</option>
+                                <option value="manual-30d">30일 이용권</option>
+                            </select>
+                        </label>
+                        <label style="display:flex; flex-direction:column; gap:5px; font-size:11px; color:#475569;">
+                            <span>원하는 이용 시작일</span>
+                            <input id="manualSubscriptionStartDateInput" type="date" autocomplete="off" style="min-width:0; padding:10px 12px; border:1px solid #cbd5e1; border-radius:8px; font-size:13px;">
+                        </label>
+                        <label style="display:flex; flex-direction:column; gap:5px; font-size:11px; color:#475569;">
+                            <span>이메일</span>
+                            <input id="manualSubscriptionEmailInput" type="email" autocomplete="off" placeholder="고급 로그인과 승인 알림에 사용할 이메일" style="min-width:0; padding:10px 12px; border:1px solid #cbd5e1; border-radius:8px; font-size:13px;">
+                        </label>
+                    </div>
+                    <div class="advanced-guide-password-grid">
+                        <label style="display:flex; flex-direction:column; gap:5px; font-size:11px; color:#475569;">
+                            <span>고급 로그인에 사용할 비밀번호</span>
+                            <input id="manualSubscriptionPasswordInput" type="password" autocomplete="new-password" placeholder="고급 로그인에 사용할 비밀번호" style="min-width:0; padding:10px 12px; border:1px solid #cbd5e1; border-radius:8px; font-size:13px;">
+                        </label>
+                        <label style="display:flex; flex-direction:column; gap:5px; font-size:11px; color:#475569;">
+                            <span>비밀번호 확인</span>
+                            <input id="manualSubscriptionPasswordConfirmInput" type="password" autocomplete="new-password" placeholder="비밀번호 확인" style="min-width:0; padding:10px 12px; border:1px solid #cbd5e1; border-radius:8px; font-size:13px;">
+                        </label>
+                    </div>
+                    <div class="manual-donation-flow" id="manualDonationFlowPanel">
+                        <div class="manual-donation-flow-head">
+                            <div>
+                                <div class="manual-donation-flow-title">후원 내용</div>
+                                <div class="manual-donation-flow-copy">후원 내용 복사 버튼을 눌러주세요.</div>
+                            </div>
+                        </div>
+                        <textarea id="manualDonationMemoText" class="manual-donation-memo" readonly placeholder="신청 정보를 입력하고 아래 버튼을 누르면 자동으로 만들어집니다."></textarea>
+                        <div class="manual-donation-action-row">
+                            <button id="manualDonationMemoCopyBtn" type="button" class="manual-donation-copy-btn">후원 내용 복사</button>
+                            <a id="manualSubscriptionDonateLink" class="manual-donation-donate-link is-disabled" href="#" target="_blank" rel="noopener noreferrer nofollow" aria-disabled="true">이용권 결제/후원하기</a>
+                        </div>
+                        <div id="manualDonationStepStatus" class="manual-donation-step-status">후원 내용 복사 버튼을 눌러주세요.</div>
+                        <button id="manualSubscriptionSubmitBtn" type="button" class="advanced-guide-submit manual-subscription-submit" disabled>후원 완료</button>
+                    </div>
+                    <div id="manualSubscriptionSubmitStatus" style="min-height:20px; font-size:12px; color:#64748b; line-height:1.6;"></div>
+                </div>
+                <div id="advancedGuideContact" class="advanced-guide-contact">
+                    문의: <strong>zhdlsqpdj@gmail.com</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="advancedFeatureModal" class="modal-overlay hidden">
+        <div class="modal-content advanced-feature-modal-content">
+            <div class="modal-header">
+                <h3 id="advancedFeatureModalTitle">✨ 고급 활용</h3>
+                <div class="modal-header-actions">
+                    <button class="close-modal btn-close">×</button>
+                </div>
+            </div>
+            <div class="modal-body advanced-feature-modal-body">
+                <div id="advancedFeatureSummary" class="guide-flow-strip guide-flow-strip-advanced">
+                    <strong>정답 입력</strong> -> <strong>링커리어 CBT 정오표 일괄입력</strong> -> <strong>채점</strong> -> <strong>과목별 통계·저장</strong>
+                </div>
+                <div id="advancedFeatureIntro" class="help-advanced-banner help-advanced-banner-info"></div>
+                <div id="advancedFeaturePlanInfo" class="help-advanced-banner help-advanced-banner-note"></div>
+                <div class="help-advanced-checklist">
+                    <div id="advancedFeatureItem1" class="help-advanced-check-item"><strong>1. 채점 결과 확인</strong><br>응답 수, 미응답 수, 정답 수, 정답률을 확인할 수 있습니다.</div>
+                    <div id="advancedFeatureItem2" class="help-advanced-check-item"><strong>2. 과목별 약점 확인</strong><br>과목별 상세 통계로 어느 영역이 약한 지 보기 쉽게 해석할 수 있습니다.</div>
+                    <div id="advancedFeatureItem3" class="help-advanced-check-item"><strong>3. 기록 저장</strong><br>문항별 통계는 TXT로, 성장 기록은 CSV로 저장해 복기 자료를 남길 수 있습니다.</div>
+                    <div id="advancedFeatureItem4" class="help-advanced-check-item"><strong>4. 반복 연습 준비</strong><br>링커리어 CBT 정오표를 붙여넣어 정답을 빠르게 적용하고, 이전 과목/처음부터 버튼과 문항 가이드로 다시 연습할 수 있습니다.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detailed Stats Modal Overlay -->
+    <div id="statModal" class="modal-overlay hidden">
+        <div class="modal-content stat-modal-content">
+            <div class="modal-header">
+                <h3>과목별 상세 통계</h3>
+                <div class="modal-header-actions">
+                    <button id="detailStatsHelpBtn" type="button" class="context-help-btn" data-context-help="detail-stats" aria-label="상세 통계 도움말" title="상세 통계 도움말">?</button>
+                    <button id="detailStatsPopoutBtn" type="button" class="modal-popout-btn" aria-label="별도 창으로 열기" title="별도 창으로 열기">별도 창</button>
+                    <button class="close-modal btn-close">×</button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <table style="width: 100%; border-collapse: collapse; text-align: center; font-size: 13px;">
+                    <thead>
+                        <tr style="background: #f1f5f9; border-bottom: 2px solid #cbd5e1;">
+                            <th style="padding: 8px;">과목명</th>
+                            <th style="padding: 8px;">맞은/푼/전체</th>
+                            <th style="padding: 8px;">건너뜀</th>
+                            <th style="padding: 8px;">못 풂</th>
+                            <th style="padding: 8px;">정답률</th>
+                        </tr>
+                    </thead>
+                    <tbody id="statTableBody">
+                        <!-- rows injected via js -->
+                    </tbody>
+                </table>
+                <div id="statDetailWrapper" style="margin-top: 15px; border-top: 1px dashed #cbd5e1; padding-top: 10px; font-size: 12px; display: flex; flex-direction: column; gap: 10px; max-height: 250px; overflow-y: auto; overflow-x: hidden;">
+                    <!-- details injected via js -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="archiveFrameModal" class="modal-overlay hidden">
+        <div class="modal-content frame-modal-content">
+            <div class="modal-header">
+                <h3>기록 보관함</h3>
+                <div class="modal-header-actions">
+                    <button id="archiveFramePopoutBtn" type="button" class="modal-popout-btn" aria-label="별도 창으로 열기" title="별도 창으로 열기">별도 창</button>
+                    <button class="close-modal btn-close">×</button>
+                </div>
+            </div>
+            <div class="modal-body frame-modal-body">
+                <iframe id="archiveFrame" class="frame-modal-iframe" title="기록 보관함" loading="eager"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <div id="extensionFrameModal" class="modal-overlay hidden">
+        <div class="modal-content frame-modal-content">
+            <div class="modal-header">
+                <h3>확장 안내</h3>
+                <div class="modal-header-actions">
+                    <button id="extensionFramePopoutBtn" type="button" class="modal-popout-btn" aria-label="별도 창으로 열기" title="별도 창으로 열기">별도 창</button>
+                    <button class="close-modal btn-close">×</button>
+                </div>
+            </div>
+            <div class="modal-body frame-modal-body">
+                <iframe id="extensionFrame" class="frame-modal-iframe" title="확장 안내" loading="lazy"></iframe>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div id="bulkCorrectImportModal" class="modal-overlay hidden">
+        <div class="modal-content bulk-import-modal">
+            <div class="modal-header">
+                <h3>링커리어 CBT 정오표 일괄입력</h3>
+                <div class="modal-header-actions">
+                    <button id="bulkImportHelpBtn" type="button" class="context-help-btn" data-context-help="bulk-import" aria-label="정오표 일괄입력 도움말" title="정오표 일괄입력 도움말">?</button>
+                    <button class="close-modal btn-close">×</button>
+                </div>
+            </div>
+            <div class="modal-body bulk-import-body">
+                <div class="bulk-import-guide-copy">
+                    CBT 답지에서 <strong>NO.</strong>부터 표 전체를 복사해 아래 범위별 칸에 붙여넣으세요. 링커리어 CBT의 <strong>정답률</strong>도 함께 읽어 상세 통계에 표시합니다. 탭, 공백, 쉼표, |, / 구분 형식은 자동으로 나누고, 아래 열 선택에서 문항·정답·정답률 열을 직접 맞출 수 있습니다. 적용이 어려운 형식은 복사한 텍스트와 캡처 이미지를 이메일로 보내주시면 맞춰드리겠습니다.
+                </div>
+                <div class="bulk-import-page-grid">
+                    <label class="bulk-import-page-field"><span>1~20</span><textarea id="bulkCorrectImportInput" class="bulk-import-textarea bulk-correct-page-input" data-range="1-20" placeholder="NO.  정답  입력답  정오  정답률"></textarea></label>
+                    <label class="bulk-import-page-field"><span>21~40</span><textarea class="bulk-import-textarea bulk-correct-page-input" data-range="21-40" placeholder="21  2  -  X  37.1%"></textarea></label>
+                    <label class="bulk-import-page-field"><span>41~60</span><textarea class="bulk-import-textarea bulk-correct-page-input" data-range="41-60"></textarea></label>
+                    <label class="bulk-import-page-field"><span>61~80</span><textarea class="bulk-import-textarea bulk-correct-page-input" data-range="61-80"></textarea></label>
+                    <label class="bulk-import-page-field"><span>81~100</span><textarea class="bulk-import-textarea bulk-correct-page-input" data-range="81-100"></textarea></label>
+                </div>
+                <div class="bulk-import-toolbar">
+                    <button id="bulkCorrectImportParseBtn" type="button" class="bulk-import-btn primary">붙여넣기 분석</button>
+                    <div id="bulkCorrectImportSummary" class="bulk-import-summary">아직 분석 전입니다.</div>
+                </div>
+                <div class="bulk-import-select-grid">
+                    <label class="bulk-import-field">
+                        <span>문항 번호 열</span>
+                        <select id="bulkCorrectQuestionCol"></select>
+                    </label>
+                    <label class="bulk-import-field">
+                        <span>정답 열</span>
+                        <select id="bulkCorrectAnswerCol"></select>
+                    </label>
+                    <label class="bulk-import-field">
+                        <span>정답률 열</span>
+                        <select id="bulkCorrectRateCol"></select>
+                    </label>
+                </div>
+                <div id="bulkCorrectImportPreview" class="bulk-import-preview">
+                    분석 결과가 여기에 표시됩니다.
+                </div>
+                <div class="bulk-import-toolbar">
+                    <div id="bulkCorrectImportStatus" class="bulk-import-status">고급모드의 정답 입력 상태에서만 사용할 수 있습니다.</div>
+                    <button id="bulkCorrectImportApplyBtn" type="button" class="bulk-import-btn success" disabled>정답 일괄 반영</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="quickInfoModal" class="modal-overlay hidden">
+        <div class="modal-content quick-info-modal-content">
+            <div class="modal-header">
+                <h3 id="quickInfoModalTitle">빠른 도움말</h3>
+                <button class="close-modal btn-close">×</button>
+            </div>
+            <div class="modal-body quick-info-modal-body">
+                <div id="quickInfoModalBody" class="quick-info-body"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Donation Custom Modal -->
+    <div id="donateModal" class="modal-overlay hidden">
+        <div class="modal-content" style="max-width: 420px; padding: 25px;">
+            <div class="modal-header" style="border-bottom: none; padding-bottom: 0px; margin-bottom: 10px;">
+                <button class="close-modal btn-close">×</button>
+            </div>
+            <div class="modal-body" style="font-size: 14px; line-height: 1.6; color: #475569; padding-right: 0;">
+                <div id="sponsorTicker" style="margin-bottom: 14px;"></div>
+                <div class="donation-purpose-note">
+                    <strong>이 화면은 일반 운영 후원입니다.</strong>
+                    <span>고급 이용권 신청은 사이드바의 ‘고급 모드’에서 신청번호를 먼저 발급받아 진행하세요.</span>
+                </div>
+                <p id="donateModalLead" style="margin-bottom: 12px; margin-top: 0;">이용해주셔서 감사합니다.</p>
+                        <p id="donateModalBody" style="margin-bottom: 12px;">서버, 도메인, 유지보수 비용은 취준생 개발자가 감당하고 있으며, 최대한 불편한 광고와 결제 없이 필수기능들을 사용할 수 있게 제공하고 있습니다.</p>
+                <p id="donateModalPromise" style="margin-bottom: 12px;"></p>
+                <div style="background: #f8fafc; padding: 14px; border-radius: 8px; border: 1px dashed #93c5fd; margin-bottom: 20px; font-size: 13px; color: #334155;">
+                    <div id="donateModalHighlight">문의사항</div>
+                    <div id="donateModalContact" style="margin-top: 10px; font-size: 12px; color: #475569; display: none;"></div>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                    <button id="donateConfirmBtn" style="flex:1; padding:12px; background:#2563eb; color:white; border:none; border-radius:6px; font-weight:bold; cursor:pointer; font-size:14px; transition: opacity 0.2s;">☕ 개발자 지원하기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats (통계) Modal -->
+    <div id="statsModal" class="modal-overlay hidden">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h3 id="statsModalTitle">🔥 접속 현황</h3>
+                <div class="modal-header-actions">
+                    <button class="close-modal btn-close">×</button>
+                </div>
+            </div>
+            <div class="modal-body" style="display:flex; flex-direction:column; gap:20px;">
+                <div class="stats-range-tabs" role="tablist" aria-label="방문 통계 기간">
+                    <button type="button" class="stats-range-tab active" data-stats-range="daily">일간</button>
+                    <button type="button" class="stats-range-tab" data-stats-range="weekly">주간</button>
+                    <button type="button" class="stats-range-tab" data-stats-range="monthly">월간</button>
+                </div>
+                <!-- 1. 오늘 방문자 -->
+                <div style="background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 8px; padding: 20px; text-align: center;">
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 5px;">
+                        <span style="display: inline-block; width: 12px; height: 12px; background-color: #22c55e; border-radius: 50%; box-shadow: 0 0 8px #22c55e; animation: pulse 2s infinite;"></span>
+                        <span id="statsActiveLabel" style="font-size: 16px; color: #475569; font-weight: bold;">오늘 방문</span>
+                    </div>
+                    <div id="activeVisitorCount" style="font-size: 36px; font-weight: 900; color: #10b981; letter-spacing: -1px;">집계 확인 중</div>
+                    <div id="statsActiveHint" style="font-size: 12px; color: #94a3b8; margin-top: 5px;">하루에 한 번씩, 브라우저 단위로 집계됩니다.</div>
+                </div>
+
+                <!-- 2. 기간별 접속자 그래프 -->
+                <div style="border-top: 1px dashed #cbd5e1; padding-top: 15px;">
+                    <div id="statsTrendTitle" style="font-weight: bold; color: #1e293b; margin-bottom: 10px; text-align: center;">📈 일간 방문 추이</div>
+                    <div style="width: 100%; height: 200px; position: relative;">
+                        <canvas id="visitorChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- 3. 총 누적 접속자 -->
+                <div style="border-top: 1px dashed #cbd5e1; padding-top: 15px; text-align: center;">
+                    <span id="statsTotalLabel" style="font-size: 13px; color: #64748b; margin-bottom: 5px; display: block;">🗓️ 2026년 4월 4일 이후 누적 방문수</span>
+                    <div id="visitorCountDisplay" style="font-size: 18px; font-weight: bold; color: #3b82f6;">집계 확인 중</div>
+                    <div id="statsTotalHint" style="font-size: 12px; color: #94a3b8; margin-top: 5px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Community Modal -->
+    <div id="cmModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="cm-header" style="display:flex; justify-content:space-between; align-items:center;">
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <h3 id="cmTitle" style="margin:0;">💬 커뮤니티</h3>
+                    <button id="cmRefreshBtn" style="font-size:11px; padding:2px 6px; border:1px solid #cbd5e1; border-radius:4px; background:white; cursor:pointer; color:#475569;" title="데이터 새로고침">🔄 새로고침</button>
+                </div>
+                <button class="btn-close" id="cmCloseBtn">×</button>
+            </div>
+            <!-- 개발자 공지 (Firebase에서 실시간 로드) -->
+            <div id="cmNotice"></div>
+            <div class="cm-policy-note">커뮤니티는 질문, 오류 제보, 개선 요청, 사용 후기를 위한 공간입니다. 스팸, 비방, 불법 콘텐츠, 개인정보 노출, 저작권 침해 자료 공유, 공식 기출문제 공유로 오인될 수 있는 게시물은 운영자가 숨김 또는 삭제할 수 있습니다.</div>
+            <div class="cm-tabs">
+                <button class="cm-tab" data-tab="popular">🔥 인기글</button>
+                <button class="cm-tab active" data-tab="questions">❓ 질문·개선</button>
+                <button class="cm-tab" data-tab="stories">💡 팁·후기</button>
+                <button class="cm-tab" data-tab="faq">📌 FAQ</button>
+            </div>
+            <div class="cm-write" id="cmWriteForm" style="flex-direction:column;gap:6px;">
+                <div id="cmImprovementGuide" class="cm-improvement-guide hidden">
+                    사용하고 계신 컴퓨터의 화면 크기(인치), 운영체제(윈도우, 맥), 브라우저(크롬, 웨일 등)을 함께 알려주시면 빠른 개선에 큰 도움이 됩니다. 상태를 더 자세히 피드백해주시면 정확하고 빠르게 해결해드리겠습니다. 화면이 깨진 경우 이미지를 붙여넣거나 파일로 첨부할 수 있습니다. 빠른 조치가 필요하면 피드백 메일을 남겨주세요. 개선 완료 후 메일이 자동 발송될 수 있으며, 메일은 댓글에 공개되지 않습니다.
+                </div>
+                <div style="display:flex;gap:6px;">
+                    <select id="cmCategorySelect" style="width:120px;padding:7px 10px;border:1px solid #cbd5e1;border-radius:6px;font-size:13px;outline:none;background:white;color:#334155;">
+                        <option value="qna">질문</option>
+                        <option value="improvement">개선요청</option>
+                    </select>
+                    <input type="text" id="cmNick" placeholder="(자유로운)닉네임" maxlength="20" style="flex:1;padding:7px 10px;border:1px solid #cbd5e1;border-radius:6px;font-size:13px;outline:none;">
+                    <input type="password" id="cmPw" placeholder="(자유로운)비밀번호" style="flex:1;padding:7px 10px;border:1px solid #cbd5e1;border-radius:6px;font-size:13px;outline:none;">
+                </div>
+                <div id="cmFeedbackEmailRow" class="cm-feedback-email-row hidden">
+                    <input type="email" id="cmFeedbackEmail" placeholder="답변/개선 완료 알림을 받을 이메일 (선택, 댓글에 공개되지 않음)" autocomplete="email">
+                </div>
+                <div id="cmAttachmentRow" class="cm-attachment-row hidden">
+                    <div class="cm-attachment-head">
+                        <label for="cmImageInput">이미지 첨부</label>
+                        <span>붙여넣기 또는 파일 선택 · 최대 3장</span>
+                    </div>
+                    <input type="file" id="cmImageInput" accept="image/png,image/jpeg,image/webp" multiple>
+                    <div id="cmAttachmentPreview" class="cm-attachment-preview"></div>
+                </div>
+                <div style="display:flex;gap:6px;">
+                    <textarea id="cmInput" placeholder="내용을 입력하세요... (최대 1000자)" rows="2"></textarea>
+                    <button id="cmSubmitBtn">등록</button>
+                </div>
+            </div>
+            <div class="cm-list" id="cmPostList"></div>
+        </div>
+    </div>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js" integrity="sha384-jb8JQMbMoBUzgWatfe6COACi2ljcDdZQ2OxczGA3bGNeWe+6DChMTBJemed7ZnvJ" crossorigin="anonymous"></script>
+    <script>
+        (function initRuntimeFlags() {
+            const url = new URL(window.location.href);
+            const devParam = url.searchParams.get('dev');
+            const previewParam = url.searchParams.get('preview');
+            const popupEditorParam = url.searchParams.get('popupEditor');
+            const advancedParam = url.searchParams.get('advanced');
+            const textEditorParam = url.searchParams.get('textEditor');
+
+            window.SKCT_FLAGS = {
+                maintenanceBypass: devParam === '1',
+                adminPreview: previewParam === '1',
+                popupEditor: popupEditorParam === '1',
+                advancedRequested: advancedParam === '1',
+                advanced: false,
+                textEditor: textEditorParam === '1'
+            };
+        })();
+    </script>
+    <script src="subscription-crypto.js?v=202604081955"></script>
+    <script src="build-info.js?v=202607050000"></script>
+    <script src="site-text-config.js?v=2026071020"></script>
+    <script src="main.js?v=2026071022"></script>
+
+    <script src="config/firebase-web-config.js"></script>
+    <!-- Firebase SDK (ES Module) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+        import { getFirebaseWebConfig } from "./config/firebase-config.mjs";
+
+        const app = initializeApp(getFirebaseWebConfig());
+        const isDevMaintenanceBypass = () => window.SKCT_FLAGS?.maintenanceBypass === true;
+        const PUBLIC_BOOTSTRAP_API_URL = 'https://us-central1-skct-tool.cloudfunctions.net/skctSecureApi/public/bootstrap';
+        const PUBLIC_BOOTSTRAP_CACHE_KEY = 'skct_public_bootstrap_cache_v4';
+        const PUBLIC_BOOTSTRAP_CACHE_MS = 60 * 1000;
+
+        function getVisitorKey() {
+            let key = localStorage.getItem('skct_visitor_key');
+            if (!/^v_[A-Za-z0-9_-]{8,80}$/.test(String(key || ''))) {
+                const random = crypto?.getRandomValues
+                    ? Array.from(crypto.getRandomValues(new Uint8Array(12))).map((n) => n.toString(36)).join('')
+                    : `${Date.now().toString(36)}${Math.round(performance.now() * 1000).toString(36)}`;
+                key = `v_${random.slice(0, 64)}`;
+                localStorage.setItem('skct_visitor_key', key);
+            }
+            return key;
+        }
+
+        function renderTodayVisitors(data) {
+            const displayEl = document.getElementById('activeVisitorCount');
+            const today = Array.isArray(data?.last7days) ? data.last7days[data.last7days.length - 1] : null;
+            const count = Number(today?.users) || 0;
+            if (displayEl) displayEl.textContent = count.toLocaleString() + "건";
+        }
+
+        function getKstDateKey(offsetDays = 0) {
+            const date = new Date(Date.now() + offsetDays * 86400000);
+            const parts = new Intl.DateTimeFormat('en-CA', {
+                timeZone: 'Asia/Seoul',
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            }).formatToParts(date).reduce((acc, part) => {
+                if (part.type !== 'literal') acc[part.type] = part.value;
+                return acc;
+            }, {});
+            return `${parts.year}-${parts.month}-${parts.day}`;
+        }
+
+        function buildLast7KstDateKeys() {
+            const LAUNCH_DATE = '2026-04-03';
+            const keys = [];
+            for (let i = 6; i >= 0; i -= 1) {
+                const key = getKstDateKey(-i);
+                keys.push({
+                    key,
+                    label: key < LAUNCH_DATE ? '' : key.slice(5),
+                    active: key >= LAUNCH_DATE
+                });
+            }
+            return keys;
+        }
+
+        function isUsablePublicBootstrapPayload(payload) {
+            return Boolean(
+                payload
+                && payload.ok === true
+                && payload.config
+                && payload.config.manualSubscriptionConfig
+            );
+        }
+
+        function readPublicBootstrapCache() {
+            try {
+                const cached = JSON.parse(sessionStorage.getItem(PUBLIC_BOOTSTRAP_CACHE_KEY) || 'null');
+                if (cached && cached.expiresAt > Date.now() && isUsablePublicBootstrapPayload(cached.payload)) return cached.payload;
+                if (cached && cached.payload && !isUsablePublicBootstrapPayload(cached.payload)) {
+                    sessionStorage.removeItem(PUBLIC_BOOTSTRAP_CACHE_KEY);
+                }
+            } catch (error) {
+                sessionStorage.removeItem(PUBLIC_BOOTSTRAP_CACHE_KEY);
+            }
+            return null;
+        }
+
+        function writePublicBootstrapCache(payload) {
+            try {
+                sessionStorage.setItem(PUBLIC_BOOTSTRAP_CACHE_KEY, JSON.stringify({
+                    expiresAt: Date.now() + PUBLIC_BOOTSTRAP_CACHE_MS,
+                    payload
+                }));
+            } catch (error) {
+                // 저장 공간이 막힌 브라우저에서는 캐시 없이 동작한다.
+            }
+        }
+
+        async function fetchPublicBootstrap(options = {}) {
+            const { countVisit = false, force = false } = options;
+            if (!force && !countVisit) {
+                const cached = readPublicBootstrapCache();
+                if (cached) return cached;
+            }
+            const response = await fetch(PUBLIC_BOOTSTRAP_API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    visitorKey: getVisitorKey(),
+                    countVisit
+                })
+            });
+            if (!response.ok) throw new Error(`public bootstrap failed: ${response.status}`);
+            const payload = await response.json();
+            if (!payload || payload.ok !== true) throw new Error('public bootstrap invalid payload');
+            writePublicBootstrapCache(payload);
+            return payload;
+        }
+
+        function normalizeBootstrapStats(payload) {
+            const raw = payload?.stats || {};
+            return {
+                totalUsersApprox: Number(raw.totalUsersApprox) || 0,
+                activeNow: Number(raw.activeNow) || 0,
+                last7days: Array.isArray(raw.last7days) ? raw.last7days : [],
+                last30days: Array.isArray(raw.last30days) ? raw.last30days : [],
+                dailySinceLaunch: Array.isArray(raw.dailySinceLaunch) ? raw.dailySinceLaunch : []
+            };
+        }
+
+        function renderVisitorSummary(data) {
+            const displayEl = document.getElementById('visitorCountDisplay');
+            if (displayEl && data) displayEl.textContent = data.totalUsersApprox.toLocaleString() + "건";
+        }
+
+        // ============================================
+        // 📈 일일 접속자 통계 & Chart.js 렌더링
+        // ============================================
+        async function fetchVisitorStats(options = {}) {
+            try {
+                const payload = await fetchPublicBootstrap(options);
+                return normalizeBootstrapStats(payload);
+            } catch (e) {
+                console.error('fetchVisitorStats error:', e);
+                return { totalUsersApprox: 0, activeNow: 0, last7days: [] };
+            }
+        }
+
+        window.startPresencePolling = async () => {
+            const data = await fetchVisitorStats({ force: true });
+            renderTodayVisitors(data);
+        };
+
+        window.stopPresencePolling = () => {};
+
+        const statsToggleBtn = document.getElementById('statsToggle');
+        const statsModal = document.getElementById('statsModal');
+        let visitorChartInstance = null;
+        let currentStatsRange = 'daily';
+        let latestVisitorStats = null;
+
+        function buildStatsSeries(data, range) {
+            const source = range === 'daily'
+                ? ((Array.isArray(data?.last30days) && data.last30days.length ? data.last30days : data?.last7days) || [])
+                : ((Array.isArray(data?.dailySinceLaunch) && data.dailySinceLaunch.length ? data.dailySinceLaunch : data?.last30days) || []);
+            const normalized = source.map((item) => ({
+                date: String(item.fullDate || item.key || item.date || ''),
+                label: String(item.date || item.label || item.fullDate || item.key || ''),
+                users: Number(item.users) || 0
+            }));
+            if (range === 'weekly') {
+                const chunks = [];
+                for (let i = 0; i < normalized.length; i += 7) {
+                    const chunk = normalized.slice(i, i + 7);
+                    if (!chunk.length) continue;
+                    chunks.push({
+                        label: `${chunk[0].label}~${chunk[chunk.length - 1].label}`,
+                        users: chunk.reduce((sum, item) => sum + item.users, 0)
+                    });
+                }
+                return {
+                    title: '📈 주간 방문 추이',
+                    label: '주간 방문',
+                    rows: chunks.length ? chunks : normalized
+                };
+            }
+            if (range === 'monthly') {
+                const monthMap = new Map();
+                normalized.forEach((item) => {
+                    const key = item.date && /^\d{4}-\d{2}/.test(item.date) ? item.date.slice(0, 7) : '최근 30일';
+                    monthMap.set(key, (monthMap.get(key) || 0) + item.users);
+                });
+                const rows = Array.from(monthMap.entries()).map(([label, users]) => ({ label, users }));
+                return {
+                    title: '📈 월간 방문 추이',
+                    label: '월간 방문',
+                    rows: rows.length ? rows : [{ label: '최근 30일', users: normalized.reduce((sum, item) => sum + item.users, 0) }]
+                };
+            }
+            return {
+                title: '📈 일간 방문 추이',
+                label: '일간 방문',
+                rows: normalized
+            };
+        }
+
+        function renderVisitorChart(data, range = currentStatsRange) {
+            if (!data) return;
+            latestVisitorStats = data;
+            currentStatsRange = range;
+            document.querySelectorAll('.stats-range-tab').forEach((button) => {
+                button.classList.toggle('active', button.dataset.statsRange === range);
+            });
+            const series = buildStatsSeries(data, range);
+            const trendTitle = document.getElementById('statsTrendTitle');
+            if (trendTitle) trendTitle.textContent = series.title;
+            const labels = series.rows.map((row) => row.label);
+            const chartData = series.rows.map((row) => row.users);
+            const safeChartData = (chartData || []).map(v => Number(v) || 0);
+            const computedMax = Math.max(...safeChartData, 5);
+            const suggestedMax = computedMax + 2;
+            const canvas = document.getElementById('visitorChart');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            if (visitorChartInstance) visitorChartInstance.destroy();
+            visitorChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels,
+                    datasets: [{
+                        label: series.label,
+                        data: chartData,
+                        borderColor: '#ef6c35',
+                        backgroundColor: 'rgba(239, 108, 53, 0.14)',
+                        borderWidth: 2,
+                        tension: 0.32,
+                        fill: true,
+                        pointBackgroundColor: '#e34f26',
+                        pointRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true, ticks: { precision: 0 }, suggestedMax } }
+                }
+            });
+        }
+
+        if (statsToggleBtn && statsModal) {
+            statsToggleBtn.addEventListener('click', async () => {
+                statsModal.classList.remove('hidden');
+                if (typeof window.startPresencePolling === 'function') window.startPresencePolling();
+
+                try {
+                    const data = await fetchVisitorStats();
+                    if (!data) return;
+                    renderVisitorChart(data, currentStatsRange);
+                } catch (err) { console.error("차트 렌더링 실패:", err); }
+            });
+
+            document.querySelectorAll('.stats-range-tab').forEach((button) => {
+                button.addEventListener('click', () => {
+                    renderVisitorChart(latestVisitorStats, button.dataset.statsRange || 'daily');
+                });
+            });
+
+            // 통계 모달은 Cloud Function 집계 스냅샷만 사용한다.
+            // RTDB 실시간 접속자 구독은 비용과 정확도 문제로 사용하지 않는다.
+            const statsPresenceObserver = new MutationObserver(() => {
+                if (statsModal.classList.contains('hidden')) {
+                    if (typeof window.stopPresencePolling === 'function') window.stopPresencePolling();
+                }
+            });
+            statsPresenceObserver.observe(statsModal, { attributes: true, attributeFilter: ['class'] });
+        }
+
+        // ============================================
+        // 📢 공개 설정 - Cloud Function 단일 조회 + 세션 캐시
+        // ============================================
+        const NOTICE_CONFIG_KEYS = ['notice_help', 'notice_sidebar', 'notice_community'];
+        const liveNoticeConfig = Object.create(null);
+
+        function syncLiveNoticeConfig(partial = {}) {
+            NOTICE_CONFIG_KEYS.forEach((key) => {
+                if (Object.prototype.hasOwnProperty.call(partial, key)) {
+                    liveNoticeConfig[key] = partial[key];
+                }
+            });
+
+            if (typeof renderNotice === 'function') {
+                window.__skctNoticeLoaded = true;
+                const helpNoticeData = liveNoticeConfig.notice_help;
+                renderNotice(helpNoticeData || { show: false });
+            }
+
+            if (typeof window.renderSidebarNotice === 'function') {
+                const sidebarNoticeData = liveNoticeConfig.notice_sidebar;
+                window.renderSidebarNotice(sidebarNoticeData || {});
+            }
+        }
+
+        function subscribeLiveNoticeConfig() {}
+
+        async function fetchNoticeOnlyConfig() {
+            try {
+                const response = await fetch('https://us-central1-skct-tool.cloudfunctions.net/skctSecureApi/public/notices', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ visitorKey: getVisitorKey() })
+                });
+                if (!response.ok) return;
+                const payload = await response.json().catch(() => null);
+                if (payload?.ok && payload.notices) {
+                    syncLiveNoticeConfig(payload.notices);
+                }
+            } catch (error) {
+                // 네트워크가 잠깐 끊겨도 기존 공지 상태를 유지한다.
+            }
+        }
+
+        let noticeRefreshTimer = null;
+        function startNoticeRefreshLoop() {
+            if (noticeRefreshTimer) return;
+            noticeRefreshTimer = window.setInterval(() => {
+                if (document.visibilityState !== 'hidden') fetchNoticeOnlyConfig();
+            }, 60000);
+        }
+
+        async function fetchConfig() {
+            try {
+                const today = getKstDateKey();
+                const shouldCountVisit = localStorage.getItem('skct_last_visit_date') !== today;
+                const payload = await fetchPublicBootstrap({
+                    countVisit: shouldCountVisit,
+                    force: window.SKCT_FLAGS?.adminPreview === true || window.SKCT_FLAGS?.maintenanceBypass === true
+                });
+                if (payload.counted || shouldCountVisit) {
+                    localStorage.setItem('skct_last_visit_date', payload.todayKey || today);
+                }
+                handleConfigData(payload.config || {});
+                renderVisitorSummary(normalizeBootstrapStats(payload));
+                startNoticeRefreshLoop();
+            } catch(e) { console.error('fetchConfig error:', e); }
+        }
+
+        function handleConfigData(cfg) {
+            window.__SKCT_PUBLIC_CONFIG = cfg || {};
+            try {
+                window.dispatchEvent(new CustomEvent('skct:public-config', { detail: window.__SKCT_PUBLIC_CONFIG }));
+            } catch (error) {
+                // 이벤트를 받을 수 없는 구형 환경에서는 전역 캐시만 사용한다.
+            }
+            const esc = (value) => {
+                const div = document.createElement('div');
+                div.textContent = String(value ?? '');
+                return div.innerHTML;
+            };
+            const sanitizeUrl = (value) => {
+                const text = String(value || '').trim();
+                return /^(https?:)?\/\//i.test(text) ? text : '#';
+            };
+            if (cfg.maintenance && cfg.maintenance.enabled && !isDevMaintenanceBypass()) {
+                window.location.href = `update.html?time=${encodeURIComponent(cfg.maintenance.time)}`;
+                return;
+            }
+            if (cfg.appName) {
+                document.title = window.SKCT_FLAGS?.advanced === true ? `${cfg.appName} | 고급버전` : cfg.appName;
+            }
+            syncLiveNoticeConfig(cfg);
+            if (cfg.useful_links && cfg.useful_links.length > 0) {
+                let html = `<div style="font-weight: bold; color: #1e293b; font-size: 14px; margin-top: 15px; margin-bottom: 8px;">🔗 유용한 링크</div>`;
+                html += `<div style="display:flex; flex-direction:column; gap:6px; margin-bottom: 15px;">`;
+                cfg.useful_links.forEach(link => {
+                    html += `<a href="${sanitizeUrl(link.url)}" target="_blank" rel="noopener noreferrer" style="display:block; padding:10px 14px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; color:#3b82f6; text-decoration:none; font-weight:600; font-size:13px; transition:all 0.2s;">
+                        ${esc(link.title)} <span style="float:right;">↗</span>
+                    </a>`;
+                });
+                html += `</div>`;
+                const helpBody = document.querySelector('.help-modal-body');
+                if (helpBody) {
+                    const container = document.createElement('div');
+                    container.innerHTML = html;
+                    helpBody.appendChild(container);
+                }
+            }
+            if (typeof window.applySupportConfig === 'function') {
+                window.applySupportConfig(cfg.supportConfig);
+            }
+            if (typeof window.applyRemoteSiteTextConfig === 'function') {
+                window.applyRemoteSiteTextConfig(cfg.siteTextConfig);
+            }
+            if (typeof window.enforceEmailOnlySubscriptionCopy === 'function') {
+                window.enforceEmailOnlySubscriptionCopy();
+            }
+            if (typeof window.applyManualSubscriptionConfig === 'function') {
+                window.applyManualSubscriptionConfig(cfg.manualSubscriptionConfig, { source: 'remote' });
+            }
+
+            // Timer Defaults Sync
+            if (cfg.timerDefaults && (window.SKCT_FLAGS?.adminPreview || !localStorage.getItem('skct_timer_cfg'))) {
+                if (window.applyRemoteTimerDefaults) {
+                    window.applyRemoteTimerDefaults(
+                        cfg.timerDefaults.total,
+                        cfg.timerDefaults.subj,
+                        cfg.timerDefaults.brk
+                    );
+                }
+            }
+            if (cfg.guideDefaults && (window.SKCT_FLAGS?.adminPreview || !localStorage.getItem('skct_guide_cfg'))) {
+                if (window.applyRemoteGuideDefaults) {
+                    window.applyRemoteGuideDefaults(
+                        cfg.guideDefaults.enabled,
+                        cfg.guideDefaults.sec
+                    );
+                }
+            }
+            const isPopupPracticeWindow = window.name === 'skct_popup_mode' || new URLSearchParams(window.location.search).get('popup') === 'advanced';
+            // Layout Ratios Sync (사용자가 로컬 저장하지 않은 경우에만 원격 기본값 적용)
+            if (cfg.layoutRatios && (window.SKCT_FLAGS?.adminPreview || isPopupPracticeWindow || !localStorage.getItem('skct_layout_ratios'))) {
+                if (window.applyRemoteLayoutRatios) {
+                    window.applyRemoteLayoutRatios(
+                        cfg.layoutRatios.timer,
+                        cfg.layoutRatios.utils,
+                        cfg.layoutRatios.calc
+                    );
+                }
+            }
+            if (cfg.popupLayout && window.applyRemotePopupLayout) {
+                window.applyRemotePopupLayout(cfg.popupLayout);
+            }
+            if (cfg.toolUiConfig && (window.SKCT_FLAGS?.adminPreview || isPopupPracticeWindow || !(localStorage.getItem('skct_practice_tool_ui') || localStorage.getItem('SKCT_PRACTICE_TOOL_ui')))) {
+                if (window.applyRemoteToolUiConfig) {
+                    window.applyRemoteToolUiConfig(cfg.toolUiConfig);
+                }
+            }
+            if (cfg.sponsors && cfg.sponsors.length > 0) {
+                const tickerEl = document.getElementById('sponsorTicker');
+                if (tickerEl) {
+                    const tickerSeconds = Math.max(1, parseFloat(cfg.supportConfig?.sponsorTickerSeconds) || 4);
+                    const tickerIntervalMs = Math.round(tickerSeconds * 1000);
+                    let html = `<div style="margin-bottom:14px; padding:10px 14px; background:linear-gradient(135deg, #fdf4ff 0%, #fff 100%); border:1px solid #fbcfe8; border-left:4px solid #f472b6; border-radius:6px; box-shadow:0 1px 2px rgba(0,0,0,0.05); display:flex; gap:10px; align-items:flex-start;">
+                        <div style="flex-shrink:0; font-size:18px; margin-top:2px;">💖</div>
+                        <div style="flex:1; overflow:hidden; position:relative; height:80px;">`;
+
+                    cfg.sponsors.forEach((s, i) => {
+                        const sponsorTypeLabel = s.type === 'subscription' ? '고급 이용권 후원' : '일반 운영 후원';
+                        const safeMessage = window.SKCTSiteTextConfig?.sanitizeHtml
+                            ? window.SKCTSiteTextConfig.sanitizeHtml(s.message || '', { multiline: true })
+                            : esc(s.message || '').replace(/\n/g, '<br>');
+                        html += `<div class="sponsor-item" style="position:absolute; width:100%; height:100%; top:0; left:0; display:flex; flex-direction:column; justify-content:center; opacity:${i===0?1:0}; transition: opacity 0.5s, transform 0.5s; transform: translateY(${i===0?'0':'15px'}); font-size:13px; color:#475569;">
+                            <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:4px;">
+                                <div><span class="sponsor-type-badge">${sponsorTypeLabel}</span> <span style="font-weight:bold; color:#be185d;">${esc(s.name)}님</span> (${esc(s.amount)})</div>
+                                <div style="font-size:10px; color:#94a3b8; flex-shrink:0;">${esc(s.date)}</div>
+                            </div>
+                            <div style="flex:1; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; text-overflow:ellipsis; white-space:normal; line-height:1.5; font-size:12px;">
+                                ${safeMessage}
+                            </div>
+                        </div>`;
+                    });
+
+                    html += `</div></div>`;
+                    tickerEl.innerHTML = html;
+
+                    if (window.__sponsorTickerIntervalId) {
+                        clearInterval(window.__sponsorTickerIntervalId);
+                        window.__sponsorTickerIntervalId = null;
+                    }
+
+                    if (cfg.sponsors.length > 1) {
+                        let idx = 0;
+                        window.__sponsorTickerIntervalId = setInterval(() => {
+                            const items = tickerEl.querySelectorAll('.sponsor-item');
+                            if(!items.length) return;
+                            items[idx].style.opacity = '0';
+                            items[idx].style.transform = 'translateY(-15px)';
+
+                            idx = (idx + 1) % items.length;
+
+                            items[idx].style.transition = 'none';
+                            items[idx].style.transform = 'translateY(15px)';
+                            items[idx].style.opacity = '0';
+                            void items[idx].offsetWidth;
+
+                            items[idx].style.transition = 'opacity 0.5s, transform 0.5s';
+                            items[idx].style.opacity = '1';
+                            items[idx].style.transform = 'translateY(0)';
+                        }, tickerIntervalMs);
+                    }
+                }
+            }
+        }
+        fetchConfig();
+    </script>
+    <!-- Community Module (loaded after Firebase init) -->
+    <script type="module" src="community.js?v=2026070924"></script>
 </body>
 </html>

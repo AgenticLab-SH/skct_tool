@@ -1,0 +1,5 @@
+config/firebase-web-config.js
+_site/
+tmp/
+*.log
+

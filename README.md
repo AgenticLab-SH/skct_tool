@@ -1,6 +1,11 @@
-# skct_tool (리다이렉트 전용)
+# SKCT Practice Tool public site
 
-예전 GitHub Pages 주소 `https://agenticlab-sh.github.io/skct_tool/` 를  
-현재 서비스 `https://skct.agenticfabworks.com/` 로 연결합니다.
+This repository contains only the static files published at
+https://skct.agenticfabworks.com/.
 
-실제 앱 코드는 [skct_practice_tool](https://github.com/AgenticLab-SH/skct_practice_tool) 저장소를 사용하세요.
+Operational runbooks, backend services, deployment configuration, audit logs,
+and credentials are maintained in a separate private repository.
+
+Please do not include personal information, credentials, or security-sensitive
+details in public issues.
+

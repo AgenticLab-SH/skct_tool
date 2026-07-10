@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>확장 안내 | SKCT Tool</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="main.css?v=2026070801">
+    <link rel="icon" href="images/sk_ci.png">
+    <style>
+        body {
+            margin: 0;
+            background:
+                radial-gradient(circle at top left, rgba(59, 130, 246, 0.18), transparent 32%),
+                linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
+            color: #0f172a;
+            font-family: "Pretendard", sans-serif;
+        }
+        .extension-info-shell {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 40px 20px 64px;
+        }
+        .extension-info-hero {
+            background: rgba(255, 255, 255, 0.92);
+            border: 1px solid rgba(148, 163, 184, 0.28);
+            border-radius: 24px;
+            padding: 28px;
+            box-shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
+            backdrop-filter: blur(14px);
+        }
+        .extension-info-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: #fff7ed;
+            color: #9a3412;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+        }
+        .extension-info-title {
+            margin: 16px 0 10px;
+            font-size: clamp(28px, 4vw, 44px);
+            line-height: 1.12;
+            font-weight: 900;
+            letter-spacing: -0.03em;
+        }
+        .extension-info-lead {
+            margin: 0;
+            font-size: 16px;
+            line-height: 1.8;
+            color: #334155;
+        }
+        .extension-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            margin-top: 24px;
+        }
+        .extension-info-card {
+            background: rgba(248, 250, 252, 0.92);
+            border: 1px solid #dbe4f0;
+            border-radius: 18px;
+            padding: 18px;
+        }
+        .extension-info-card h2 {
+            margin: 0 0 10px;
+            font-size: 17px;
+            font-weight: 800;
+        }
+        .extension-info-card p,
+        .extension-info-card li {
+            margin: 0;
+            color: #475569;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+        .extension-info-card ul {
+            margin: 0;
+            padding-left: 18px;
+        }
+        .extension-info-warning {
+            margin-top: 22px;
+            padding: 18px 20px;
+            border-radius: 18px;
+            background: #fff1f2;
+            border: 1px solid #fecdd3;
+            color: #9f1239;
+        }
+        .extension-info-warning strong {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+        .extension-info-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 26px;
+        }
+        .extension-info-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 48px;
+            padding: 0 20px;
+            border-radius: 999px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 800;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        .extension-info-button:hover {
+            transform: translateY(-1px);
+        }
+        .extension-info-button.primary {
+            background: linear-gradient(135deg, #0f766e, #0891b2);
+            color: #ffffff;
+            box-shadow: 0 16px 30px rgba(8, 145, 178, 0.22);
+        }
+        .extension-info-button.secondary {
+            background: #ffffff;
+            color: #0f172a;
+            border: 1px solid #cbd5e1;
+        }
+        .extension-info-footnote {
+            margin-top: 18px;
+            color: #64748b;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+    </style>
+</head>
+<body>
+    <main class="extension-info-shell">
+        <section class="extension-info-hero">
+            <div class="extension-info-badge">고급 모드 전용 · 연동 안내</div>
+            <h1 class="extension-info-title">확장 안내는<br>보조 기능 후보입니다</h1>
+            <p class="extension-info-lead">
+                이 페이지는 고급 모드에서 보조적으로 검토 중인 확장 안내입니다.
+                핵심 연습 기능은 확장 없이도 사용할 수 있고, 안정화 전에는 선택 기능처럼 안내하지 않습니다.
+            </p>
+
+            <div class="extension-info-grid">
+                <article class="extension-info-card">
+                    <h2>현재 상태</h2>
+                    <p>우선 목표는 링커리어 CBT 결과 페이지의 답지 표를 읽어 정답과 정답률을 고급 모드 OMR에 바로 넘기는 기능입니다. 수동 복사 입력이 먼저 안정화된 뒤 확장 자동화를 붙입니다.</p>
+                </article>
+                <article class="extension-info-card">
+                    <h2>제공 기준</h2>
+                    <p>확장은 고급 모드 안에서만 안내합니다. 핵심 연습 도구는 확장 없이도 사용할 수 있어야 하며, 확장은 결과 페이지의 공개 표를 사용자가 직접 열어둔 상태에서만 보조적으로 읽습니다.</p>
+                </article>
+                <article class="extension-info-card">
+                    <h2>출시 전 확인</h2>
+                    <ul>
+                        <li>설치 흐름과 삭제 방법을 짧게 정리합니다.</li>
+                        <li>지원 브라우저와 제한 사항을 확인합니다.</li>
+                        <li>예: <code>cbt.linkareer.com/cbt/practice/result/...</code> 결과 페이지 하단 답지 표에서 NO., 정답, 정답률 열만 추출합니다.</li>
+                        <li>문제 발생 시 책임 범위와 문의 방법을 명확히 표시합니다.</li>
+                    </ul>
+                </article>
+            </div>
+
+            <div class="extension-info-warning">
+                <strong>사용 전 꼭 확인하세요</strong>
+                확장은 사용자가 직접 열어 둔 결과 페이지의 표를 보조적으로 읽는 방식만 검토합니다. 실제 시험 환경, 회사 보안 정책, 외부 서비스 약관, 브라우저 정책과 충돌할 수 있는 기능은 제공하지 않습니다.
+            </div>
+
+            <div class="extension-info-actions">
+                <a class="extension-info-button primary" href="index.html">메인 연습 도구로 돌아가기</a>
+            </div>
+
+            <p class="extension-info-footnote">
+                확장은 고급 모드의 보조 기능 후보입니다. 안정화가 끝나면 고급 안내 안에서만 필요한 범위로 제공하겠습니다.
+            </p>
+        </section>
+    </main>
+</body>
+</html>
