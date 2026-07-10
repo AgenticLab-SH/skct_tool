@@ -10,7 +10,7 @@
     <meta name="robots" content="noindex, nofollow">
     <meta name="googlebot" content="noindex, nofollow">
     <link rel="icon" href="images/sk_ci.png">
-    <link rel="stylesheet" href="study-archive.css?v=2026070921">
+    <link rel="stylesheet" href="study-archive.css?v=2026071102">
     <link rel="stylesheet" as="style" integrity="sha384-uGEvnSEpW2nM9xJFsrxrwakwrk9QdDTQIBJh0hVMu90OaVyMAMpAK1rIn0/Kh1/k" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 </head>
 <body>
@@ -110,7 +110,7 @@
                 <section class="archive-panel">
                     <div class="panel-header">
                         <div>
-                            <p class="panel-eyebrow">Sessions</p>
+                            <p class="panel-eyebrow">저장된 기록</p>
                             <h3>회차 기록</h3>
                         </div>
                         <div class="panel-header-actions">
@@ -131,7 +131,7 @@
                 <section class="archive-panel">
                     <div class="panel-header">
                         <div>
-                            <p class="panel-eyebrow">Growth</p>
+                            <p class="panel-eyebrow">회차 비교</p>
                             <h3>성장 그래프</h3>
                         </div>
                     </div>
@@ -139,6 +139,7 @@
                         회차 기록이 1개 이상 저장되면 정답률, 응답 기준 정답률, 평균 풀이 시간 흐름을 볼 수 있습니다.
                     </div>
                     <div id="growthSummary" class="growth-summary"></div>
+                    <div id="growthDiagnosis" class="growth-diagnosis" aria-live="polite"></div>
                     <div class="chart-wrap">
                         <canvas id="growthChart" height="120"></canvas>
                     </div>
@@ -151,7 +152,7 @@
                 <section class="archive-panel">
                     <div class="panel-header">
                         <div>
-                            <p class="panel-eyebrow">Wrong Notes</p>
+                            <p class="panel-eyebrow">오답 정리</p>
                             <h3>오답노트</h3>
                         </div>
                         <div id="wrongNoteCountBadge" class="count-badge">0건</div>
@@ -185,7 +186,7 @@
                 <section class="archive-panel entry-form-panel">
                     <div class="panel-header">
                         <div>
-                            <p class="panel-eyebrow">Write</p>
+                            <p class="panel-eyebrow">새 기록</p>
                             <h3 id="entryFormTitle">새 자료 저장</h3>
                         </div>
                         <button id="entryFormResetBtn" type="button" class="ghost-btn">폼 비우기</button>
@@ -252,7 +253,7 @@
                 <section class="archive-panel archive-list-panel">
                     <div class="panel-header">
                         <div>
-                            <p class="panel-eyebrow">Browse</p>
+                            <p class="panel-eyebrow">저장 목록</p>
                             <h3>저장 자료 목록</h3>
                         </div>
                         <div id="entryCountBadge" class="count-badge">0건</div>
@@ -297,7 +298,7 @@
                 <section class="archive-panel archive-detail-panel">
                     <div class="panel-header">
                         <div>
-                            <p class="panel-eyebrow">Review</p>
+                            <p class="panel-eyebrow">상세 보기</p>
                             <h3>선택 자료 상세</h3>
                         </div>
                     </div>
@@ -341,9 +342,9 @@
 
     <script src="subscription-crypto.js?v=202604081955"></script>
     <script src="build-info.js?v=202604112208"></script>
-    <script src="site-text-config.js?v=2026071020"></script>
+    <script src="site-text-config.js?v=2026071103"></script>
     <script src="config/firebase-web-config.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-    <script type="module" src="study-archive.js?v=2026070921"></script>
+    <script type="module" src="study-archive.js?v=2026071102"></script>
 </body>
 </html>

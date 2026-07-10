@@ -106,6 +106,7 @@ const archiveNotionCopyBtn = document.getElementById('archiveNotionCopyBtn');
 const archiveExportStatus = document.getElementById('archiveExportStatus');
 const growthEmpty = document.getElementById('growthEmpty');
 const growthSummary = document.getElementById('growthSummary');
+const growthDiagnosis = document.getElementById('growthDiagnosis');
 const sectionGrowthGrid = document.getElementById('sectionGrowthGrid');
 const wrongTagRatioGrid = document.getElementById('wrongTagRatioGrid');
 const growthChartCanvas = document.getElementById('growthChart');
@@ -675,6 +676,7 @@ function renderGrowth() {
             <div class="growth-stat"><strong>${latest.skipped + latest.unanswered}</strong><span>건너뜀·미응답</span></div>
         ` : '';
     }
+    renderGrowthDiagnosis(rows);
     if (growthChartCanvas && window.Chart) {
         if (growthChart) growthChart.destroy();
         if (rows.length) {
@@ -730,6 +732,56 @@ function renderGrowth() {
     }
     renderSectionGrowth();
     renderWrongTagRatios();
+}
+
+function renderGrowthDiagnosis(rows) {
+    if (!growthDiagnosis) return;
+    const latest = rows[rows.length - 1];
+    if (!latest) {
+        growthDiagnosis.innerHTML = '';
+        return;
+    }
+    const previous = rows[rows.length - 2];
+    const latestSession = [...state.sessions]
+        .filter((session) => session?.total)
+        .sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0))
+        .at(-1);
+    const trend = previous ? Math.round((latest.overall - previous.overall) * 10) / 10 : null;
+    const sections = Array.isArray(latestSession?.sections) ? latestSession.sections : [];
+    const weakest = [...sections].sort((a, b) => (Number(a.accuracyOverall) || 0) - (Number(b.accuracyOverall) || 0))[0];
+    const items = Array.isArray(latestSession?.items) ? latestSession.items : [];
+    const elapsed = items.map((item) => Number(item.elapsedMs) || 0).filter((value) => value > 0);
+    const avg = elapsed.length ? elapsed.reduce((sum, value) => sum + value, 0) / elapsed.length : 0;
+    const slowCount = avg ? elapsed.filter((value) => value >= avg * 1.35).length : 0;
+    const tagCounts = new Map();
+    state.wrongNotes.forEach((note) => {
+        const tag = normalizeWrongTag(note.reasonTag);
+        tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1);
+    });
+    const topTag = [...tagCounts.entries()].sort((a, b) => b[1] - a[1])[0];
+    const pressureCount = latest.skipped + latest.unanswered;
+    const trendText = trend == null
+        ? '다음 회차부터 변화 폭을 보여드립니다.'
+        : trend === 0
+            ? '직전 회차와 같은 정답률입니다.'
+            : `직전 회차보다 ${Math.abs(trend)}%p ${trend > 0 ? '올랐습니다' : '낮아졌습니다'}.`;
+    const focusText = weakest
+        ? `${weakest.name || weakest.id || '취약 영역'} ${formatPercent(weakest.accuracyOverall)}부터 다시 보세요.`
+        : '영역별 기록이 쌓이면 가장 낮은 영역을 알려드립니다.';
+    const timeText = slowCount
+        ? `평균보다 오래 걸린 문항이 ${slowCount}개입니다.`
+        : pressureCount
+            ? `건너뜀·미응답 ${pressureCount}개를 먼저 확인하세요.`
+            : '두드러진 시간 지연 문항이 없습니다.';
+    const reasonText = topTag
+        ? `${topTag[0]} 태그가 ${topTag[1]}건으로 가장 많습니다.`
+        : '오답 이유를 태그하면 반복되는 원인을 보여드립니다.';
+    growthDiagnosis.innerHTML = `
+        <article><span>이번 변화</span><strong>${escapeHtml(trendText)}</strong></article>
+        <article><span>다음 집중 영역</span><strong>${escapeHtml(focusText)}</strong></article>
+        <article><span>시간 사용</span><strong>${escapeHtml(timeText)}</strong></article>
+        <article><span>반복 오답 원인</span><strong>${escapeHtml(reasonText)}</strong></article>
+    `;
 }
 
 function renderSectionGrowth() {

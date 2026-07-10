@@ -1463,7 +1463,7 @@ document.addEventListener('DOMContentLoaded', () => {
         popupEditorMetricsEl.innerHTML = `
             <div>창 크기: ${(popupLayout.window.widthRatio * 100).toFixed(1)}% x ${(popupLayout.window.heightRatio * 100).toFixed(1)}%</div>
             <div>창 위치: 왼쪽 ${(popupLayout.window.leftRatio * 100).toFixed(1)}% / 위 ${(popupLayout.window.topRatio * 100).toFixed(1)}%</div>
-            <div>OMR 폭: ${(popupLayout.omrWidthRatio * 100).toFixed(1)}%</div>
+            <div>답안 패널 폭: ${(popupLayout.omrWidthRatio * 100).toFixed(1)}%</div>
             <div>세로 비율: 타이머 ${layoutRatios.timer.toFixed(1)} / 메모 ${layoutRatios.utils.toFixed(1)} / 계산기 ${layoutRatios.calc.toFixed(1)}</div>
             <div>도구 기본값: 하단 여백 ${(payload.toolUiConfig.bottomPaddingRatio * 100).toFixed(1)}%, 우측 버튼 열 ${(payload.toolUiConfig.sideButtonColumnRatio * 100).toFixed(1)}%, 메모 ${payload.toolUiConfig.noteFontSize}px, 그림판 ${payload.toolUiConfig.canvasLineWidth}px</div>
         `;
@@ -1752,7 +1752,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         buildQuickInfoCard('이 창의 역할', '시간, 채점 기준, 화면 비율, 도구 기본값을 현재 브라우저에 적용합니다. 적용하면 지금 화면에 바로 반영됩니다.'),
                         buildQuickInfoCard(
                             readSiteText('settingsModal.practiceModeTitle', '🎯 모드 설정'),
-                            formatMultilineHtml(readSiteText('settingsModal.practiceModeHint', 'OFF = 실전: 과목 시간이 끝나면 자동으로 잠깁니다.\nON = 자유 풀이: 시간 제한 없이 마킹합니다.'))
+                            formatMultilineHtml(readSiteText('settingsModal.practiceModeHint', 'OFF = 실전: 과목 시간이 끝나면 자동으로 잠깁니다.\nON = 자유 풀이: 시간 제한 없이 응답합니다.'))
                         ),
                         buildQuickInfoCard(
                             readSiteText('settingsModal.scoringTitle', '📊 채점 기준'),
@@ -1796,7 +1796,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     title: '✨ 고급 활용 도움말',
                     body: [
                         buildQuickInfoCard('추천 흐름', '<strong>답안 체크</strong> -> <strong>정답 입력</strong> -> <strong>채점</strong> -> <strong>통계·TXT·CSV·정오표</strong>'),
-                        buildQuickInfoCard('버튼 위치', '<strong>상단 상태</strong>로 권한과 이용권을 확인하고, <strong>OMR 아래</strong>에서 복기 버튼과 기록 보관함을 바로 사용합니다.'),
+                        buildQuickInfoCard('버튼 위치', '<strong>상단 상태</strong>에서 권한과 이용권을 확인하고, 채점 결과는 <strong>과목별 통계</strong>와 <strong>기록 보관함</strong>으로 이어집니다.'),
                         `<div class="quick-info-flow">
                             ${buildQuickInfoStep(readSiteText('advancedFeature.feature1Html', '<strong>1. 결과부터 확인</strong><br>맞은 수, 정답률, 건너뜀, 못 푼 문제를 먼저 봅니다.'))}
                             ${buildQuickInfoStep(readSiteText('advancedFeature.feature2Html', '<strong>2. 과목별 약점 확인</strong><br>과목별 상세 통계로 흔들린 영역을 바로 봅니다.'))}
@@ -1815,15 +1815,15 @@ document.addEventListener('DOMContentLoaded', () => {
                             ${buildQuickInfoStep(readSiteText('advancedMode.coachStep2Html', '<strong>채점</strong><br>점수와 건너뜀을 먼저 봅니다.'))}
                             ${buildQuickInfoStep(readSiteText('advancedMode.coachStep3Html', '<strong>복기 버튼</strong><br>상세 통계, TXT, 정오표로 이어갑니다.'))}
                         </div>`,
-                        buildQuickInfoCard('기록 저장', '<strong>문항별 통계</strong>와 <strong>성장 기록</strong>은 OMR 아래에서 파일로 내려받거나 기록 보관함에 저장합니다. CSV를 불러온 뒤에도 바로 보관함에 반영할 수 있습니다.')
+                        buildQuickInfoCard('기록 저장', '<strong>문항별 통계</strong>와 <strong>성장 기록</strong>은 파일로 내려받거나 기록 보관함에 저장합니다. CSV를 불러온 뒤에도 바로 보관함에 반영할 수 있습니다.')
                     ].join('')
                 };
             case 'omr-flow':
                 return {
-                    title: 'OMR 버튼 사용 순서',
+                    title: '채점과 기록 순서',
                     body: `
                         <div class="omr-flow-help">
-                            <p class="omr-flow-lead">OMR은 답 체크, 정답 입력, 채점, 복기 저장을 한 탭에서 이어가는 곳입니다.</p>
+                            <p class="omr-flow-lead">답안 기록은 실제 시험 기능이 아니라, 연습이 끝난 뒤 개인 자료를 채점하고 복기할 때 쓰는 도구입니다.</p>
                             <div class="omr-flow-steps">
                                 <div class="omr-flow-step">
                                     <span class="omr-flow-number">1</span>
@@ -1905,7 +1905,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     body: [
                         buildQuickInfoCard('복사할 위치', '링커리어 CBT 답지 부분에서 <strong>NO.</strong>부터 표 전체를 긁어서 복사합니다.'),
                         buildQuickInfoCard('붙여넣는 방법', '답지가 여러 페이지라면 <strong>1~20, 21~40</strong>처럼 범위별 칸에 계속 붙여넣으면 됩니다.'),
-                        buildQuickInfoCard('반영 흐름', '<strong>붙여넣기 분석</strong>으로 문항 번호와 정답 열을 확인한 뒤 <strong>정답 적용 및 채점</strong>을 누릅니다. 정답이 OMR에 들어가고 바로 채점됩니다.'),
+                        buildQuickInfoCard('반영 흐름', '<strong>붙여넣기 분석</strong>으로 문항 번호와 정답 열을 확인한 뒤 <strong>정답 적용 및 채점</strong>을 누릅니다. 정답이 채점용 답안 기록에 반영되고 바로 채점됩니다.'),
                         buildQuickInfoCard('다른 형식 요청', '원하는 답 입력 방식이 있으면 답변 페이지를 스크롤해 복사한 텍스트와 캡처 이미지를 <strong>zhdlsqpdj@gmail.com</strong>으로 보내주세요.'),
                         '<figure class="bulk-import-help-figure"><img src="images/linkareer-cbt-answer-example.png" alt="링커리어 CBT 답지 표 복사 예시"><figcaption>예시처럼 NO., 정답, 입력답, 정오, 정답률이 보이는 표를 복사하면 됩니다.</figcaption></figure>'
                     ].join('')
@@ -2157,7 +2157,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const name = getAdvancedWelcomeName(verifiedAdvancedLicenseBundle);
             const message = readSiteText(
                 'messages.advancedWelcomeBody',
-                '현재 창에서 고급 모드가 활성화되었습니다.\n\n고급 모드 기능\n- 계정 상태: 만료일, 남은 시간, 아낀 시간 확인\n- 고급 활용: 정답 붙여넣기, CBT 정답률, 과목별 상세 통계\n- 기록 보관함: 회차 기록과 복기 자료 저장\n- OMR 개선: 폭과 여백, 문항별 시간 가이드 적용\n\n{닉네임}님, 이용해주셔서 감사합니다.\n준비에 도움이 되셨으면 좋겠습니다.\n불편한 점은 언제든지 zhdlsqpdj@gmail.com으로 보내주세요.',
+                '고급 모드가 열렸습니다.\n\n사용할 수 있는 기능\n- 회차별 결과와 문항 시간 저장\n- CBT 정오표 일괄입력과 과목별 통계\n- 성장 그래프와 오답 원인 분석\n- 오답노트, 복기 메모, CSV·노션용 표\n- 팝업 비율과 반복 연습 제어\n\n{닉네임}님, 이용해주셔서 감사합니다.\n문의: zhdlsqpdj@gmail.com',
                 { name, '닉네임': name }
             );
             if (advancedAccessStatus) {
@@ -2548,7 +2548,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if (advancedModeLabelArchive) advancedModeLabelArchive.textContent = readSiteText('advancedMode.labelArchive', '기록 보관함');
         if (advancedModeLabelRail) advancedModeLabelRail.textContent = readSiteText('advancedMode.labelRail', '실제환경 여백');
-        if (advancedModeStatusFootnote) advancedModeStatusFootnote.innerHTML = readSiteText('advancedMode.footnoteHtml', '기록 보관함은 OMR 아래 버튼에서 바로 열 수 있고, 고급 모드에서 열린 창이면 자동으로 연결됩니다.');
+        if (advancedModeStatusFootnote) advancedModeStatusFootnote.innerHTML = readSiteText('advancedMode.footnoteHtml', '채점한 기록은 보관함 저장으로 바로 연결할 수 있고, 고급 모드에서 열린 창이면 계정도 자동으로 확인합니다.');
         if (advancedModeGuideBtn) advancedModeGuideBtn.textContent = readSiteText('advancedMode.guideButton', '고급 활용 보기');
         if (advancedModeArchiveBtn) advancedModeArchiveBtn.textContent = readSiteText('advancedMode.archiveButton', '기록 보관함');
         if (advancedCoachTitle) advancedCoachTitle.textContent = readSiteText('advancedMode.coachTitle', '복기 버튼 순서');
@@ -3273,7 +3273,7 @@ document.addEventListener('DOMContentLoaded', () => {
             modeToggleBtn.classList.remove('active-score');
             if (advancedSaveSummary) advancedSaveSummary.classList.add('hidden');
             if (omrModeLabel) {
-                omrModeLabel.textContent = window.siteText ? window.siteText('tools.omrModeLabel') : '답안 마킹';
+                omrModeLabel.textContent = window.siteText ? window.siteText('tools.omrModeLabel') : '답안 기록 · 채점용';
                 omrModeLabel.style.color = '';
             }
             if (omrModeHint) {
@@ -3281,7 +3281,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 omrModeHint.textContent = '';
             }
         } else {
-            modeToggleBtn.textContent = '✏️ 답안 마킹으로 돌아가기';
+            modeToggleBtn.textContent = '✏️ 내 답 기록으로 돌아가기';
             modeToggleBtn.classList.add('active-score');
             if (omrModeLabel) omrModeLabel.textContent = '✅ 정답 입력 중';
             if (omrModeLabel) omrModeLabel.style.color = '#4ade80';

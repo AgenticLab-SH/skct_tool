@@ -361,6 +361,35 @@ body.archive-readonly-mode #entryDeleteBtn {
     margin-bottom: 16px;
 }
 
+.growth-diagnosis {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.growth-diagnosis article {
+    position: relative;
+    overflow: hidden;
+    padding: 15px 16px;
+    border: 1px solid rgba(37, 99, 235, 0.14);
+    border-radius: 15px;
+    background: linear-gradient(135deg, #eff6ff, #ffffff);
+    animation: growthDiagnosisIn .45s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.growth-diagnosis article:nth-child(2) { animation-delay: .06s; }
+.growth-diagnosis article:nth-child(3) { animation-delay: .12s; }
+.growth-diagnosis article:nth-child(4) { animation-delay: .18s; }
+.growth-diagnosis span,.growth-diagnosis strong { display:block; }
+.growth-diagnosis span { color:#2563eb; font-size:10px; font-weight:900; }
+.growth-diagnosis strong { margin-top:6px; color:#1e293b; font-size:13px; line-height:1.55; }
+
+@keyframes growthDiagnosisIn {
+    from { opacity:0; transform:translateY(8px); }
+    to { opacity:1; transform:none; }
+}
+
 .growth-stat {
     padding: 16px;
 }
@@ -758,6 +787,7 @@ body.archive-readonly-mode #entryDeleteBtn {
     .field-grid,
     .filter-grid,
     .growth-summary,
+    .growth-diagnosis,
     .section-growth-grid,
     .wrong-note-head,
     .wrong-note-edit-row {
