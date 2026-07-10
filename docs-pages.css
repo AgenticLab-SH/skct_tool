@@ -196,6 +196,39 @@ body.docs-page::before {
     line-height: 1.7;
 }
 
+.docs-link-card {
+    position: relative;
+    display: block;
+    min-height: 190px;
+    color: var(--docs-text);
+    text-decoration: none;
+    transition: transform .18s ease, border-color .18s ease, background-color .18s ease;
+}
+
+.docs-link-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 107, 0, .48);
+    background: linear-gradient(145deg, rgba(227, 25, 55, .13), rgba(255, 107, 0, .08));
+}
+
+.docs-link-card > span {
+    color: #ff9560;
+    font-size: 12px;
+    font-weight: 850;
+}
+
+.docs-link-card h3 {
+    margin: 12px 36px 8px 0;
+}
+
+.docs-link-card > b {
+    position: absolute;
+    top: 22px;
+    right: 22px;
+    color: #ff9560;
+    font-size: 20px;
+}
+
 .docs-summary-strip { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin-top:18px; }
 .docs-summary-strip article { padding:16px 18px; border:1px solid var(--docs-border); border-radius:16px; background:rgba(255,255,255,.86); }
 .docs-summary-strip strong { display:block; margin-bottom:5px; color:var(--docs-text); font-size:14px; }

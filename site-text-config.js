@@ -1,12 +1,12 @@
 (function initSiteTextConfig() {
     const DEFAULT_SITE_TEXT_CONFIG = {
         meta: {
-            title: 'SKCT 연습 도구 | 타이머·계산기·메모장·그림판',
-            description: '가지고 있는 문제 PDF나 E-book 옆에서 타이머, 화면 계산기, 메모장과 그림판을 무료로 연습하세요. PC 팝업 배치를 지원합니다.',
-            ogTitle: 'SKCT 연습 도구 | 화면 도구까지 미리 연습하세요',
-            ogDescription: '문제 PDF나 E-book 옆에서 타이머, 화면 계산기, 메모장과 그림판을 무료로 사용해 보세요.',
-            twitterTitle: 'SKCT 연습 도구 | 화면 도구까지 미리 연습하세요',
-            twitterDescription: '문제 PDF나 E-book 옆에서 타이머, 화면 계산기, 메모장과 그림판을 무료로 사용해 보세요.',
+            title: 'SKCT 연습 도구 | PDF·E-book과 함께 무료로 연습',
+            description: 'SKCT 연습을 준비할 때 가지고 있는 문제 PDF나 E-book 옆에서 타이머, 화면 계산기, 메모장과 그림판을 무료로 사용하세요.',
+            ogTitle: 'SKCT 연습 도구 | 가지고 있는 문제로 바로 시작',
+            ogDescription: '문제 PDF나 E-book 옆에서 타이머, 화면 계산기, 메모장과 그림판을 무료로 사용하세요.',
+            twitterTitle: 'SKCT 연습 도구 | 가지고 있는 문제로 바로 시작',
+            twitterDescription: '문제 PDF나 E-book 옆에서 타이머, 화면 계산기, 메모장과 그림판을 무료로 사용하세요.',
             srTitle: 'SKCT 온라인 연습 도구',
             srDescription: '타이머, 메모장, 그림판, 계산기를 실제 온라인 시험과 비슷한 흐름으로 연습하는 SKCT 도구입니다.'
         },
@@ -23,9 +23,9 @@
             communityLabel: '채팅'
         },
         landing: {
-            eyebrow: '무료 SKCT 화면 도구 연습',
-            title: '가지고 있는 문제로,\n화면 도구까지 연습하세요.',
-            lead: '문제 PDF나 E-book은 평소처럼 열면 됩니다. 옆에 연습 도구를 띄우고 타이머, 화면 계산기, 메모장과 그림판을 사용해 보세요. 기본 기능은 모두 무료입니다.',
+            eyebrow: '무료 SKCT 연습 도구',
+            title: 'SKCT 연습,\n가지고 있는 문제로 시작하세요.',
+            lead: '문제 PDF나 E-book은 평소처럼 열면 됩니다. SKCT 연습 도구를 옆에 띄우고 타이머, 화면 계산기, 메모장과 그림판을 사용해 보세요. 기본 기능은 모두 무료입니다.',
             deviceHint: 'PC에서는 ‘팝업으로 열기’를 눌러 문제 자료 옆에 두면 가장 편합니다.',
             primaryButton: '무료 연습 시작',
             guideLink: '1분 사용법',
@@ -286,13 +286,19 @@
     };
 
     const LEGACY_SITE_TEXT_DEFAULTS = {
-        'landing.eyebrow': ['SKCT PRACTICE'],
-        'landing.title': ['문제 풀이는 그대로.\n도구 사용은 더 익숙하게.'],
-        'landing.lead': ['가지고 있는 문제 PDF나 E-book을 띄우고, 무료 연습 도구로 시간 관리와 답안 마킹까지 함께 연습해 보세요.', '가지고 있는 문제 PDF나 E-book을 띄우고, 계산기·메모장·그림판·타이머를 실제처럼 써보세요. 기본 기능은 모두 무료입니다.'],
+        'landing.eyebrow': ['SKCT PRACTICE', '무료 SKCT 화면 도구 연습'],
+        'landing.title': ['문제 풀이는 그대로.\n도구 사용은 더 익숙하게.', '가지고 있는 문제로,\n화면 도구까지 연습하세요.'],
+        'landing.lead': ['가지고 있는 문제 PDF나 E-book을 띄우고, 무료 연습 도구로 시간 관리와 답안 마킹까지 함께 연습해 보세요.', '가지고 있는 문제 PDF나 E-book을 띄우고, 계산기·메모장·그림판·타이머를 실제처럼 써보세요. 기본 기능은 모두 무료입니다.', '문제 PDF나 E-book은 평소처럼 열면 됩니다. 옆에 연습 도구를 띄우고 타이머, 화면 계산기, 메모장과 그림판을 사용해 보세요. 기본 기능은 모두 무료입니다.'],
         'landing.deviceHint': ['PC 화면에 최적화되어 있습니다. 연습할 때는 ‘팝업으로 열기’를 권장합니다.'],
         'landing.primaryButton': ['연습 시작'],
         'landing.guideLink': ['사용법 보기'],
         'meta.srTitle': ['SKCT 연습 툴 - SKCT 실제화면과 동일한 온라인 SKCT 환경 가이드'],
+        'meta.title': ['SKCT 연습 도구 | 타이머·계산기·메모장·그림판'],
+        'meta.description': ['가지고 있는 문제 PDF나 E-book 옆에서 타이머, 화면 계산기, 메모장과 그림판을 무료로 연습하세요. PC 팝업 배치를 지원합니다.'],
+        'meta.ogTitle': ['SKCT 연습 도구 | 화면 도구까지 미리 연습하세요'],
+        'meta.ogDescription': ['문제 PDF나 E-book 옆에서 타이머, 화면 계산기, 메모장과 그림판을 무료로 사용해 보세요.'],
+        'meta.twitterTitle': ['SKCT 연습 도구 | 화면 도구까지 미리 연습하세요'],
+        'meta.twitterDescription': ['문제 PDF나 E-book 옆에서 타이머, 화면 계산기, 메모장과 그림판을 무료로 사용해 보세요.'],
         'statsModal.totalHint': ['그래프는 최근 기간만 표시하고, 누적 방문수는 2026년 4월 4일 이후 기준입니다.'],
         'meta.srDescription': ["본 웹사이트는 SK그룹 인적성 검사를 대비하기 위한 완벽한 무료 SKCT 연습 애플리케이션입니다. SKCT 실제 환경, SKCT 실제화면 인터페이스, 그리고 SKCT 크기 체감까지 고려하여 최대한 정밀하게 구현하였습니다. SKCT 모의고사 인적성 테스트를 진행할 때 필수적인 'SKCT 타이머', 'SKCT 화면 계산기', 'SKCT 메모장', 'SKCT 그림판', 'SKCT 실제 OMR'의 모든 기능을 하나의 SKCT 툴 화면 안에서 제공합니다. 실제 시험과 동일한 감각으로 SKCT 모의 연습을 철저히 준비하세요!"],
         'toolbar.popupButton': ['먼저 팝업으로 열기', '화면 더 줄이기', '팝업 연습'],

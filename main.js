@@ -3430,9 +3430,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!trimmed) return null;
         const circledMap = { '①': 1, '②': 2, '③': 3, '④': 4, '⑤': 5 };
         if (circledMap[trimmed]) return circledMap[trimmed];
-        const match = trimmed.match(/[1-5]/);
+        const match = trimmed.match(/^(?:정답|답)?\s*[:：]?\s*([1-5])(?:\s*번)?$/);
         if (!match) return null;
-        const num = parseInt(match[0], 10);
+        const num = parseInt(match[1], 10);
         return num >= 1 && num <= 5 ? num : null;
     };
 
@@ -3568,11 +3568,12 @@ document.addEventListener('DOMContentLoaded', () => {
         let invalidRowCount = 0;
         let duplicateCount = 0;
         let rateCount = 0;
+        const maxQuestionNo = getTotalQuestionCount();
         parsed.rows.forEach((row) => {
             const questionNo = parseBulkQuestionNumber(row.cells[questionCol]);
             const answer = parseBulkChoice(row.cells[answerCol]);
             const answerRate = rateCol >= 0 ? parseBulkRate(row.cells[rateCol]) : null;
-            if (questionNo == null || answer == null) {
+            if (questionNo == null || questionNo < 1 || questionNo > maxQuestionNo || answer == null) {
                 invalidRowCount++;
                 return;
             }
@@ -4532,30 +4533,48 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             const round = roundsMap.get(id);
             const subjName = cells[idx.subj].trim();
+            const resultLabel = cells[idx.result].trim();
+            const userAnswer = cells[idx.my].trim() || null;
+            const correctAnswer = cells[idx.correct].trim() || null;
+            const correct = cells[idx.isCorrect].trim() === '1';
+            const skipped = /건너뜀/.test(resultLabel);
+            const unanswered = !skipped && (/못\s*풂|미응답|미답/.test(resultLabel) || userAnswer == null);
+            const resultKey = correct
+                ? 'correct'
+                : skipped
+                    ? 'skipped'
+                    : unanswered
+                        ? 'unanswered'
+                        : 'wrong';
             round.items.push({
                 subjId: subjectNameToId(subjName),
                 subjName,
                 num: Number(cells[idx.num]) || 0,
-                myAnswer: cells[idx.my].trim() || null,
-                correctAnswer: cells[idx.correct].trim() || null,
+                myAnswer: userAnswer,
+                correctAnswer,
                 cbtAnswerRate: idx.rate >= 0 ? parseBulkRate(cells[idx.rate]) : null,
                 answerSource: idx.rate >= 0 && parseBulkRate(cells[idx.rate]) != null ? 'CBT' : '',
-                resultKey: '',
-                resultLabel: cells[idx.result].trim(),
+                resultKey,
+                resultLabel,
                 spent: Number(cells[idx.spent]) || 0,
-                correct: cells[idx.isCorrect].trim() === '1'
+                correct,
+                skipped,
+                unanswered
             });
         }
         // 영역별/전체 요약을 항목에서 재계산
         return Array.from(roundsMap.values()).map((round) => {
             const subjMap = {};
-            let oc = 0, oa = 0, ot = 0;
+            let oc = 0, oa = 0, ot = 0, os = 0, ou = 0, ow = 0;
             round.items.forEach((it) => {
                 const sid = it.subjId || it.subjName;
-                if (!subjMap[sid]) subjMap[sid] = { id: it.subjId, name: it.subjName, correct: 0, attempted: 0, total: 0 };
+                if (!subjMap[sid]) subjMap[sid] = { id: it.subjId, name: it.subjName, correct: 0, attempted: 0, total: 0, skipped: 0, unanswered: 0, wrong: 0 };
                 subjMap[sid].total += 1; ot += 1;
-                if (it.myAnswer != null && it.myAnswer !== '') { subjMap[sid].attempted += 1; oa += 1; }
+                if (it.skipped) { subjMap[sid].skipped += 1; os += 1; }
+                else if (it.unanswered) { subjMap[sid].unanswered += 1; ou += 1; }
+                else if (it.myAnswer != null && it.myAnswer !== '') { subjMap[sid].attempted += 1; oa += 1; }
                 if (it.correct) { subjMap[sid].correct += 1; oc += 1; }
+                else if (!it.skipped && !it.unanswered && it.myAnswer != null && it.myAnswer !== '') { subjMap[sid].wrong += 1; ow += 1; }
             });
             const subjectsArr = Object.values(subjMap).map((s) => ({
                 ...s,
@@ -4567,7 +4586,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 subjects: subjectsArr,
                 overall: {
                     total: ot, attempted: oa, correct: oc,
-                    skipped: 0, unanswered: 0, wrong: oa - oc,
+                    skipped: os, unanswered: ou, wrong: ow,
                     attemptedRate: oa > 0 ? (oc / oa) * 100 : 0,
                     overallRate: ot > 0 ? (oc / ot) * 100 : 0
                 }
@@ -6371,6 +6390,75 @@ button{display:none}
         },
         importStatRoundsCsv(text) {
             return importStatRoundsCsv(text);
+        },
+        runFeatureSelfCheck() {
+            const checks = {};
+            const sampleTable = [
+                'NO.\t정답\t입력답\t정오\t정답률',
+                '1\t3\t2\tX\t75%',
+                '2\t①\t1\tO\t48.5%',
+                '3\t답: 5\t4\tX\t20%',
+                '101\t2\t2\tO\t90%'
+            ].join('\n');
+            const parsed = parseBulkCorrectImportText(sampleTable);
+            const questionCol = detectBulkQuestionColumn(parsed);
+            const answerCol = detectBulkAnswerColumn(parsed, questionCol);
+            const rateCol = detectBulkRateColumn(parsed, questionCol, answerCol);
+            const preview = buildBulkCorrectPreview(parsed, questionCol, answerCol, rateCol);
+            checks.bulkImport = preview.mappedRows.length === 3
+                && preview.invalidRowCount === 1
+                && preview.mappedRows[0]?.answer === 3
+                && preview.mappedRows[0]?.answerRate === 75
+                && preview.mappedRows[2]?.answer === 5;
+
+            const fixtureRound = {
+                id: 'QA-ROUND-1',
+                ts: '2026-07-11T00:00:00.000Z',
+                mode: 'practice',
+                meta: { practicedAt: '2026-07-11T09:00', material: 'QA 자료', roundLabel: '1회차' },
+                treatSkippedAsWrong: false,
+                overall: { total: 4, attempted: 2, correct: 1, skipped: 1, unanswered: 1, wrong: 1, attemptedRate: 50, overallRate: 25 },
+                subjects: [{ id: subjects[0]?.id || 's1', name: subjects[0]?.name || '언어이해', total: 4, attempted: 2, correct: 1, skipped: 1, unanswered: 1, wrong: 1, attemptedRate: 50, overallRate: 25 }],
+                items: [
+                    { no: 1, subjId: subjects[0]?.id || 's1', subjName: subjects[0]?.name || '언어이해', num: 1, myAnswer: 3, correctAnswer: 3, cbtAnswerRate: 75, resultKey: 'correct', resultLabel: '정답', spent: 12, correct: true, skipped: false, unanswered: false },
+                    { no: 2, subjId: subjects[0]?.id || 's1', subjName: subjects[0]?.name || '언어이해', num: 2, myAnswer: 2, correctAnswer: 4, cbtAnswerRate: 48.5, resultKey: 'wrong', resultLabel: '오답', spent: 25, correct: false, skipped: false, unanswered: false },
+                    { no: 3, subjId: subjects[0]?.id || 's1', subjName: subjects[0]?.name || '언어이해', num: 3, myAnswer: null, correctAnswer: 1, cbtAnswerRate: 20, resultKey: 'skipped', resultLabel: '건너뜀', spent: 8, correct: false, skipped: true, unanswered: false },
+                    { no: 4, subjId: subjects[0]?.id || 's1', subjName: subjects[0]?.name || '언어이해', num: 4, myAnswer: null, correctAnswer: null, cbtAnswerRate: null, resultKey: 'unanswered', resultLabel: '못 풂', spent: 0, correct: false, skipped: false, unanswered: true }
+                ]
+            };
+            const imported = parseStatRoundsCsv(buildStatRoundsCsv([fixtureRound]));
+            const restored = imported[0];
+            checks.csvRoundTrip = imported.length === 1
+                && restored?.overall?.total === 4
+                && restored?.overall?.attempted === 2
+                && restored?.overall?.correct === 1
+                && restored?.overall?.skipped === 1
+                && restored?.overall?.unanswered === 1
+                && restored?.overall?.wrong === 1
+                && restored?.items?.[2]?.resultKey === 'skipped'
+                && restored?.items?.[3]?.resultKey === 'unanswered';
+
+            const serverRecord = restored ? buildServerStudySessionRecordFromStatRound(restored) : null;
+            checks.archiveRecord = serverRecord?.total?.skipped === 1
+                && serverRecord?.total?.unanswered === 1
+                && serverRecord?.items?.length === 4
+                && serverRecord?.wrongNotes?.length === 1;
+
+            const requiredControls = [
+                'subjectResetBtn', 'fullResetBtn', 'bulkCorrectImportBtn', 'detailScoreBtn',
+                'advancedStatsServerBtn', 'advancedStatsCsvBtn', 'advancedStatsCsvImportBtn',
+                'advancedStatsCsvServerBtn', 'advancedStatsCsvImportServerBtn',
+                'advancedArchiveOpenBtn', 'studyArchiveOpenBtn', 'archiveFrame'
+            ];
+            const missingControls = requiredControls.filter((id) => !document.getElementById(id));
+            checks.requiredControls = missingControls.length === 0;
+            return {
+                ok: Object.values(checks).every(Boolean),
+                checks,
+                missingControls,
+                parsedBulkRows: preview.mappedRows.length,
+                restoredSummary: restored?.overall || null
+            };
         }
     };
 
