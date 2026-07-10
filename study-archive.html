@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>기록 보관함 | SKCT Tool</title>
+    <meta name="description" content="고급 모드 회차 기록, 성장 그래프, 오답노트, 복기 메모를 계정별로 저장하고 확인하는 기록 보관함입니다.">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
+    <link rel="icon" href="images/sk_ci.png">
+    <link rel="stylesheet" href="study-archive.css?v=2026070921">
+    <link rel="stylesheet" as="style" integrity="sha384-uGEvnSEpW2nM9xJFsrxrwakwrk9QdDTQIBJh0hVMu90OaVyMAMpAK1rIn0/Kh1/k" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+</head>
+<body>
+    <div class="archive-shell">
+        <header class="archive-hero">
+            <div>
+                <p id="archiveHeroEyebrow" class="archive-eyebrow">Advanced Study Library</p>
+                <h1 id="archiveHeroTitle">기록 보관함</h1>
+                <p id="archiveHeroCopy" class="archive-hero-copy">
+                    고급 모드 이용자 전용 보관함입니다. 채점한 회차 기록, 성장 그래프, 오답노트, 복기 메모를 계정별로 저장하고 다시 확인합니다.
+                </p>
+                <p class="archive-hero-copy">복기 메모는 사용자가 직접 작성한 풀이 과정, 오답 이유, 시간 사용 패턴을 정리하기 위한 개인 기록입니다. 저작권이 있는 문제 전문이나 공식 기출문제 전문을 공유하거나 게시하는 용도로 사용할 수 없습니다.</p>
+            </div>
+            <div class="archive-hero-actions">
+                <button id="archivePopoutButton" type="button" class="archive-link-button">별도 창으로 열기</button>
+                <a id="archiveBackButton" class="archive-link-button" href="index.html">메인 연습 도구로 돌아가기</a>
+            </div>
+        </header>
+
+        <section id="archiveAccessGate" class="archive-panel auth-panel hidden">
+            <div class="auth-card">
+                <div class="auth-copy">
+                    <h2 id="archiveAccessGateTitle">고급 모드 확인이 먼저 필요합니다</h2>
+                    <p id="archiveAccessGateBody">
+                        이 페이지는 <strong>고급 모드 전용</strong>입니다. 메인 화면의 <strong>고급 안내</strong>에서 승인된 신청 이메일 또는 로그인 ID로 라이선스를 먼저 확인한 뒤 다시 들어와 주세요.
+                    </p>
+                </div>
+                <div class="auth-actions">
+                    <a id="archiveAccessGuideLink" class="archive-link-button" href="index.html">고급 안내로 돌아가기</a>
+                </div>
+                <div id="archiveAccessGateStatus" class="status-text"></div>
+            </div>
+        </section>
+
+        <section id="archiveAuthPanel" class="archive-panel auth-panel">
+            <div class="auth-card">
+                <div class="auth-tabs">
+                    <button id="authLoginTab" type="button" class="auth-tab active" data-auth-mode="login">로그인</button>
+                    <button id="authRegisterTab" type="button" class="auth-tab" data-auth-mode="register">회원가입</button>
+                </div>
+                <div class="auth-copy">
+                    <h2 id="authTitle">기록 보관함 로그인</h2>
+                    <p id="authDescription">
+                        고급 모드 창에서 열면 자동으로 보관함에 연결됩니다. 자동 확인이 실패한 경우에만 신청 이메일과 비밀번호로 다시 확인해 주세요.
+                    </p>
+                </div>
+                <label class="archive-field">
+                    <span id="authEmailLabel">이메일</span>
+                    <input id="authEmailInput" type="email" autocomplete="username" placeholder="example@email.com">
+                </label>
+                <label class="archive-field">
+                    <span id="authPasswordLabel">비밀번호</span>
+                    <input id="authPasswordInput" type="password" autocomplete="current-password" placeholder="비밀번호 6자 이상">
+                </label>
+                <div class="auth-actions">
+                    <button id="authSubmitBtn" type="button" class="primary-btn">로그인</button>
+                    <p id="archiveAuthFootnote" class="auth-footnote">
+                        기록 보관함은 고급 모드 창에서 열었을 때만 사용할 수 있습니다. 저장해 둔 링크로 직접 접속하면 다시 고급 모드에서 열어야 합니다.
+                    </p>
+                </div>
+                <div id="authStatus" class="status-text"></div>
+            </div>
+        </section>
+
+        <section id="archiveWorkspace" class="archive-workspace hidden">
+            <div class="archive-panel workspace-header">
+                <div>
+                    <p class="archive-eyebrow">Session Storage</p>
+                    <h2 id="archiveWorkspaceTitle">저장된 기록</h2>
+                    <p id="archiveWorkspaceCopy" class="workspace-copy">
+                        고급 모드에서 저장한 회차 기록, 성장 그래프, 오답노트가 한곳에 모입니다.
+                    </p>
+                </div>
+                <div class="workspace-header-actions">
+                    <div id="currentUserBadge" class="user-badge">로그인 확인 중...</div>
+                    <button id="archiveLegacyImportBtn" type="button" class="ghost-btn hidden">기존 계정 가져오기</button>
+                    <button id="authLogoutBtn" type="button" class="ghost-btn">로그아웃</button>
+                </div>
+            </div>
+
+            <nav class="archive-tabs" aria-label="기록 보관함 메뉴">
+                <button type="button" class="archive-tab active" data-archive-tab="sessions">회차 기록</button>
+                <button type="button" class="archive-tab" data-archive-tab="growth">성장 그래프</button>
+                <button type="button" class="archive-tab" data-archive-tab="wrongNotes">오답노트</button>
+                <button type="button" class="archive-tab" data-archive-tab="materials">자료 메모</button>
+            </nav>
+
+            <section id="queuedSessionNotice" class="archive-panel queue-notice hidden">
+                <div>
+                    <strong>기록 보관함 반영 상태</strong>
+                    <p>고급 모드에서 보낸 기록을 현재 계정에 반영합니다. 같은 회차는 중복 저장하지 않습니다.</p>
+                </div>
+                <div id="queuedSessionStatus" class="status-text">확인 중...</div>
+            </section>
+
+            <div id="sessionsTabPanel" class="archive-tab-panel">
+                <section class="archive-panel">
+                    <div class="panel-header">
+                        <div>
+                            <p class="panel-eyebrow">Sessions</p>
+                            <h3>회차 기록</h3>
+                        </div>
+                        <div class="panel-header-actions">
+                            <button id="archiveCsvExportBtn" type="button" class="ghost-btn compact-btn">엑셀용 CSV 저장</button>
+                            <button id="archiveNotionCopyBtn" type="button" class="ghost-btn compact-btn">노션용 표 복사</button>
+                            <div id="sessionCountBadge" class="count-badge">0회</div>
+                        </div>
+                    </div>
+                    <div id="archiveExportStatus" class="status-text"></div>
+                    <div id="sessionListEmpty" class="empty-state">
+                        아직 저장된 회차 기록이 없습니다. 고급 모드에서 채점 후 <strong>보관함 저장</strong>을 누르면 여기로 이어집니다.
+                    </div>
+                    <div id="sessionList" class="session-list"></div>
+                </section>
+            </div>
+
+            <div id="growthTabPanel" class="archive-tab-panel hidden">
+                <section class="archive-panel">
+                    <div class="panel-header">
+                        <div>
+                            <p class="panel-eyebrow">Growth</p>
+                            <h3>성장 그래프</h3>
+                        </div>
+                    </div>
+                    <div id="growthEmpty" class="empty-state">
+                        회차 기록이 1개 이상 저장되면 정답률, 응답 기준 정답률, 평균 풀이 시간 흐름을 볼 수 있습니다.
+                    </div>
+                    <div id="growthSummary" class="growth-summary"></div>
+                    <div class="chart-wrap">
+                        <canvas id="growthChart" height="120"></canvas>
+                    </div>
+                    <div id="sectionGrowthGrid" class="section-growth-grid"></div>
+                    <div id="wrongTagRatioGrid" class="section-growth-grid wrong-tag-ratio-grid"></div>
+                </section>
+            </div>
+
+            <div id="wrongNotesTabPanel" class="archive-tab-panel hidden">
+                <section class="archive-panel">
+                    <div class="panel-header">
+                        <div>
+                            <p class="panel-eyebrow">Wrong Notes</p>
+                            <h3>오답노트</h3>
+                        </div>
+                        <div id="wrongNoteCountBadge" class="count-badge">0건</div>
+                    </div>
+                    <div class="filter-grid wrong-note-filter-grid">
+                        <label class="archive-field compact">
+                            <span>상태</span>
+                            <select id="wrongStatusFilter">
+                                <option value="">전체</option>
+                                <option value="open">다시 풀기</option>
+                                <option value="reviewed">복기함</option>
+                                <option value="resolved">해결</option>
+                            </select>
+                        </label>
+                        <label class="archive-field compact">
+                            <span>태그</span>
+                            <select id="wrongTagFilter">
+                                <option value="">전체</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div id="wrongNoteListEmpty" class="empty-state">
+                        아직 저장된 오답이 없습니다. 채점 결과에서 틀린 문항과 시간 부족 문항이 자동으로 오답노트에 들어옵니다.
+                    </div>
+                    <div id="wrongNoteList" class="wrong-note-list"></div>
+                </section>
+            </div>
+
+            <div id="materialsTabPanel" class="archive-tab-panel hidden">
+            <div class="workspace-grid">
+                <section class="archive-panel entry-form-panel">
+                    <div class="panel-header">
+                        <div>
+                            <p class="panel-eyebrow">Write</p>
+                            <h3 id="entryFormTitle">새 자료 저장</h3>
+                        </div>
+                        <button id="entryFormResetBtn" type="button" class="ghost-btn">폼 비우기</button>
+                    </div>
+                    <div class="field-grid">
+                        <label class="archive-field">
+                            <span>자료 제목</span>
+                            <input id="entryTitleInput" type="text" placeholder="예: 2024 상반기 언어이해 3회차 오답 정리">
+                        </label>
+                        <label class="archive-field">
+                            <span>주관사</span>
+                            <input id="entryOrganizerInput" type="text" placeholder="예: SK / 해커스 / 스터디 자체">
+                        </label>
+                        <label class="archive-field">
+                            <span>회차</span>
+                            <input id="entryRoundInput" type="text" placeholder="예: 3회차 / 2024 상반기">
+                        </label>
+                        <label class="archive-field">
+                            <span>과목</span>
+                            <input id="entrySubjectInput" type="text" list="subjectSuggestions" placeholder="예: 언어이해">
+                        </label>
+                        <label class="archive-field">
+                            <span>저장 유형</span>
+                            <select id="entryStorageTypeSelect">
+                                <option value="문제+AI 응답">복기 메모+AI 응답</option>
+                                <option value="문제 원문">개인 복기 메모</option>
+                                <option value="AI 응답">AI 응답</option>
+                                <option value="복기 메모">복기 메모</option>
+                            </select>
+                        </label>
+                        <label class="archive-field">
+                            <span>문제 형식</span>
+                            <input id="entryProblemFormatInput" type="text" placeholder="예: 언어이해 지문형 / 수열추리 / 상황판단">
+                        </label>
+                    </div>
+                    <label class="archive-field">
+                        <span>직접 태그</span>
+                        <input id="entryTagsInput" type="text" placeholder="쉼표로 구분해 입력 예: 오답, 반복연습, 시간관리">
+                    </label>
+                    <label class="archive-field">
+                        <span>복기 메모 / 풀이 과정 / 오답 이유</span>
+                        <textarea id="entryRawTextInput" rows="10" placeholder="직접 작성한 풀이 과정, 오답 이유, 시간 사용 패턴을 정리하세요. 과목과 난이도 키워드는 자동 태그 후보로 읽습니다."></textarea>
+                    </label>
+                    <label class="archive-field">
+                        <span>AI 응답 / 해설</span>
+                        <textarea id="entryAiResponseInput" rows="8" placeholder="AI 응답, 해설, 내가 정리한 답안 전략을 저장하세요."></textarea>
+                    </label>
+                    <div class="auto-tag-card">
+                        <div class="auto-tag-header">
+                            <strong>자동 감지 태그 미리보기</strong>
+                            <span>붙여넣기 내용과 입력 필드에서 자동으로 보강됩니다.</span>
+                        </div>
+                        <div id="autoTagPreview" class="tag-chip-wrap muted">
+                            아직 자동 태그가 없습니다.
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button id="entrySaveBtn" type="button" class="primary-btn">자료 저장</button>
+                        <button id="entryDeleteBtn" type="button" class="danger-btn hidden">선택 자료 삭제</button>
+                    </div>
+                    <div id="entryFormStatus" class="status-text"></div>
+                </section>
+
+                <section class="archive-panel archive-list-panel">
+                    <div class="panel-header">
+                        <div>
+                            <p class="panel-eyebrow">Browse</p>
+                            <h3>저장 자료 목록</h3>
+                        </div>
+                        <div id="entryCountBadge" class="count-badge">0건</div>
+                    </div>
+                    <div class="filter-grid">
+                        <label class="archive-field compact">
+                            <span>검색</span>
+                            <input id="filterSearchInput" type="text" placeholder="제목, 태그, 본문 검색">
+                        </label>
+                        <label class="archive-field compact">
+                            <span>과목</span>
+                            <select id="filterSubjectSelect">
+                                <option value="">전체</option>
+                            </select>
+                        </label>
+                        <label class="archive-field compact">
+                            <span>저장 유형</span>
+                            <select id="filterStorageTypeSelect">
+                                <option value="">전체</option>
+                            </select>
+                        </label>
+                        <label class="archive-field compact">
+                            <span>회차</span>
+                            <input id="filterRoundInput" type="text" placeholder="예: 3회차">
+                        </label>
+                    </div>
+                    <div class="tag-filter-block">
+                        <div class="tag-filter-header">
+                            <strong>태그 필터</strong>
+                            <button id="clearTagFiltersBtn" type="button" class="text-btn">선택 초기화</button>
+                        </div>
+                        <div id="tagFilterList" class="tag-filter-list">
+                            태그가 생기면 여기에 체크 필터가 표시됩니다.
+                        </div>
+                    </div>
+                    <div id="entryListEmpty" class="empty-state">
+                        아직 저장된 자료가 없습니다. 왼쪽 폼에서 첫 자료를 저장해 보세요.
+                    </div>
+                    <div id="entryList" class="entry-list"></div>
+                </section>
+
+                <section class="archive-panel archive-detail-panel">
+                    <div class="panel-header">
+                        <div>
+                            <p class="panel-eyebrow">Review</p>
+                            <h3>선택 자료 상세</h3>
+                        </div>
+                    </div>
+                    <div id="detailEmpty" class="empty-state">
+                        목록에서 자료를 선택하면 여기서 전체 내용과 자동 태그를 확인할 수 있습니다.
+                    </div>
+                    <div id="detailView" class="detail-view hidden">
+                        <div class="detail-top">
+                            <div>
+                                <h4 id="detailTitle">자료 제목</h4>
+                                <p id="detailMeta" class="detail-meta"></p>
+                            </div>
+                            <div class="detail-actions">
+                                <button id="detailEditBtn" type="button" class="ghost-btn">폼으로 불러오기</button>
+                            </div>
+                        </div>
+                        <div id="detailTags" class="tag-chip-wrap"></div>
+                        <div class="detail-section">
+                            <strong>개인 복기 메모</strong>
+                            <pre id="detailRawText" class="detail-text"></pre>
+                        </div>
+                        <div class="detail-section">
+                            <strong>AI 응답 / 해설</strong>
+                            <pre id="detailAiResponse" class="detail-text"></pre>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            </div>
+        </section>
+    </div>
+
+    <datalist id="subjectSuggestions">
+        <option value="언어이해"></option>
+        <option value="자료해석"></option>
+        <option value="창의수리"></option>
+        <option value="언어추리"></option>
+        <option value="수열추리"></option>
+        <option value="복합"></option>
+    </datalist>
+
+    <script src="subscription-crypto.js?v=202604081955"></script>
+    <script src="build-info.js?v=202604112208"></script>
+    <script src="site-text-config.js?v=2026071020"></script>
+    <script src="config/firebase-web-config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script type="module" src="study-archive.js?v=2026070921"></script>
+</body>
+</html>
