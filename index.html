@@ -67,7 +67,7 @@
       gtag('js', new Date());
       gtag('config', 'G-ZLHB1RM91X');
     </script>
-    <link rel="stylesheet" href="main.css?v=2026071103">
+    <link rel="stylesheet" href="main.css?v=2026072401">
     <!-- Google Fonts & Pretendard -->
     <link rel="stylesheet" as="style" integrity="sha384-uGEvnSEpW2nM9xJFsrxrwakwrk9QdDTQIBJh0hVMu90OaVyMAMpAK1rIn0/Kh1/k" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     <link rel="icon" href="images/sk_ci.png">
@@ -176,6 +176,10 @@
                     <span class="sidebar-shortcut-icon">⚙</span>
                     <span class="sidebar-shortcut-label compact" id="sidebarSettingsLabel">설정</span>
                 </div>
+                <button class="utility-toggle sidebar-shortcut" id="utilityToggle" type="button" title="활용 도구 열기" aria-haspopup="dialog" aria-controls="utilityModal" aria-expanded="false">
+                    <span class="sidebar-shortcut-icon" aria-hidden="true">↗</span>
+                    <span class="sidebar-shortcut-label compact" id="sidebarUtilityLabel">활용<br>도구</span>
+                </button>
                 <div class="advanced-guide-toggle normal-only sidebar-shortcut" id="advancedGuideToggle" title="고급 안내 보기">
                     <span class="sidebar-shortcut-icon">🔒</span>
                     <span class="sidebar-shortcut-label compact" id="sidebarAdvancedGuideLabel">고급<br>모드</span>
@@ -193,7 +197,7 @@
                 <div class="sidebar-divider normal-only"></div>
                 <div class="donate-toggle normal-only sidebar-shortcut" id="donateToggle" title="운영 응원 열기">
                     <span class="sidebar-shortcut-icon">☕</span>
-                    <span class="sidebar-shortcut-label compact" id="sidebarDonateLabel">후원</span>
+                    <span class="sidebar-shortcut-label compact" id="sidebarDonateLabel">운영<br>후원</span>
                 </div>
                 <div class="sidebar-divider"></div>
                 <div class="stats-toggle sidebar-shortcut" id="statsToggle" title="접속 현황 열기">
@@ -928,6 +932,66 @@
         </div>
     </div>
 
+    <div id="utilityModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="resourceToolsModalTitle" aria-describedby="resourceToolsModalDescription">
+        <div class="modal-content resource-tools-modal">
+            <div class="modal-header resource-tools-header">
+                <div>
+                    <span class="resource-tools-eyebrow">AgenticFabWorks</span>
+                    <h3 id="resourceToolsModalTitle">취업 준비에 바로 쓰는 활용 도구</h3>
+                </div>
+                <button class="close-modal btn-close" type="button" aria-label="활용 도구 닫기">×</button>
+            </div>
+            <div class="modal-body resource-tools-body">
+                <p class="resource-tools-intro" id="resourceToolsModalDescription">필요한 기능만 골랐습니다. 카드에 마우스를 올리거나 키보드로 선택하면 용도를 확인할 수 있습니다.</p>
+                <div class="resource-tools-grid">
+                    <a class="resource-tool-card resource-tool-calendar" href="https://calendar.agenticfabworks.com/" target="_blank" rel="noopener noreferrer" data-resource-tool="calendar-circle" aria-label="캘린더 서클 새 탭에서 열기">
+                        <div class="resource-tool-preview resource-calendar-preview" aria-hidden="true">
+                            <span class="calendar-preview-ring"></span>
+                            <span class="calendar-preview-hand"></span>
+                            <i class="calendar-preview-dot dot-one"></i>
+                            <i class="calendar-preview-dot dot-two"></i>
+                            <i class="calendar-preview-dot dot-three"></i>
+                        </div>
+                        <div class="resource-tool-copy">
+                            <span class="resource-tool-kicker">시간 계획</span>
+                            <strong>캘린더 서클</strong>
+                            <p>원형 시간표에서 일정을 배치하고 밀린 계획을 다시 정렬합니다.</p>
+                            <span class="resource-tool-action">새 탭에서 열기 <b aria-hidden="true">↗</b></span>
+                        </div>
+                        <span class="resource-tool-hover-detail">오늘의 시간을 원 위에서 한눈에 보고, 일정 길이와 순서를 직접 조정할 수 있습니다.</span>
+                    </a>
+                    <a class="resource-tool-card resource-tool-charcount" href="https://tools.agenticfabworks.com/charcount/" target="_blank" rel="noopener noreferrer" data-resource-tool="character-count" aria-label="글자수 세기 새 탭에서 열기">
+                        <div class="resource-tool-preview resource-charcount-preview" aria-hidden="true">
+                            <span class="charcount-preview-paper"><i></i><i></i><i></i><i></i></span>
+                            <span class="charcount-preview-count"><b>532</b><small>자</small></span>
+                        </div>
+                        <div class="resource-tool-copy">
+                            <span class="resource-tool-kicker">자소서 점검</span>
+                            <strong>글자수 세기</strong>
+                            <p>공백 포함·제외, UTF-8 바이트, 단어와 줄 수를 동시에 확인합니다.</p>
+                            <span class="resource-tool-action">새 탭에서 열기 <b aria-hidden="true">↗</b></span>
+                        </div>
+                        <span class="resource-tool-hover-detail">자기소개서 문항을 붙여 넣으면 채용 사이트의 글자수·바이트 제한을 빠르게 맞출 수 있습니다.</span>
+                    </a>
+                    <a class="resource-tool-card resource-tool-interview" href="https://interview.agenticfabworks.com/" target="_blank" rel="noopener noreferrer" data-resource-tool="interview-studio" aria-label="면접 연습 스튜디오 새 탭에서 열기">
+                        <div class="resource-tool-preview resource-interview-preview" aria-hidden="true">
+                            <span class="interview-preview-question">Q</span>
+                            <span class="interview-preview-lines"><i></i><i></i><i></i></span>
+                            <span class="interview-preview-wave"><i></i><i></i><i></i><i></i><i></i></span>
+                        </div>
+                        <div class="resource-tool-copy">
+                            <span class="resource-tool-kicker">답변 훈련</span>
+                            <strong>면접 연습 스튜디오</strong>
+                            <p>질문만 보기, 키워드·전체 답변 작성, 영어와 음성 연습을 지원합니다.</p>
+                            <span class="resource-tool-action">새 탭에서 열기 <b aria-hidden="true">↗</b></span>
+                        </div>
+                        <span class="resource-tool-hover-detail">답변과 녹음은 현재 기기에 저장되며, 질문별 연습 기록을 백업하고 다시 불러올 수 있습니다.</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Donation Custom Modal -->
     <div id="donateModal" class="modal-overlay hidden">
         <div class="modal-content" style="max-width: 420px; padding: 25px;">
@@ -1071,8 +1135,8 @@
     </script>
     <script src="subscription-crypto.js?v=202604081955"></script>
     <script src="build-info.js?v=202607050000"></script>
-    <script src="site-text-config.js?v=2026071104"></script>
-    <script src="main.js?v=2026071104"></script>
+    <script src="site-text-config.js?v=2026072401"></script>
+    <script src="main.js?v=2026072401"></script>
 
     <script src="config/firebase-web-config.js"></script>
     <!-- Firebase SDK (ES Module) -->

@@ -19,7 +19,7 @@
             advancedModeLabelHtml: '고급<br>활용',
             popupLabel: '팝업',
             supportLabel: '운영\n후원',
-            utilityLabel: '더보기',
+            utilityLabel: '활용\n도구',
             communityLabel: '채팅'
         },
         landing: {
@@ -520,6 +520,8 @@
         'messages.manualLookupRequired': ['이메일과 비밀번호를 모두 입력해주세요.'],
         'messages.manualLookupNotFound': ['해당 이메일로 조회되는 신청을 찾지 못했습니다. 이메일 또는 비밀번호를 다시 확인해주세요.'],
         'sidebar.helpLabel': ['가이드', '도움말'],
+        'sidebar.supportLabel': ['운영 후원', '후원'],
+        'sidebar.utilityLabel': ['더보기'],
         'sidebar.advancedGuideLabelHtml': ['고급<br>기능', '고급<br>안내'],
         'toolbar.totalTimeLabel': ['전체 남은 시간', '전체 시간'],
         'toolbar.guidePrefix': ['가이드:', '목표:'],
